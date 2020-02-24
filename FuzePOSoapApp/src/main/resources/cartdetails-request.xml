@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+			xmlns:us="http://www.cartproduceritem.com/cartdetails">
+			
+	<soapenv:Body>
+		<us:CartDetailsRequest>
+			<us:id>1</us:id>
+		</us:CartDetailsRequest>
+	</soapenv:Body>		
+</soapenv:Envelope>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.createpocartproducer.com/createpo"
+	xmlns:tnspo="http://www.createpocartproducer.com/createpo"
+	elementFormDefault="qualified">	
+	
+	<xs:complexType name="itempojo">
+		<xs:sequence>
+			<xs:element name="id" type="xs:int" />
+			<xs:element name="name" type="xs:string" />
+			<xs:element name="contractId" type="xs:string" />
+			<xs:element name="dueDate" type="xs:date" />
+			<xs:element name="shipToId" type="xs:string" />
+			<xs:element name="activity" type="xs:string" />
+			<xs:element name="comments" type="xs:string" />
+			<xs:element name="model" type="xs:string" />
+			<xs:element name="description" type="xs:string" />
+			<xs:element name="price" type="xs:string" />
+			<xs:element name="inStock" type="xs:boolean" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:element name="AddPODetailsRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="poreq" type="tnspo:poreq" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="AddPODetailsResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="pores" type="tnspo:pores" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:complexType name="poreq">
+		<xs:sequence>
+			<xs:element name="id" type="xs:int" />
+			<xs:element name="itempojo" type="tnspo:itempojo" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+
+<xs:complexType name="pores">
+		<xs:sequence>
+			<xs:element name="message" type="xs:string" />
+			<xs:element name="status" type="xs:boolean" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	
+	
+</xs:schema>
