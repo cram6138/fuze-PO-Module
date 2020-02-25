@@ -2,6 +2,7 @@ package com.fuze.po.PurchaseOrderAppServices.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.BeanUtils;
@@ -12,11 +13,14 @@ import com.fuze.po.PurchaseOrderAppServices.entity.Item;
 import com.fuze.po.PurchaseOrderAppServices.entity.POItems;
 import com.fuze.po.PurchaseOrderAppServices.entity.PORequest;
 import com.fuze.po.PurchaseOrderAppServices.entity.Project;
+import com.fuze.po.PurchaseOrderAppServices.forms.ItemForm;
 import com.fuze.po.PurchaseOrderAppServices.forms.PORequestForm;
 import com.fuze.po.PurchaseOrderAppServices.forms.ProjectSearchForm;
 import com.fuze.po.PurchaseOrderAppServices.info.ItemInfo;
 import com.fuze.po.PurchaseOrderAppServices.info.PORequestInfo;
 import com.fuze.po.PurchaseOrderAppServices.info.ProjectInfo;
+import com.fuze.po.PurchaseOrderAppServices.info.ResponseInfo;
+import com.fuze.po.PurchaseOrderAppServices.repository.ItemRepository;
 import com.fuze.po.PurchaseOrderAppServices.repository.POItemsRepository;
 import com.fuze.po.PurchaseOrderAppServices.repository.PORequestRepository;
 import com.fuze.po.PurchaseOrderAppServices.repository.ProjectRepository;
@@ -26,6 +30,9 @@ public class POService {
 
 	@Autowired
 	private PORequestRepository poRequestRepo;
+	
+	@Autowired
+	private ItemRepository itemRepository;
 
 	@Autowired
 	POItemsRepository poItemRepository;
@@ -33,10 +40,20 @@ public class POService {
 	@Autowired
 	private ProjectRepository projectRepository;
 
-	public PORequest savePORequest(PORequest request) {
-
-		return poRequestRepo.save(request);
-
+	public ResponseInfo saveRequestForm(PORequestForm requestForm) {
+		PORequest poRequestObj = poRequestRepo.getOne(requestForm.getPoId());
+		ResponseInfo response = new ResponseInfo();
+		for(ItemForm itemForm : requestForm.getPoitems()) {
+			Item item = itemRepository.getOne(itemForm.getId());
+			POItems poItems = new POItems();
+			poItems.setItem(item);
+			poItems.setPoRequest(poRequestObj);
+			poItemRepository.save(poItems);
+			response.setStatus(true);
+			response.setResponseType("Successfully Saved");
+		}
+		
+		return response;
 	}
 
 	public List<PORequestInfo> getPOList() {
@@ -109,5 +126,7 @@ public class POService {
 		
 		return projectInfoList;
 	}
+	
+	
 
 }

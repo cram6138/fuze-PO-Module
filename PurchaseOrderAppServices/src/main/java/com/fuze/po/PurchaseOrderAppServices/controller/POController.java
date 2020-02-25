@@ -14,10 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fuze.po.PurchaseOrderAppServices.entity.PORequest;
+import com.fuze.po.PurchaseOrderAppServices.forms.PORequestForm;
 import com.fuze.po.PurchaseOrderAppServices.forms.ProjectSearchForm;
 import com.fuze.po.PurchaseOrderAppServices.info.ItemInfo;
 import com.fuze.po.PurchaseOrderAppServices.info.PORequestInfo;
 import com.fuze.po.PurchaseOrderAppServices.info.ProjectInfo;
+import com.fuze.po.PurchaseOrderAppServices.info.ResponseInfo;
 import com.fuze.po.PurchaseOrderAppServices.service.POService;
 
 @RestController
@@ -28,10 +30,10 @@ public class POController {
 	@Autowired
 	private POService poRequestService;
 
-	@PostMapping("/save")
-	public PORequest saveReq(@RequestBody final PORequest request) {
-		return poRequestService.savePORequest(request);
-	}
+	@PostMapping("/savePORequest")
+	public ResponseEntity<ResponseInfo> saveForm(@RequestBody final PORequestForm request) {
+		return new ResponseEntity<ResponseInfo>(poRequestService.saveRequestForm(request), HttpStatus.OK);}
+
 
 	@GetMapping("/getPoRequest")
 	public ResponseEntity<List<PORequestInfo>> getPOItemListData() {
@@ -49,5 +51,8 @@ public class POController {
 		
 		return new ResponseEntity<List<ProjectInfo>>(poRequestService.searchProjects(projectSearchForm), HttpStatus.OK);
 	}
+	
+	
+	
 
 }
