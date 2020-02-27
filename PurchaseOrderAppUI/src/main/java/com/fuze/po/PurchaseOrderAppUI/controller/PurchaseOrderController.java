@@ -43,5 +43,10 @@ public class PurchaseOrderController {
 		model.addAttribute("POTracker","active");
 		return "POTracker";
 	}
+	@RequestMapping("/POViewCart")
+	public String poviewcart(Model model) {
+		model.addAttribute("POViewCart","active");
+		return "POViewCart";
+	}
 	
 }

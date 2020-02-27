@@ -116,6 +116,15 @@
                 <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
               </div>
             </li>
+            
+            <li class="nav-item dropdown no-arrow mx-1">
+              <a class="nav-link dropdown-toggle" href="POViewCart">
+                <i class="fa fa-cart-plus"></i>
+                <!-- PO Cart -->
+                <span class="badge badge-danger badge-counter">2</span>
+              </a>
+            
+            </li>
 
             <!-- Nav Item - Messages -->
 
@@ -227,6 +236,7 @@
               </a>
               <!-- Dropdown - Alerts -->
             </li>
+			
           </ul>
 
         </nav>

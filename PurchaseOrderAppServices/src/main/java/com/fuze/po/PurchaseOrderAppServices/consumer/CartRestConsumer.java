@@ -2,6 +2,7 @@ package com.fuze.po.PurchaseOrderAppServices.consumer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +16,7 @@ import com.fuze.po.PurchaseOrderAppServices.bean.POListRequest;
 
 @RestController
 @ComponentScan(basePackages = { "com.fuze.*" })
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class CartRestConsumer {
 	
 	@Autowired
