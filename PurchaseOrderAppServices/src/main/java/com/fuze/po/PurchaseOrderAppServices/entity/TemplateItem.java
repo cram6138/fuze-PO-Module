@@ -9,6 +9,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+/**
+ * @author Bhajuram.c
+ *
+ */
 @Entity
 @Table(name = "template_item")
 public class TemplateItem {

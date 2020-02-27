@@ -8,6 +8,10 @@ import org.springframework.data.repository.query.Param;
 
 import com.fuze.po.PurchaseOrderAppServices.entity.TemplateItem;
 
+/**
+ * @author Bhajuram.c
+ *
+ */
 public interface TemplateItemepository extends JpaRepository<TemplateItem, Integer> {
 
 	@Query("select ti from TemplateItem ti where ti.template.id =:tempId")

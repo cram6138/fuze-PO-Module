@@ -2,10 +2,14 @@ package com.fuze.po.PurchaseOrderAppServices.info;
 
 import java.util.Date;
 
+/**
+ * @author Bhajuram.c
+ *
+ */
 public class EQuoteInfo {
 
 	private int id;
-	private String eQuoteName;
+	private String name;
 	private String subMarket;
 	private String siteType;
 	private String siteSubType;
@@ -27,13 +31,13 @@ public class EQuoteInfo {
 	public void setId(int id) {
 		this.id = id;
 	}
-
-	public String geteQuoteName() {
-		return eQuoteName;
+	
+	public String getName() {
+		return name;
 	}
 
-	public void seteQuoteName(String eQuoteName) {
-		this.eQuoteName = eQuoteName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getSubMarket() {

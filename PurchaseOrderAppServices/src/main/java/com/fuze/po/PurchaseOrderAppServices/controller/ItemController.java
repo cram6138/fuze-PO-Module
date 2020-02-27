@@ -24,7 +24,6 @@ public class ItemController {
 
 	@GetMapping("/getItems")
 	public ResponseEntity<PORequestInfo> getItems(ItemInfo itemInfo) {
-
 		return new ResponseEntity<PORequestInfo>(itemService.getItems(itemInfo), HttpStatus.OK);
 	}
 

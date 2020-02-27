@@ -7,6 +7,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * @author Bhajuram.c
+ *
+ */
 @Entity
 @Table(name = "template")
 public class Template {
@@ -15,7 +19,7 @@ public class Template {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@Column(name = "template_name")
-	private String templateName;
+	private String name;
 	@Column(name = "sub_market")
 	private String subMarket;
 	@Column(name = "site_type")
@@ -47,11 +51,11 @@ public class Template {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getTemplateName() {
-		return templateName;
+	public String getName() {
+		return name;
 	}
-	public void setTemplateName(String templateName) {
-		this.templateName = templateName;
+	public void setName(String name) {
+		this.name = name;
 	}
 	public String getSubMarket() {
 		return subMarket;

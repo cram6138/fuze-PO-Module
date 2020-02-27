@@ -1,5 +1,6 @@
 package com.fuze.po.PurchaseOrderAppServices.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,20 +14,23 @@ import javax.persistence.Table;
  *
  */
 @Entity
-@Table(name = "po_items")
-public class POItems {
-
+@Table(name = "equote_item")
+public class EquoteItems {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-
+	
+	@ManyToOne
+	@JoinColumn(name = "equote_id")
+	private EQuotes equote;
+	
 	@ManyToOne
 	@JoinColumn(name = "item_id")
 	private Item item;
-
-	@ManyToOne
-	@JoinColumn(name = "po_request_id")
-	private PORequest poRequest;
+	
+	@Column(name = "quantity")
+	private int quantity;
 
 	public int getId() {
 		return id;
@@ -34,6 +38,14 @@ public class POItems {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public EQuotes getEquote() {
+		return equote;
+	}
+
+	public void setEquote(EQuotes equote) {
+		this.equote = equote;
 	}
 
 	public Item getItem() {
@@ -44,12 +56,12 @@ public class POItems {
 		this.item = item;
 	}
 
-	public PORequest getPoRequest() {
-		return poRequest;
+	public int getQuantity() {
+		return quantity;
 	}
 
-	public void setPoRequest(PORequest poRequest) {
-		this.poRequest = poRequest;
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 
 }
