@@ -115,6 +115,7 @@ public class PODetailsEndpoint {
 					poItemsEntityrow
 							.setPoRequestEntity(poRequestEntityRepository.findById(request.getPoreq().getId()).get());
 					poItemsEntityRepository.save(poItemsEntityrow);
+					cartItemRepository.deleteAllCartItemsByCartId();
 				}
 				poRes.setMessage("PO Created Successfully.");
 				poRes.setStatus(true);
