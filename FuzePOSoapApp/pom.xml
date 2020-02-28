@@ -119,6 +119,8 @@
 					<schemaFiles>cartdetails.xsd</schemaFiles>
 					<schemaFiles>createpo.xsd</schemaFiles>
 					<schemaFiles>polist.xsd</schemaFiles>
+					<schemaFiles>poreqstatus.xsd</schemaFiles>
+					<schemaFiles>poreqedit.xsd</schemaFiles>
 					<clearOutputDir>false</clearOutputDir>
 				</configuration>
 			</plugin>

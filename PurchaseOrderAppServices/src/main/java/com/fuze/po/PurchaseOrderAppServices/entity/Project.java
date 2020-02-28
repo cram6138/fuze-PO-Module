@@ -7,6 +7,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * @author Bhajuram.c
+ *
+ */
 @Entity
 @Table(name = "project")
 public class Project {

@@ -2,6 +2,10 @@ package com.fuze.po.PurchaseOrderAppServices.info;
 
 import java.util.Map;
 
+/**
+ * @author Bhajuram.c
+ *
+ */
 public class ResponseInfo {
 	
 	private boolean status;

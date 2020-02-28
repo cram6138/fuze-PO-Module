@@ -1,5 +1,9 @@
 package com.fuze.po.PurchaseOrderAppServices.info;
 
+/**
+ * @author Bhajuram.c
+ *
+ */
 public class TemplateItemInfo {
 	
 	private ItemInfo items;

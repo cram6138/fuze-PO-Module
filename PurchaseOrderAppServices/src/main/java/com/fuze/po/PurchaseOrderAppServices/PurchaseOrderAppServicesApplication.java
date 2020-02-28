@@ -6,6 +6,10 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
+/**
+ * @author Bhajuram.c
+ *
+ */
 @SpringBootApplication
 @EntityScan(basePackages = { "com.fuze.po.PurchaseOrderAppServices.entity" })
 public class PurchaseOrderAppServicesApplication extends SpringBootServletInitializer {

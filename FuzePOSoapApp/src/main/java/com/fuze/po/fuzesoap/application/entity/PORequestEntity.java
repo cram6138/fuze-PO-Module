@@ -45,6 +45,9 @@ public class PORequestEntity {
 	@Column(name = "site_tracker")
 	private String siteTracker;
 
+	@Column(name = "status")
+	private String status;
+
 	public int getId() {
 		return id;
 	}
@@ -131,6 +134,14 @@ public class PORequestEntity {
 
 	public void setSiteTracker(String siteTracker) {
 		this.siteTracker = siteTracker;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 }

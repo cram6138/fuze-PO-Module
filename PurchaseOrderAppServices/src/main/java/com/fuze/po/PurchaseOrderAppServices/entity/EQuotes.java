@@ -9,6 +9,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * @author Bhajuram.c
+ *
+ */
 @Entity
 @Table(name = "e_quotes")
 public class EQuotes {
@@ -17,7 +21,7 @@ public class EQuotes {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@Column(name = "eQuote_name")
-	private String eQuoteName;
+	private String name;
 	@Column(name = "sub_market")
 	private String subMarket;
 	@Column(name = "site_type")
@@ -51,11 +55,14 @@ public class EQuotes {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String geteQuoteName() {
-		return eQuoteName;
+	public String getName() {
+		return name;
 	}
-	public void seteQuoteName(String eQuoteName) {
-		this.eQuoteName = eQuoteName;
+	public void setName(String name) {
+		this.name = name;
+	}
+	public void setCreatedOn(Date createdOn) {
+		this.createdOn = createdOn;
 	}
 	public String getSubMarket() {
 		return subMarket;

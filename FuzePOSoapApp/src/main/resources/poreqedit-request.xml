@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope
+	xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+	xmlns:us="http://www.poreqeditproducer.com/poreqedit">
+	<soapenv:Body>
+		<us:POReqEditRequest>
+			<us:id>1</us:id>
+			<us:siteName>TESTING SITE</us:siteName>
+			<us:projectName>ANTENNA PRJ</us:projectName>
+			<us:projectId>PRK456</us:projectId>
+			<us:pslc>SM-123-PSL456</us:pslc>
+			<us:psProject>PS_TEST</us:psProject>
+			<us:projectStatus>SENT</us:projectStatus>
+			<us:type>TESTING</us:type>
+			<us:projectType>TESTING</us:projectType>
+			<us:customerProjectType>TESTING</us:customerProjectType>
+			<us:siteTracker>TESTING</us:siteTracker>
+			<us:status>RECEIVED</us:status>
+		</us:POReqEditRequest>
+	</soapenv:Body>
+</soapenv:Envelope>

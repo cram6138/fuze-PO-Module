@@ -1,7 +1,9 @@
 package com.fuze.po.PurchaseOrderAppServices.info;
 
-import javax.persistence.Column;
-
+/**
+ * @author Bhajuram.c
+ *
+ */
 public class ProjectInfo {
 
 	private int id;

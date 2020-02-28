@@ -36,6 +36,11 @@ import com.fuze.po.fuzesoap.application.repository.PORequestEntityRepository;
 import com.polistproduceritem.polist.POListRequest;
 import com.polistproduceritem.polist.POListResponse;
 import com.polistproduceritem.polist.Porespojo;
+import com.poreqeditproducer.poreqedit.POReqEditRequest;
+import com.poreqeditproducer.poreqedit.POReqEditResponse;
+import com.poreqeditproducer.poreqedit.Poreqeditpojo;
+import com.poreqstatusproducer.poreqstatus.POReqStatusRequest;
+import com.poreqstatusproducer.poreqstatus.POReqStatusResponse;
 
 @Endpoint
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -46,6 +51,10 @@ public class PODetailsEndpoint {
 	private static final String NAMESPACE_URI_CREATE_PO = "http://www.createpocartproducer.com/createpo";
 
 	private static final String NAMESPACE_URI_PO_LIST = "http://www.polistproduceritem.com/polist";
+
+	private static final String NAMESPACE_URI_CHANGE_PO_REQUEST_STATUS = "http://www.poreqstatusproducer.com/poreqstatus";
+
+	private static final String NAMESPACE_URI_EDIT_PO_REQUEST = "http://www.poreqeditproducer.com/poreqedit";
 
 	@Autowired
 	private CartItemRepository cartItemRepository;
@@ -146,6 +155,53 @@ public class PODetailsEndpoint {
 					list.add(porespojo);
 				}
 				response.setPorespojo(list);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return response;
+	}
+
+	@ResponsePayload
+	@PayloadRoot(namespace = NAMESPACE_URI_CHANGE_PO_REQUEST_STATUS, localPart = "POReqStatusRequest")
+	public POReqStatusResponse changePORrqStatus(@RequestPayload POReqStatusRequest request) {
+		POReqStatusResponse response = new POReqStatusResponse();
+		try {
+			Optional<PORequestEntity> dbPOReqEntity = poRequestEntityRepository.findByIdAndStatus(request.getId());
+			if (dbPOReqEntity.isPresent()) {
+				dbPOReqEntity.get().setStatus(request.getStatus());
+				poRequestEntityRepository.save(dbPOReqEntity.get());
+				response.setId(dbPOReqEntity.get().getId());
+				response.setStatus(dbPOReqEntity.get().getStatus());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return response;
+	}
+
+	@ResponsePayload
+	@PayloadRoot(namespace = NAMESPACE_URI_EDIT_PO_REQUEST, localPart = "POReqEditRequest")
+	public POReqEditResponse editPORequest(@RequestPayload POReqEditRequest request) {
+		POReqEditResponse response = new POReqEditResponse();
+		try {
+			Optional<PORequestEntity> dbPOReq = poRequestEntityRepository.findById(request.getId());
+			if (dbPOReq.isPresent()) {
+				Poreqeditpojo poReqEditPojo = new Poreqeditpojo();
+				dbPOReq.get().setSiteName(request.getSiteName());
+				dbPOReq.get().setProjectName(request.getProjectName());
+				dbPOReq.get().setProjectId(request.getProjectId());
+				dbPOReq.get().setPslc(request.getPslc());
+				dbPOReq.get().setPsProject(request.getPsProject());
+				dbPOReq.get().setProjectStatus(request.getProjectStatus());
+				dbPOReq.get().setType(request.getType());
+				dbPOReq.get().setProjectType(request.getProjectType());
+				dbPOReq.get().setCustomerProjectType(request.getCustomerProjectType());
+				dbPOReq.get().setSiteTracker(request.getSiteTracker());
+				dbPOReq.get().setStatus(request.getStatus());
+				poRequestEntityRepository.save(dbPOReq.get());
+				BeanUtils.copyProperties(dbPOReq.get(), poReqEditPojo);
+				response.setPoreqeditpojo(poReqEditPojo);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

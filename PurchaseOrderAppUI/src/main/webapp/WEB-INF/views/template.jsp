@@ -12,9 +12,20 @@
 <body>
 	<%@ include file="header.jsp"%>
 	<div style="margin-left: 20%">
-		<span >Import Template :</span> <select id="select">
-			<option value="">-- Select Template --</option>
-		</select><br>
+		<div>
+			<span>
+				<select id="selectType">
+					<option value="">-- Import option -- </option>
+					<option value="template"> Import Template </option>
+					<option value="eQuote"> Import eQuote</option>
+					<option value="catalog"> Import Catalog--</option>
+				</select>
+			</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<span id="etd">
+				<select id="selected"></select>
+			</span>
+		</div>
+		<br>
 		<div id="templateDetails"></div><br>
 	</div>
 		<div id="grid"></div>
@@ -27,31 +38,36 @@
 <script>
 	$(document).ready(function () {
 		var tempObj;
-		var uri = appConfig.service_application;
-		console.log(uri);
-		$.ajax({
-            type: "POST",
-            dataType:"json",
-            cache: false,
-            url: uri + '/template/tempList',
-            success: function(data, textStatus, jqXHR){
-                tempObj = data;
-                $.each(data, function(index, value) {
-					$('#select').append('<option value="' + value.id + '">' + value.templateName + '</option>');
-				})               
-            },
-            error: function(jqXHR, textStatus, errorThrown){
-                console.log(errorThrown);  
-            }
-        });
+		var baseUrl = appConfig.service_application;
 		
-		$('#select').change(function() {
-			var templateId = $(this).val();
+		// $('#etd').children().prop('disabled',true);
+		$('#etd').hide();
+		$('#selectType').change(function() {
+			var selectedType = $(this).val();
+			if(selectedType == 'template') {
+				getTemplateDropdown(baseUrl);
+			} else if(selectedType == 'eQuote') {
+				geteQuoteDropdown(baseUrl);
+			} else if (selectedType == 'catalog') {
+				getCatalogDropdown(baseUrl);
+			}
 			
+		})
+		
+		
+		$('#selected').change(function() {
+			var objId = $(this).val();
+			var selectedType = $('#selectType').val();
+			console.log(selectedType);
+			loadGridData(objId, selectedType);
+			
+		})
+		
+		function loadGridData(objId, selectedType) {
 			$(tempObj).each(function () {
-				if(this.id == templateId) {
+				if(this.id == objId) {
 					console.log(this)
-					var htmlString = "<span><b>Template Name : </b>"+this.templateName +"</span> &nbsp"+
+					var htmlString = "<span><b>Template Name : </b>"+this.name +"</span> &nbsp"+
 					"<span><b>Site Type : </b>"+this.siteType +"</span> &nbsp"+
 					"<span><b>Site Sub Type : </b>"+this.siteSubType +"</span> &nbsp"+
 					"<span><b>Sub Market : </b>"+this.subMarket +"</span><br>"+
@@ -69,13 +85,13 @@
 				$('b .pdrght').css("padding-right", "5px");
 			})
 			
-			if(templateId) {
+			if(objId) {
 				
 				$("#grid").kendoGrid({
 		            dataSource: {
 		                transport: {
 		                    read: function(options) {
-		                    	loadTemplateItems(options, templateId);
+		                    	loadTemplateItems(options, objId, selectedType);
 		                    },
 				schema: {
 		        	 model: {
@@ -113,14 +129,69 @@
 		        });
 				
 			}
-		})
+		}
 		
-		function loadTemplateItems(options, templateId) {
+		function getTemplateDropdown(baseUrl) {
 			$.ajax({
 	            type: "POST",
 	            dataType:"json",
 	            cache: false,
-	            url: uri + '/template/tempImport/' + templateId,
+	            url: baseUrl + '/template/tempList',
+	            success: function(data, textStatus, jqXHR){
+	            	// $('#etd').children().prop('disabled',false);
+	            	$('#etd').show();
+	                tempObj = data;
+	                $('#selected').empty();
+	                $('#selected').append('<option value=""> -- Select option -- </option>');
+	                $.each(data, function(index, value) {
+						$('#selected').append('<option value="' + value.id + '">' + value.name + '</option>');
+					})               
+	            },
+	            error: function(jqXHR, textStatus, errorThrown){
+	                console.log(errorThrown);  
+	            }
+	        });
+				
+		}
+		
+		function geteQuoteDropdown(baseUrl) {
+			$.ajax({
+	            type: "GET",
+	            dataType:"json",
+	            cache: false,
+	            url: baseUrl + '/template/eQuotes',
+	            success: function(data, textStatus, jqXHR){
+	            	// $('#etd').children().prop('disabled',false);
+	            	$('#etd').show();
+	                tempObj = data;
+	                $('#selected').empty();
+	                $('#selected').append('<option value=""> -- Select option --  </option>');
+	                $.each(data, function(index, value) {
+						$('#selected').append('<option value="' + value.id + '">' + value.name + '</option>');
+					})               
+	            },
+	            error: function(jqXHR, textStatus, errorThrown){
+	                console.log(errorThrown);  
+	            }
+	        });
+		}
+		
+		function getCatalogDropdown(uri) {
+			
+		}
+		
+		function loadTemplateItems(options, objId, selectedType) {
+			var callUrl;
+			if (selectedType == 'eQuote') {
+				callUrl = baseUrl + '/template/eQuoteImport/' + objId;
+			} else if (selectedType == 'template') {
+				callUrl = baseUrl + '/template/tempImport/' + objId;
+			}
+			$.ajax({
+	            type: "POST",
+	            dataType:"json",
+	            cache: false,
+	            url: callUrl,
 	            success: function(data){
 	            	console.log(data);
 	            	options.success(data);

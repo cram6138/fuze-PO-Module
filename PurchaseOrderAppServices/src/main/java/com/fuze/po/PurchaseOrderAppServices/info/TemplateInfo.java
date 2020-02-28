@@ -1,9 +1,13 @@
 package com.fuze.po.PurchaseOrderAppServices.info;
 
+/**
+ * @author Bhajuram.c
+ *
+ */
 public class TemplateInfo {
 	
 	private int id;
-	private String templateName;
+	private String name;
 	private String subMarket;
 	private String siteType; 
 	private String siteSubType;
@@ -23,11 +27,11 @@ public class TemplateInfo {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getTemplateName() {
-		return templateName;
+	public String getName() {
+		return name;
 	}
-	public void setTemplateName(String templateName) {
-		this.templateName = templateName;
+	public void setName(String name) {
+		this.name = name;
 	}
 	public String getSubMarket() {
 		return subMarket;
