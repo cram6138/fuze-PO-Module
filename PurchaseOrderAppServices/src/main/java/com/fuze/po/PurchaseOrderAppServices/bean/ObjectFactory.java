@@ -140,4 +140,21 @@ public class ObjectFactory {
         return new Porespojo();
     }
 
+    /**
+     * Create an instance of {@link POReqStatusRequest }
+     * 
+     */
+    public POReqStatusRequest createPOReqStatusRequest() {
+        return new POReqStatusRequest();
+    }
+
+    /**
+     * Create an instance of {@link POReqStatusResponse }
+     * 
+     */
+    public POReqStatusResponse createPOReqStatusResponse() {
+        return new POReqStatusResponse();
+    }
+
+
 }

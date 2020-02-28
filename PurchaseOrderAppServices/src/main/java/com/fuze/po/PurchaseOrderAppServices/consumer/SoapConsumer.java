@@ -12,6 +12,8 @@ import com.fuze.po.PurchaseOrderAppServices.bean.AddPODetailsResponse;
 import com.fuze.po.PurchaseOrderAppServices.bean.CartDetailsRequest;
 import com.fuze.po.PurchaseOrderAppServices.bean.CartItemsDetailsResponse;
 import com.fuze.po.PurchaseOrderAppServices.bean.POListRequest;
+import com.fuze.po.PurchaseOrderAppServices.bean.POReqStatusRequest;
+import com.fuze.po.PurchaseOrderAppServices.bean.POReqStatusResponse;
 
 @Service
 @PropertySource("classpath:global.properties")
@@ -46,6 +48,13 @@ public class SoapConsumer {
 		AddPODetailsResponse addPODetailsResponse = (AddPODetailsResponse) webServiceTemplate
 				.marshalSendAndReceive(cartItemsUrl+"/poList", request);
 		return addPODetailsResponse;
+	}
+	
+	public POReqStatusResponse getPOStatus(POReqStatusRequest PORequest) {
+		webServiceTemplate = new WebServiceTemplate(jaxb2Marshaller);
+		POReqStatusResponse poReqStatusResponse = (POReqStatusResponse) webServiceTemplate
+				.marshalSendAndReceive(cartItemsUrl+"/poList", PORequest);
+		return poReqStatusResponse;
 	}
 
 }
