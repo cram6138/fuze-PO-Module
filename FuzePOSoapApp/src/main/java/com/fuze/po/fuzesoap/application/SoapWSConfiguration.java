@@ -59,6 +59,26 @@ public class SoapWSConfiguration extends WsConfigurerAdapter {
 		return poListWsdl;
 	}
 
+	@Bean(name = "poReqStatus")
+	public DefaultWsdl11Definition poReqStatus() throws Exception {
+		DefaultWsdl11Definition poReqStatusWsdl = new DefaultWsdl11Definition();
+		poReqStatusWsdl.setPortTypeName("poReqStatusPort");
+		poReqStatusWsdl.setLocationUri("/soapWs/poReqStatus");
+		poReqStatusWsdl.setTargetNamespace("http://www.poreqstatusproducer.com/poreqstatus");
+		poReqStatusWsdl.setSchemaCollection(poReqStatusXsdFile());
+		return poReqStatusWsdl;
+	}
+
+	@Bean(name = "poReqEdit")
+	public DefaultWsdl11Definition poReqEdit() throws Exception {
+		DefaultWsdl11Definition poReqEditWsdl = new DefaultWsdl11Definition();
+		poReqEditWsdl.setPortTypeName("poReqEditPort");
+		poReqEditWsdl.setLocationUri("/soapWs/poReqEdit");
+		poReqEditWsdl.setTargetNamespace("http://www.poreqeditproducer.com/poreqedit");
+		poReqEditWsdl.setSchemaCollection(poReqEditXsdFile());
+		return poReqEditWsdl;
+	}
+
 	@Bean
 	public XsdSchema cartDetailsXsdSchema() {
 		return new SimpleXsdSchema(new ClassPathResource("cartdetails.xsd"));
@@ -74,6 +94,20 @@ public class SoapWSConfiguration extends WsConfigurerAdapter {
 	@Bean
 	public XsdSchemaCollection poListXsdFile() throws Exception {
 		CommonsXsdSchemaCollection xsds = new CommonsXsdSchemaCollection(new ClassPathResource("polist.xsd"));
+		xsds.setInline(true);
+		return xsds;
+	}
+
+	@Bean
+	public XsdSchemaCollection poReqStatusXsdFile() throws Exception {
+		CommonsXsdSchemaCollection xsds = new CommonsXsdSchemaCollection(new ClassPathResource("poreqstatus.xsd"));
+		xsds.setInline(true);
+		return xsds;
+	}
+
+	@Bean
+	public XsdSchemaCollection poReqEditXsdFile() throws Exception {
+		CommonsXsdSchemaCollection xsds = new CommonsXsdSchemaCollection(new ClassPathResource("poreqedit.xsd"));
 		xsds.setInline(true);
 		return xsds;
 	}
