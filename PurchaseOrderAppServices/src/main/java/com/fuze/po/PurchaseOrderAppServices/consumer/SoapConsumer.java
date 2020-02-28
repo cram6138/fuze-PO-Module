@@ -12,6 +12,8 @@ import com.fuze.po.PurchaseOrderAppServices.bean.AddPODetailsResponse;
 import com.fuze.po.PurchaseOrderAppServices.bean.CartDetailsRequest;
 import com.fuze.po.PurchaseOrderAppServices.bean.CartItemsDetailsResponse;
 import com.fuze.po.PurchaseOrderAppServices.bean.POListRequest;
+import com.fuze.po.PurchaseOrderAppServices.bean.POReqEditRequest;
+import com.fuze.po.PurchaseOrderAppServices.bean.POReqEditResponse;
 import com.fuze.po.PurchaseOrderAppServices.bean.POReqStatusRequest;
 import com.fuze.po.PurchaseOrderAppServices.bean.POReqStatusResponse;
 
@@ -53,7 +55,14 @@ public class SoapConsumer {
 	public POReqStatusResponse getPOStatus(POReqStatusRequest PORequest) {
 		webServiceTemplate = new WebServiceTemplate(jaxb2Marshaller);
 		POReqStatusResponse poReqStatusResponse = (POReqStatusResponse) webServiceTemplate
-				.marshalSendAndReceive(cartItemsUrl+"/poList", PORequest);
+				.marshalSendAndReceive(cartItemsUrl+"/poReqStatus", PORequest);
+		return poReqStatusResponse;
+	}
+	
+	public POReqEditResponse poRequestEdit(POReqEditRequest poReqEditRequest) {
+		webServiceTemplate = new WebServiceTemplate(jaxb2Marshaller);
+		POReqEditResponse poReqStatusResponse = (POReqEditResponse) webServiceTemplate
+				.marshalSendAndReceive(cartItemsUrl+"/poReqEdit", poReqEditRequest);
 		return poReqStatusResponse;
 	}
 

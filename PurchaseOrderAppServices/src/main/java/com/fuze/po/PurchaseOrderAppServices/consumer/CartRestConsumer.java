@@ -13,6 +13,8 @@ import com.fuze.po.PurchaseOrderAppServices.bean.AddPODetailsResponse;
 import com.fuze.po.PurchaseOrderAppServices.bean.CartDetailsRequest;
 import com.fuze.po.PurchaseOrderAppServices.bean.CartItemsDetailsResponse;
 import com.fuze.po.PurchaseOrderAppServices.bean.POListRequest;
+import com.fuze.po.PurchaseOrderAppServices.bean.POReqEditRequest;
+import com.fuze.po.PurchaseOrderAppServices.bean.POReqEditResponse;
 import com.fuze.po.PurchaseOrderAppServices.bean.POReqStatusRequest;
 import com.fuze.po.PurchaseOrderAppServices.bean.POReqStatusResponse;
 
@@ -43,6 +45,11 @@ public class CartRestConsumer {
 	@PostMapping("/poStatus")
 	public POReqStatusResponse poStatusDetails(@RequestBody POReqStatusRequest poReqStatusRequest) {
 		return client.getPOStatus(poReqStatusRequest);
+	}
+	
+	@PostMapping("/poRequestEdit")
+	public POReqEditResponse poRequestEdit(@RequestBody POReqEditRequest poReqStatusRequest) {
+		return client.poRequestEdit(poReqStatusRequest);
 	}
 
 }
