@@ -29,7 +29,7 @@ public class CartRestConsumer {
 
 	
 	@PostMapping("/getCartItemsDetails")
-	public CartItemsDetailsResponse invokeSoapClientToGetCartItemsDetails(@RequestBody CartDetailsRequest request) {
+	public CartItemsDetailsResponse invokeSoapClientToGetCartItemsDetails(@RequestBody CartDetailsRequest request) throws Exception {
 		return client.getCartItemsDetails(request);
 	}
 
