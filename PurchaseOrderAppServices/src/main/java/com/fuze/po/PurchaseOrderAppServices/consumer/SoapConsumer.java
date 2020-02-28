@@ -20,6 +20,10 @@ import com.fuze.po.PurchaseOrderAppServices.bean.POReqEditResponse;
 import com.fuze.po.PurchaseOrderAppServices.bean.POReqStatusRequest;
 import com.fuze.po.PurchaseOrderAppServices.bean.POReqStatusResponse;
 
+/**
+ * @author Gobinda Majhi
+ *
+ */
 @Service
 @PropertySource("classpath:global.properties")
 public class SoapConsumer {

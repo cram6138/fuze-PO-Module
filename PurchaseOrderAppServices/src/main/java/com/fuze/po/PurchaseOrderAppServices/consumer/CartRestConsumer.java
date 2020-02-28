@@ -19,6 +19,10 @@ import com.fuze.po.PurchaseOrderAppServices.bean.POReqEditResponse;
 import com.fuze.po.PurchaseOrderAppServices.bean.POReqStatusRequest;
 import com.fuze.po.PurchaseOrderAppServices.bean.POReqStatusResponse;
 
+/**
+ * @author Gobinda Majhi
+ *
+ */
 @RestController
 @ComponentScan(basePackages = { "com.fuze.*" })
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -27,7 +31,11 @@ public class CartRestConsumer {
 	@Autowired
 	private SoapConsumer client;
 
-	
+	/**
+	 * for getting request Id
+	 * 
+	 * @return List<Cartitems> cartItems
+	 */
 	@PostMapping("/getCartItemsDetails")
 	public CartItemsDetailsResponse invokeSoapClientToGetCartItemsDetails(@RequestBody CartDetailsRequest request){
 		return client.getCartItemsDetails(request);
