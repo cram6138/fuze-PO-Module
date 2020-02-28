@@ -50,6 +50,7 @@ public class SoapConsumer {
 
 	public AddPODetailsResponse addPORequest(AddPODetailsRequest request) {
 		webServiceTemplate = new WebServiceTemplate(jaxb2Marshaller);
+		logger.info("Entering in SoapConsumer class in addPORequest method");
 		AddPODetailsResponse addPODetailsResponse = null;
 		try {
 			addPODetailsResponse = (AddPODetailsResponse) webServiceTemplate
@@ -87,14 +88,14 @@ public class SoapConsumer {
 	}
 
 	public POReqEditResponse poRequestEdit(POReqEditRequest poReqEditRequest) {
-		logger.info("Entering in SoapConsumer class in getPOStatus method");
+		logger.info("Entering in SoapConsumer class in poRequestEdit method");
 		webServiceTemplate = new WebServiceTemplate(jaxb2Marshaller);
 		POReqEditResponse poReqEditResponse = null;
 		try {
 			poReqEditResponse = (POReqEditResponse) webServiceTemplate
 					.marshalSendAndReceive(cartItemsUrl + "/poReqEdit", poReqEditRequest);
 		} catch (Exception e) {
-			logger.info("Exception  in getPOStatus method" + e.getMessage());
+			logger.info("Exception  in poRequestEdit method" + e.getMessage());
 		}
 		return poReqEditResponse;
 	}
