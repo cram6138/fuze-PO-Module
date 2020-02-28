@@ -129,5 +129,13 @@ public class Template {
 	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
 	}
+	@Override
+	public String toString() {
+		return "Template [id=" + id + ", name=" + name + ", subMarket=" + subMarket + ", siteType=" + siteType
+				+ ", siteSubType=" + siteSubType + ", vendorName=" + vendorName + ", projectType=" + projectType
+				+ ", candidateType=" + candidateType + ", activityType=" + activityType + ", RANVendor=" + RANVendor
+				+ ", encloser=" + encloser + ", generator=" + generator + ", band=" + band + ", createdBy=" + createdBy
+				+ "]";
+	}
 	
 }

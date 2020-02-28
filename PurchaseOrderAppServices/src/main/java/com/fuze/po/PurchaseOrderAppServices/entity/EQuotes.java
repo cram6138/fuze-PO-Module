@@ -139,5 +139,13 @@ public class EQuotes {
 	public Date getCreatedOn() {
 		return createdOn;
 	}
+	@Override
+	public String toString() {
+		return "EQuotes [id=" + id + ", name=" + name + ", subMarket=" + subMarket + ", siteType=" + siteType
+				+ ", siteSubType=" + siteSubType + ", vendorName=" + vendorName + ", projectType=" + projectType
+				+ ", candidateType=" + candidateType + ", activityType=" + activityType + ", RANVendor=" + RANVendor
+				+ ", encloser=" + encloser + ", generator=" + generator + ", band=" + band + ", createdBy=" + createdBy
+				+ ", createdOn=" + createdOn + "]";
+	}
 	
 }

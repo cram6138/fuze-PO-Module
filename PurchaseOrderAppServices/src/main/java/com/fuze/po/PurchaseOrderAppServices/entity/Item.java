@@ -138,5 +138,12 @@ public class Item {
 	public void setComments(String comments) {
 		this.comments = comments;
 	}
+
+	@Override
+	public String toString() {
+		return "Item [id=" + id + ", name=" + name + ", contractId=" + contractId + ", dueDate=" + dueDate
+				+ ", shipToId=" + shipToId + ", activity=" + activity + ", comments=" + comments + ", model=" + model
+				+ ", description=" + description + ", price=" + price + ", inStock=" + inStock + "]";
+	}
 	
 }

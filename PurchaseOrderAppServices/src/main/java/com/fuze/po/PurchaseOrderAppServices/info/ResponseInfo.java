@@ -29,5 +29,9 @@ public class ResponseInfo {
 	public void setErrorMsg(Map<String, String> errorMsg) {
 		this.errorMsg = errorMsg;
 	}
+	@Override
+	public String toString() {
+		return "ResponseInfo [status=" + status + ", responseType=" + responseType + ", errorMsg=" + errorMsg + "]";
+	}
 
 }

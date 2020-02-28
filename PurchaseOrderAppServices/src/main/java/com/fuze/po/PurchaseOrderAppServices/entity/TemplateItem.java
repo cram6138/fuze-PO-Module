@@ -63,4 +63,9 @@ public class TemplateItem {
 		this.quantity = quantity;
 	}
 
+	@Override
+	public String toString() {
+		return "TemplateItem [id=" + id + ", template=" + template + ", item=" + item + ", quantity=" + quantity + "]";
+	}
+
 }

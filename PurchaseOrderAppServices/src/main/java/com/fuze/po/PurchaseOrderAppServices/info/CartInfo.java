@@ -22,7 +22,9 @@ public class CartInfo {
 	public void setProjectId(int projectId) {
 		this.projectId = projectId;
 	}
+	@Override
+	public String toString() {
+		return "CartInfo [id=" + id + ", marketId=" + marketId + ", projectId=" + projectId + "]";
+	}
 	
-	
-
 }

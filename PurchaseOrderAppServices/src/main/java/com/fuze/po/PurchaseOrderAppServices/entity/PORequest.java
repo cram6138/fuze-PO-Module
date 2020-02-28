@@ -7,6 +7,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * @author Bhajuram.c
+ *
+ */
 @Entity
 @Table(name = "po_request")
 public class PORequest {
@@ -102,6 +106,13 @@ public class PORequest {
 	}
 	public void setSiteTracker(String siteTracker) {
 		this.siteTracker = siteTracker;
+	}
+	@Override
+	public String toString() {
+		return "PORequest [id=" + id + ", siteName=" + siteName + ", projectName=" + projectName + ", projectId="
+				+ projectId + ", pslc=" + pslc + ", psProject=" + psProject + ", projectStatus=" + projectStatus
+				+ ", type=" + type + ", projectType=" + projectType + ", customerProjectType=" + customerProjectType
+				+ ", siteTracker=" + siteTracker + "]";
 	}
 	
 }

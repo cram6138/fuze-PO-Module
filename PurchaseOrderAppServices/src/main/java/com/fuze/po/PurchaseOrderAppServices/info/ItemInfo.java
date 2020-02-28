@@ -49,5 +49,10 @@ public class ItemInfo {
 	public void setInStock(boolean inStock) {
 		this.inStock = inStock;
 	}
+	@Override
+	public String toString() {
+		return "ItemInfo [id=" + id + ", name=" + name + ", model=" + model + ", description=" + description
+				+ ", price=" + price + ", inStock=" + inStock + "]";
+	}
 	
 }

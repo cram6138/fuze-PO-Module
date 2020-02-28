@@ -61,5 +61,10 @@ public class CartItems {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
+
+	@Override
+	public String toString() {
+		return "CartItems [id=" + id + ", cart=" + cart + ", item=" + item + ", quantity=" + quantity + "]";
+	}
 	
 }

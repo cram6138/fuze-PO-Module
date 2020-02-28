@@ -13,6 +13,10 @@ import javax.persistence.Table;
  * @author Bhajuram.c
  *
  */
+/**
+ * @author Bhajuram.c
+ *
+ */
 @Entity
 @Table(name = "equote_item")
 public class EquoteItems {
@@ -62,6 +66,11 @@ public class EquoteItems {
 
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+
+	@Override
+	public String toString() {
+		return "EquoteItems [id=" + id + ", equote=" + equote + ", item=" + item + ", quantity=" + quantity + "]";
 	}
 
 }

@@ -21,5 +21,9 @@ public class TemplateItemInfo {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
+	@Override
+	public String toString() {
+		return "TemplateItemInfo [items=" + items + ", quantity=" + quantity + "]";
+	}
 	
 }

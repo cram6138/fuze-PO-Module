@@ -97,4 +97,12 @@ public class PORequestInfo {
 		this.siteTracker = siteTracker;
 	}
 
+	@Override
+	public String toString() {
+		return "PORequestInfo [id=" + id + ", projectName=" + projectName + ", projectId=" + projectId + ", pslc="
+				+ pslc + ", psProject=" + psProject + ", projectStatus=" + projectStatus + ", type=" + type
+				+ ", projectType=" + projectType + ", customerProjectType=" + customerProjectType + ", siteTracker="
+				+ siteTracker + "]";
+	}
+
 }

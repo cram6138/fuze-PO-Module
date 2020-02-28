@@ -37,5 +37,9 @@ public class Cart {
 	public void setMarketId(String marketId) {
 		this.marketId = marketId;
 	}
+	@Override
+	public String toString() {
+		return "Cart [id=" + id + ", marketId=" + marketId + ", projectId=" + projectId + "]";
+	}
 	
 }

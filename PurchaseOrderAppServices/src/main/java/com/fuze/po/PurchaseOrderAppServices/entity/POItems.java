@@ -52,4 +52,9 @@ public class POItems {
 		this.poRequest = poRequest;
 	}
 
+	@Override
+	public String toString() {
+		return "POItems [id=" + id + ", item=" + item + ", poRequest=" + poRequest + "]";
+	}
+
 }
