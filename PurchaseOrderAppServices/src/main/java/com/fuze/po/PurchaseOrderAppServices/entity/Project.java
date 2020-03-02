@@ -1,10 +1,13 @@
 package com.fuze.po.PurchaseOrderAppServices.entity;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 /**
@@ -42,6 +45,9 @@ public class Project {
 	private String siteTracker;
 	@Column(name = "teritory")
 	private String teritory;
+	
+	@ManyToMany(mappedBy = "projects")
+	private Set<PORequest> porequests;
 	
 	public int getId() {
 		return id;
