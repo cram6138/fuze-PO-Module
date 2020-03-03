@@ -131,5 +131,5 @@ public class ProjectInfo {
 				+ ", pslc=" + pslc + ", projectStatus=" + projectStatus + ", type=" + type + ", customProjectType="
 				+ customProjectType + ", siteTracker=" + siteTracker + ", teritory=" + teritory + "]";
 	}
-	
+
 }

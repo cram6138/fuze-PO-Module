@@ -20,19 +20,19 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "equote_item")
 public class EquoteItems {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "equote_id")
 	private EQuotes equote;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "item_id")
 	private Item item;
-	
+
 	@Column(name = "quantity")
 	private int quantity;
 

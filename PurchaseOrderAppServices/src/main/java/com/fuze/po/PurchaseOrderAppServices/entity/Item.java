@@ -20,7 +20,7 @@ public class Item {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+
 	@Column(name = "name")
 	private String name;
 
@@ -145,5 +145,5 @@ public class Item {
 				+ ", shipToId=" + shipToId + ", activity=" + activity + ", comments=" + comments + ", model=" + model
 				+ ", description=" + description + ", price=" + price + ", inStock=" + inStock + "]";
 	}
-	
+
 }

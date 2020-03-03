@@ -31,7 +31,7 @@ public class EQuoteInfo {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
@@ -152,5 +152,5 @@ public class EQuoteInfo {
 				+ ", encloser=" + encloser + ", generator=" + generator + ", band=" + band + ", createdBy=" + createdBy
 				+ ", createdOn=" + createdOn + "]";
 	}
-	
+
 }

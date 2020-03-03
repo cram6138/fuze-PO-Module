@@ -39,8 +39,7 @@ public class PORequest {
 	private String siteTracker;
 
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "po_projects", joinColumns = @JoinColumn(name = "po_request_id"),
-	inverseJoinColumns = @JoinColumn(name = "project_id"))
+	@JoinTable(name = "po_projects", joinColumns = @JoinColumn(name = "po_request_id"), inverseJoinColumns = @JoinColumn(name = "project_id"))
 	private Set<Project> projects;
 
 	public int getId() {
@@ -98,8 +97,6 @@ public class PORequest {
 	public void setProjects(Set<Project> projects) {
 		this.projects = projects;
 	}
-	
-	
 
 	public String getPoName() {
 		return poName;
