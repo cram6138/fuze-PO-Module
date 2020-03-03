@@ -49,4 +49,11 @@ public class PurchaseOrderController {
 		return "POViewCart";
 	}
 	
+	@RequestMapping("/reports")
+	public String viewReports() {
+		//model.addAttribute("POViewCart","active");
+		return "reports";
+	}
+	
+	
 }
