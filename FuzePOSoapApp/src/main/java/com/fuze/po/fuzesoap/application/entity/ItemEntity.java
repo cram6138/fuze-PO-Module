@@ -135,4 +135,18 @@ public class ItemEntity {
 		this.inStock = inStock;
 	}
 
+	@Override
+	public String toString() {
+		return "ItemEntity [id=" + id + ", name=" + name + ", contractId=" + contractId + ", dueDate=" + dueDate
+				+ ", shipToId=" + shipToId + ", activity=" + activity + ", comments=" + comments + ", model=" + model
+				+ ", description=" + description + ", price=" + price + ", inStock=" + inStock + ", getId()=" + getId()
+				+ ", getName()=" + getName() + ", getContractId()=" + getContractId() + ", getDueDate()=" + getDueDate()
+				+ ", getShipToId()=" + getShipToId() + ", getActivity()=" + getActivity() + ", getComments()="
+				+ getComments() + ", getModel()=" + getModel() + ", getDescription()=" + getDescription()
+				+ ", getPrice()=" + getPrice() + ", isInStock()=" + isInStock() + ", getClass()=" + getClass()
+				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+	}
+	
+	
+
 }

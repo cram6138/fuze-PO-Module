@@ -45,4 +45,13 @@ public class CartEntity {
 		this.marketId = marketId;
 	}
 
+	@Override
+	public String toString() {
+		return "CartEntity [id=" + id + ", projectId=" + projectId + ", marketId=" + marketId + ", getId()=" + getId()
+				+ ", getProjectId()=" + getProjectId() + ", getMarketId()=" + getMarketId() + ", getClass()="
+				+ getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+	}
+	
+	
+
 }

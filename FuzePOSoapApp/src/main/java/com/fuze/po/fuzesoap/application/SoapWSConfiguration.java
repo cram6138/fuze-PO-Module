@@ -20,6 +20,12 @@ import org.springframework.xml.xsd.commons.CommonsXsdSchemaCollection;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class SoapWSConfiguration extends WsConfigurerAdapter {
 
+	/**
+	 * SOAP Webservice setup
+	 * 
+	 * @return ServletRegistrationBean<MessageDispatcherServlet>
+	 */
+	
 	@Bean
 	public ServletRegistrationBean<MessageDispatcherServlet> messageDispatcherServlet(
 			ApplicationContext applicationContext) {
@@ -29,6 +35,12 @@ public class SoapWSConfiguration extends WsConfigurerAdapter {
 		return new ServletRegistrationBean(servlet, "/soapWs/*");
 	}
 
+	/**
+	 * for Getting list of cartdetails
+	 * 
+	 * @return DefaultWsdl11Definition cartDetailsWsdl
+	 */
+	
 	@Bean(name = "cartDetails")
 	public DefaultWsdl11Definition getCartDetails(XsdSchema cartDetailsXsdSchema) {
 		DefaultWsdl11Definition cartDetailsWsdl = new DefaultWsdl11Definition();
@@ -39,6 +51,12 @@ public class SoapWSConfiguration extends WsConfigurerAdapter {
 		return cartDetailsWsdl;
 	}
 
+	/**
+	 * for creating purchase order
+	 * 
+	 * @return DefaultWsdl11Definition createPOWsdl
+	 */
+	
 	@Bean(name = "createPO")
 	public DefaultWsdl11Definition createPO() throws Exception {
 		DefaultWsdl11Definition createPOWsdl = new DefaultWsdl11Definition();
@@ -49,6 +67,12 @@ public class SoapWSConfiguration extends WsConfigurerAdapter {
 		return createPOWsdl;
 	}
 
+	/**
+	 * for getting list of purchase orders
+	 * 
+	 * @return DefaultWsdl11Definition poListWsdl
+	 */
+	
 	@Bean(name = "poList")
 	public DefaultWsdl11Definition poList() throws Exception {
 		DefaultWsdl11Definition poListWsdl = new DefaultWsdl11Definition();
@@ -58,6 +82,12 @@ public class SoapWSConfiguration extends WsConfigurerAdapter {
 		poListWsdl.setSchemaCollection(poListXsdFile());
 		return poListWsdl;
 	}
+	
+	/**
+	 * for changing the purchase order request status
+	 * 
+	 * @return DefaultWsdl11Definition poReqStatusWsdl
+	 */
 
 	@Bean(name = "poReqStatus")
 	public DefaultWsdl11Definition poReqStatus() throws Exception {
@@ -69,6 +99,12 @@ public class SoapWSConfiguration extends WsConfigurerAdapter {
 		return poReqStatusWsdl;
 	}
 
+	/**
+	 * for editing the purchase order
+	 * 
+	 * @return DefaultWsdl11Definition poReqEditWsdl
+	 */
+	
 	@Bean(name = "poReqEdit")
 	public DefaultWsdl11Definition poReqEdit() throws Exception {
 		DefaultWsdl11Definition poReqEditWsdl = new DefaultWsdl11Definition();
