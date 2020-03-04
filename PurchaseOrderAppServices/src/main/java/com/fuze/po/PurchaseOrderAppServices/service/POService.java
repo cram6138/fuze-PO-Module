@@ -46,15 +46,8 @@ public class POService {
 
 	public ResponseInfo createPoRequest(PORequestForm requestForm) {
 		ResponseInfo response = new ResponseInfo();
-		PORequest poRequest = new PORequest();
 		try {
-			poRequest.setMarket(requestForm.getMarket());
-			poRequest.setPslc(requestForm.getPslc());
-			poRequest.setPoStatus(requestForm.getPoStatus());
-			poRequest.setSiteTracker(requestForm.getSiteTracker());
-			poRequest.setTeritory(requestForm.getTeritory());
-			poRequest.setPoName(requestForm.getPoName());
-			
+			PORequest poRequest = populatePORequestEntity(requestForm);
 			Set<Project> projects = new HashSet<Project>();
 			for (Integer projectId: requestForm.getProjectIds()) {
 				projects.add(projectRepository.getOne(projectId));
@@ -77,21 +70,24 @@ public class POService {
 		return response;
 	}
 
+	private PORequest populatePORequestEntity(PORequestForm requestForm) {
+		PORequest poRequest = new PORequest();
+		poRequest.setMarket(requestForm.getMarket());
+		poRequest.setPslc(requestForm.getPslc());
+		poRequest.setPoStatus(requestForm.getPoStatus());
+		poRequest.setSiteTracker(requestForm.getSiteTracker());
+		poRequest.setTeritory(requestForm.getTeritory());
+		poRequest.setPoName(requestForm.getPoName());
+		return poRequest;
+	}
+
 	public List<PORequestInfo> getPOList() {
-		//List<PORequest> poRequestListDemo = poRequestRepo.findAllPORequest(1);
 		List<PORequest> poRequestList = poRequestRepo.findAll();
 		List<PORequestInfo> poRequestInfoList = new ArrayList<PORequestInfo>();
 		if (poRequestList != null && !poRequestList.isEmpty()) {
 			for (PORequest po : poRequestList) {
-				PORequestInfo poRequestInfo = new PORequestInfo();
-				poRequestInfo.setId(po.getId());
-				poRequestInfo.setMarket(po.getMarket());
-				poRequestInfo.setPoName(po.getPoName());
-				poRequestInfo.setPoStatus(po.getPoStatus());
-				poRequestInfo.setPslc(po.getPslc());
-				poRequestInfo.setTeritory(po.getTeritory());
-				poRequestInfo.setSiteTracker(po.getSiteTracker());
-				
+				PORequestInfo poRequestInfo = populatePOInfo(po);
+
 				Set<ItemInfo> itemInfoList = new HashSet<ItemInfo>();
 				populateItemsInfo(itemInfoList, poItemRepository.findAllByRequestId(po.getId()));
 				poRequestInfo.setItems(itemInfoList);
@@ -105,8 +101,20 @@ public class POService {
 		return poRequestInfoList;
 	}
 
+	private PORequestInfo populatePOInfo(PORequest po) {
+		PORequestInfo poRequestInfo = new PORequestInfo();
+		poRequestInfo.setId(po.getId());
+		poRequestInfo.setMarket(po.getMarket());
+		poRequestInfo.setPoName(po.getPoName());
+		poRequestInfo.setPoStatus(po.getPoStatus());
+		poRequestInfo.setPslc(po.getPslc());
+		poRequestInfo.setTeritory(po.getTeritory());
+		poRequestInfo.setSiteTracker(po.getSiteTracker());
+		return poRequestInfo;
+	}
+
 	private void populateProjectInfo(Set<ProjectInfo> projectInfos, Set<Project> projects) {
-		if(!projects.isEmpty()) {
+		if(projects != null && !projects.isEmpty()) {
 			Iterator<Project> it = projects.iterator();
 			while (it.hasNext()) {
 				ProjectInfo projectInfo = new ProjectInfo();
@@ -117,7 +125,7 @@ public class POService {
 	}
 
 	private void populateItemsInfo(Set<ItemInfo> itemInfoList, Set<POItems> poItems) {
-		if(!poItems.isEmpty()) {
+		if(poItems != null && !poItems.isEmpty()) {
 			Iterator<POItems> it = poItems.iterator();
 			while (it.hasNext()) {
 				ItemInfo itemInfo = new ItemInfo();

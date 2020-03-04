@@ -3,12 +3,16 @@ package com.fuze.po.PurchaseOrderAppServices.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fuze.po.PurchaseOrderAppServices.config.LoggingService;
 import com.fuze.po.PurchaseOrderAppServices.entity.EQuotes;
 import com.fuze.po.PurchaseOrderAppServices.entity.EquoteItems;
+import com.fuze.po.PurchaseOrderAppServices.entity.Item;
 import com.fuze.po.PurchaseOrderAppServices.entity.Template;
 import com.fuze.po.PurchaseOrderAppServices.entity.TemplateItem;
 import com.fuze.po.PurchaseOrderAppServices.info.EQuoteInfo;
@@ -29,6 +33,8 @@ import com.fuze.po.PurchaseOrderAppServices.repository.TemplateRepository;
  */
 @Service
 public class TemplateService {
+	
+	private static final Logger LOGGER = LogManager.getLogger(TemplateService.class);
 
 	@Autowired
 	private TemplateRepository templateRepository;
@@ -55,6 +61,8 @@ public class TemplateService {
 				BeanUtils.copyProperties(temp, tempInfo);
 				templateInfoList.add(tempInfo);
 			}
+		} else {
+			LOGGER.info("No Data found for template");
 		}
 		return templateInfoList;
 	}
@@ -68,20 +76,26 @@ public class TemplateService {
 		List<TemplateItemInfo> templateItemsInfoList = new ArrayList<TemplateItemInfo>();
 		if (templateItems != null && !templateItems.isEmpty()) {
 			for (TemplateItem item : templateItems) {
-				ItemInfo itemInfo = new ItemInfo();
-				itemInfo.setId(item.getItem().getId());
-				itemInfo.setName(item.getItem().getName());
-				itemInfo.setModel(item.getItem().getModel());
-				itemInfo.setDescription(item.getItem().getDescription());
-				itemInfo.setPrice(item.getItem().getPrice());
-				itemInfo.setInStock(item.getItem().isInStock());
 				TemplateItemInfo tempItemInfo = new TemplateItemInfo();
-				tempItemInfo.setItems(itemInfo);
+				tempItemInfo.setItems(getItemInfo(item.getItem()));
 				tempItemInfo.setQuantity(item.getQuantity());
 				templateItemsInfoList.add(tempItemInfo);
 			}
+		} else {
+			LOGGER.info("No Data found for template");
 		}
 		return templateItemsInfoList;
+	}
+
+	private ItemInfo getItemInfo(Item item) {
+		ItemInfo itemInfo = new ItemInfo();
+		itemInfo.setId(item.getId());
+		itemInfo.setName(item.getName());
+		itemInfo.setModel(item.getModel());
+		itemInfo.setDescription(item.getDescription());
+		itemInfo.setPrice(item.getPrice());
+		itemInfo.setInStock(item.isInStock());
+		return itemInfo;
 	}
 
 	/**
@@ -96,6 +110,8 @@ public class TemplateService {
 				BeanUtils.copyProperties(eQuote, eQuoteInfo);
 				eQuoteInfoList.add(eQuoteInfo);
 			}
+		} else {
+			LOGGER.info("No Data found for eQuote");
 		}
 		return eQuoteInfoList;
 	}
@@ -109,19 +125,13 @@ public class TemplateService {
 		List<EQuoteItemsInfo> EQuoteItemsInfoList = new ArrayList<EQuoteItemsInfo>();
 		if (templateItems != null && !templateItems.isEmpty()) {
 			for (EquoteItems item : templateItems) {
-				ItemInfo itemInfo = new ItemInfo();
-				itemInfo.setId(item.getItem().getId());
-				itemInfo.setName(item.getItem().getName());
-				itemInfo.setModel(item.getItem().getModel());
-				itemInfo.setDescription(item.getItem().getDescription());
-				itemInfo.setPrice(item.getItem().getPrice());
-				itemInfo.setInStock(item.getItem().isInStock());
-
 				EQuoteItemsInfo EQuoteItemsInfo = new EQuoteItemsInfo();
-				EQuoteItemsInfo.setItems(itemInfo);
+				EQuoteItemsInfo.setItems(getItemInfo(item.getItem()));
 				EQuoteItemsInfo.setQuantity(item.getQuantity());
 				EQuoteItemsInfoList.add(EQuoteItemsInfo);
 			}
+		} else {
+			LOGGER.info("No Data found for eQuote");
 		}
 		return EQuoteItemsInfoList;
 	}
