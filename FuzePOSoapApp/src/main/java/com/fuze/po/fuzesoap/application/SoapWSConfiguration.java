@@ -25,7 +25,7 @@ public class SoapWSConfiguration extends WsConfigurerAdapter {
 	 * 
 	 * @return ServletRegistrationBean<MessageDispatcherServlet>
 	 */
-	
+
 	@Bean
 	public ServletRegistrationBean<MessageDispatcherServlet> messageDispatcherServlet(
 			ApplicationContext applicationContext) {
@@ -40,7 +40,7 @@ public class SoapWSConfiguration extends WsConfigurerAdapter {
 	 * 
 	 * @return DefaultWsdl11Definition cartDetailsWsdl
 	 */
-	
+
 	@Bean(name = "cartDetails")
 	public DefaultWsdl11Definition getCartDetails(XsdSchema cartDetailsXsdSchema) {
 		DefaultWsdl11Definition cartDetailsWsdl = new DefaultWsdl11Definition();
@@ -56,7 +56,7 @@ public class SoapWSConfiguration extends WsConfigurerAdapter {
 	 * 
 	 * @return DefaultWsdl11Definition createPOWsdl
 	 */
-	
+
 	@Bean(name = "createPO")
 	public DefaultWsdl11Definition createPO() throws Exception {
 		DefaultWsdl11Definition createPOWsdl = new DefaultWsdl11Definition();
@@ -72,7 +72,7 @@ public class SoapWSConfiguration extends WsConfigurerAdapter {
 	 * 
 	 * @return DefaultWsdl11Definition poListWsdl
 	 */
-	
+
 	@Bean(name = "poList")
 	public DefaultWsdl11Definition poList() throws Exception {
 		DefaultWsdl11Definition poListWsdl = new DefaultWsdl11Definition();
@@ -82,7 +82,7 @@ public class SoapWSConfiguration extends WsConfigurerAdapter {
 		poListWsdl.setSchemaCollection(poListXsdFile());
 		return poListWsdl;
 	}
-	
+
 	/**
 	 * for changing the purchase order request status
 	 * 
@@ -104,7 +104,7 @@ public class SoapWSConfiguration extends WsConfigurerAdapter {
 	 * 
 	 * @return DefaultWsdl11Definition poReqEditWsdl
 	 */
-	
+
 	@Bean(name = "poReqEdit")
 	public DefaultWsdl11Definition poReqEdit() throws Exception {
 		DefaultWsdl11Definition poReqEditWsdl = new DefaultWsdl11Definition();
@@ -113,6 +113,16 @@ public class SoapWSConfiguration extends WsConfigurerAdapter {
 		poReqEditWsdl.setTargetNamespace("http://www.poreqeditproducer.com/poreqedit");
 		poReqEditWsdl.setSchemaCollection(poReqEditXsdFile());
 		return poReqEditWsdl;
+	}
+
+	@Bean(name = "addCrtItems")
+	public DefaultWsdl11Definition addCartItems() throws Exception {
+		DefaultWsdl11Definition addCartItemsWsdl = new DefaultWsdl11Definition();
+		addCartItemsWsdl.setPortTypeName("adCartItemsPort");
+		addCartItemsWsdl.setLocationUri("/soapWs/addCartItems");
+		addCartItemsWsdl.setTargetNamespace("http://www.poaddcartitemsproducer.com/addcartitems");
+		addCartItemsWsdl.setSchemaCollection(addCartItemsXsdFile());
+		return addCartItemsWsdl;
 	}
 
 	@Bean
@@ -144,6 +154,13 @@ public class SoapWSConfiguration extends WsConfigurerAdapter {
 	@Bean
 	public XsdSchemaCollection poReqEditXsdFile() throws Exception {
 		CommonsXsdSchemaCollection xsds = new CommonsXsdSchemaCollection(new ClassPathResource("poreqedit.xsd"));
+		xsds.setInline(true);
+		return xsds;
+	}
+
+	@Bean
+	public XsdSchemaCollection addCartItemsXsdFile() throws Exception {
+		CommonsXsdSchemaCollection xsds = new CommonsXsdSchemaCollection(new ClassPathResource("addcartitems.xsd"));
 		xsds.setInline(true);
 		return xsds;
 	}

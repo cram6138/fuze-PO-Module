@@ -1,0 +1,17 @@
+<soapenv:Envelope
+	xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+	xmlns:us="http://www.poaddcartitemsproducer.com/addcartitems">
+	<soapenv:Body>
+		<us:AddCartItemsRequest>
+			<us:cartId>1</us:cartId>
+			<us:itemIds>
+				<us:itemId>1</us:itemId>
+				<us:quantity>2</us:quantity>
+			</us:itemIds>
+			<us:itemIds>
+				<us:itemId>2</us:itemId>
+				<us:quantity>2</us:quantity>
+			</us:itemIds>
+		</us:AddCartItemsRequest>
+	</soapenv:Body>
+</soapenv:Envelope>
