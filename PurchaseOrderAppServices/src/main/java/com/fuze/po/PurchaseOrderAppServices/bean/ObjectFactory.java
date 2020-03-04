@@ -179,5 +179,29 @@ public class ObjectFactory {
     public POReqStatusResponse createPOReqStatusResponse() {
         return new POReqStatusResponse();
     }
+    /**
+     * Create an instance of {@link AddCartItemsRequest }
+     * 
+     */
+    public AddCartItemsRequest createAddCartItemsRequest() {
+        return new AddCartItemsRequest();
+    }
+
+    /**
+     * Create an instance of {@link ItemIdsPojo }
+     * 
+     */
+    public ItemIdsPojo createItemIdsPojo() {
+        return new ItemIdsPojo();
+    }
+
+    /**
+     * Create an instance of {@link AddCartItemsResponse }
+     * 
+     */
+    public AddCartItemsResponse createAddCartItemsResponse() {
+        return new AddCartItemsResponse();
+    }
+
 
 }

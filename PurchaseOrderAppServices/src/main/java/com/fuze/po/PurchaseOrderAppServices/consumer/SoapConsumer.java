@@ -9,6 +9,8 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.stereotype.Service;
 import org.springframework.ws.client.core.WebServiceTemplate;
 
+import com.fuze.po.PurchaseOrderAppServices.bean.AddCartItemsRequest;
+import com.fuze.po.PurchaseOrderAppServices.bean.AddCartItemsResponse;
 import com.fuze.po.PurchaseOrderAppServices.bean.AddPODetailsRequest;
 import com.fuze.po.PurchaseOrderAppServices.bean.AddPODetailsResponse;
 import com.fuze.po.PurchaseOrderAppServices.bean.CartDetailsRequest;
@@ -102,6 +104,19 @@ public class SoapConsumer {
 			logger.info("Exception  in poRequestEdit method" + e.getMessage());
 		}
 		return poReqEditResponse;
+	}
+	
+	public AddCartItemsResponse addCartItems(AddCartItemsRequest addCartItemsRequest) {
+		logger.info("Entering in SoapConsumer class in addCartItemsResponse method");
+		webServiceTemplate = new WebServiceTemplate(jaxb2Marshaller);
+		AddCartItemsResponse addCartItemsResponse = null;
+		try {
+			addCartItemsResponse = (AddCartItemsResponse) webServiceTemplate
+					.marshalSendAndReceive(cartItemsUrl + "/addCartItems", addCartItemsRequest);
+		} catch (Exception e) {
+			logger.info("Exception  in addCartItemsResponse method" + e.getMessage());
+		}
+		return addCartItemsResponse;
 	}
 
 }

@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fuze.po.PurchaseOrderAppServices.bean.AddCartItemsRequest;
+import com.fuze.po.PurchaseOrderAppServices.bean.AddCartItemsResponse;
 import com.fuze.po.PurchaseOrderAppServices.bean.AddPODetailsRequest;
 import com.fuze.po.PurchaseOrderAppServices.bean.AddPODetailsResponse;
 import com.fuze.po.PurchaseOrderAppServices.bean.CartDetailsRequest;
@@ -59,6 +61,11 @@ public class CartRestConsumer {
 	@PostMapping("/poRequestEdit")
 	public POReqEditResponse poRequestEdit(@RequestBody POReqEditRequest poReqStatusRequest) {
 		return client.poRequestEdit(poReqStatusRequest);
+	}
+	
+	@PostMapping("/addCartItems")
+	public AddCartItemsResponse addCartItems(@RequestBody AddCartItemsRequest addCartItemsRequest) {
+		return client.addCartItems(addCartItemsRequest);
 	}
 
 }
