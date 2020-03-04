@@ -18,8 +18,7 @@
 	<div class="container-fluid">
  <div class="row vertical-center-row">
             <div class="text-center col-md-4 col-md-offset-4">
-                <button type="button" id="submitButton" class="btn btn-success" style="margin: 10px;">Get Earthquake
-                    Data!</button>
+                <button type="button" id="submitButton" class="btn btn-success" style="margin: 10px;"> Get PO Request Data! </button>
             </div>
         </div>
         </div>
@@ -33,7 +32,7 @@
  <!-- Custom scripts for all pages-->
   	<script src="static/js/po-admin.min.js"></script>
 	<script src="https://connectors.tableau.com/libs/tableauwdc-2.3.latest.js" type="text/javascript"></script>
-    <script src="static/js/earthquakeWDC.js" type="text/javascript"></script>
+    <script src="static/js/reports.js" type="text/javascript"></script>
 
 </body>
 

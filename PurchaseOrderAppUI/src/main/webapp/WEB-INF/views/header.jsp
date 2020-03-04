@@ -226,7 +226,7 @@
             </li>
 
             <li class="nav-item dropdown no-arrow mx-1">
-              <a class="nav-link dropdown-toggle" href="reports" id="alertsDropdown" role="button" >
+              <a class="nav-link dropdown-toggle" href="reports" id="alertsDropdown">
                 Reports
                 <!-- Counter - Alerts -->
                 <!-- <span class="badge badge-danger badge-counter">3+</span> -->
