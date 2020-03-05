@@ -50,6 +50,12 @@ public class Item {
 
 	@Column(name = "in_stock")
 	private boolean inStock;
+	
+	@Column(name = "vendor")
+	private String vendor;
+
+	@Column(name = "vendor_id")
+	private String vendorId;
 
 	public int getId() {
 		return id;
@@ -125,6 +131,23 @@ public class Item {
 
 	public String getActivity() {
 		return activity;
+	}
+
+
+	public String getVendor() {
+		return vendor;
+	}
+
+	public void setVendor(String vendor) {
+		this.vendor = vendor;
+	}
+
+	public String getVendorId() {
+		return vendorId;
+	}
+
+	public void setVendorId(String vendorId) {
+		this.vendorId = vendorId;
 	}
 
 	public void setActivity(String activity) {
