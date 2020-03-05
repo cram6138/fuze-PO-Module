@@ -26,13 +26,19 @@ import com.createpocartproducer.createpo.AddPODetailsRequest;
 import com.createpocartproducer.createpo.AddPODetailsResponse;
 import com.createpocartproducer.createpo.Itempojo;
 import com.createpocartproducer.createpo.Pores;
+import com.fuze.po.fuzesoap.application.entity.CartEntity;
 import com.fuze.po.fuzesoap.application.entity.CartItemsEntity;
+import com.fuze.po.fuzesoap.application.entity.ItemEntity;
 import com.fuze.po.fuzesoap.application.entity.POItemsEntity;
 import com.fuze.po.fuzesoap.application.entity.PORequestEntity;
+import com.fuze.po.fuzesoap.application.repository.CartEntityRepository;
 import com.fuze.po.fuzesoap.application.repository.CartItemRepository;
 import com.fuze.po.fuzesoap.application.repository.ItemEntityRepository;
 import com.fuze.po.fuzesoap.application.repository.POItemsEntityRepository;
 import com.fuze.po.fuzesoap.application.repository.PORequestEntityRepository;
+import com.poaddcartitemsproducer.addcartitems.AddCartItemsRequest;
+import com.poaddcartitemsproducer.addcartitems.AddCartItemsResponse;
+import com.poaddcartitemsproducer.addcartitems.ItemIdsPojo;
 import com.polistproduceritem.polist.POListRequest;
 import com.polistproduceritem.polist.POListResponse;
 import com.polistproduceritem.polist.Porespojo;
@@ -56,6 +62,8 @@ public class PODetailsEndpoint {
 
 	private static final String NAMESPACE_URI_EDIT_PO_REQUEST = "http://www.poreqeditproducer.com/poreqedit";
 
+	private static final String NAMESPACE_URI_ADD_CART_ITEMS = "http://www.poaddcartitemsproducer.com/addcartitems";
+
 	@Autowired
 	private CartItemRepository cartItemRepository;
 
@@ -67,6 +75,9 @@ public class PODetailsEndpoint {
 
 	@Autowired
 	private ItemEntityRepository itemEntityRepository;
+
+	@Autowired
+	private CartEntityRepository cartEntityRepository;
 
 	@ResponsePayload
 	@PayloadRoot(namespace = NAMESPACE_URI_CART_DETAILS, localPart = "CartDetailsRequest")
@@ -202,6 +213,42 @@ public class PODetailsEndpoint {
 				poRequestEntityRepository.save(dbPOReq.get());
 				BeanUtils.copyProperties(dbPOReq.get(), poReqEditPojo);
 				response.setPoreqeditpojo(poReqEditPojo);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return response;
+	}
+
+	@ResponsePayload
+	@PayloadRoot(namespace = NAMESPACE_URI_ADD_CART_ITEMS, localPart = "AddCartItemsRequest")
+	public AddCartItemsResponse addCartItems(@RequestPayload AddCartItemsRequest request) {
+		AddCartItemsResponse response = new AddCartItemsResponse();
+		try {
+			Optional<CartEntity> dbCart = cartEntityRepository.findById(request.getCartId());
+			if (dbCart.isPresent()) {
+				if (!CollectionUtils.isEmpty(request.getItemIds())) {
+					for (ItemIdsPojo row : request.getItemIds()) {
+						CartItemsEntity cartItemsEntity = new CartItemsEntity();
+						ItemEntity itemEntity = new ItemEntity();
+						itemEntity.setId(row.getItemId());
+						Integer quantityValue = 5;
+						cartItemsEntity.setCart(dbCart.get());
+						cartItemsEntity.setItem(itemEntity);
+						cartItemsEntity.setQuantity(quantityValue);
+						cartItemRepository.save(cartItemsEntity);
+					}
+					response.setMessage("Successfully saved.");
+					response.setStatus("success");
+				} else {
+					response.setMessage("Items are can't be empty.");
+					response.setStatus("failed");
+					return response;
+				}
+			} else {
+				response.setMessage("Cart Id not exist.");
+				response.setStatus("failed");
+				return response;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -144,4 +144,20 @@ public class PORequestEntity {
 		this.status = status;
 	}
 
+	@Override
+	public String toString() {
+		return "PORequestEntity [id=" + id + ", siteName=" + siteName + ", projectName=" + projectName + ", projectId="
+				+ projectId + ", pslc=" + pslc + ", psProject=" + psProject + ", projectStatus=" + projectStatus
+				+ ", type=" + type + ", projectType=" + projectType + ", customerProjectType=" + customerProjectType
+				+ ", siteTracker=" + siteTracker + ", status=" + status + ", getId()=" + getId() + ", getSiteName()="
+				+ getSiteName() + ", getProjectName()=" + getProjectName() + ", getProjectId()=" + getProjectId()
+				+ ", getPslc()=" + getPslc() + ", getPsProject()=" + getPsProject() + ", getProjectStatus()="
+				+ getProjectStatus() + ", getType()=" + getType() + ", getProjectType()=" + getProjectType()
+				+ ", getCustomerProjectType()=" + getCustomerProjectType() + ", getSiteTracker()=" + getSiteTracker()
+				+ ", getStatus()=" + getStatus() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+				+ ", toString()=" + super.toString() + "]";
+	}
+	
+	
+
 }

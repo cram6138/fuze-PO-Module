@@ -11,6 +11,8 @@ public class ItemInfo {
 	private String model;
 	private String description;
 	private String price;
+	private String vendor;
+	private String vendorId;
 	private boolean inStock;
 
 	public int getId() {
@@ -59,6 +61,23 @@ public class ItemInfo {
 
 	public void setInStock(boolean inStock) {
 		this.inStock = inStock;
+	}
+	
+
+	public String getVendor() {
+		return vendor;
+	}
+
+	public void setVendor(String vendor) {
+		this.vendor = vendor;
+	}
+
+	public String getVendorId() {
+		return vendorId;
+	}
+
+	public void setVendorId(String vendorId) {
+		this.vendorId = vendorId;
 	}
 
 	@Override

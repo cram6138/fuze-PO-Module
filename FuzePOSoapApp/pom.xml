@@ -121,6 +121,7 @@
 					<schemaFiles>polist.xsd</schemaFiles>
 					<schemaFiles>poreqstatus.xsd</schemaFiles>
 					<schemaFiles>poreqedit.xsd</schemaFiles>
+					<schemaFiles>addcartitems.xsd</schemaFiles>
 					<clearOutputDir>false</clearOutputDir>
 				</configuration>
 			</plugin>

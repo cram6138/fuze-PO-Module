@@ -48,4 +48,14 @@ public class POItemsEntity {
 		this.poRequestEntity = poRequestEntity;
 	}
 
+	@Override
+	public String toString() {
+		return "POItemsEntity [id=" + id + ", itemEntity=" + itemEntity + ", poRequestEntity=" + poRequestEntity
+				+ ", getId()=" + getId() + ", getItemEntity()=" + getItemEntity() + ", getPoRequestEntity()="
+				+ getPoRequestEntity() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
+				+ super.toString() + "]";
+	}
+	
+	
+
 }

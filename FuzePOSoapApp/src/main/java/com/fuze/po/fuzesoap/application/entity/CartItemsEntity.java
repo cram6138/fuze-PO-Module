@@ -60,4 +60,14 @@ public class CartItemsEntity {
 		this.quantity = quantity;
 	}
 
+	@Override
+	public String toString() {
+		return "CartItemsEntity [id=" + id + ", cart=" + cart + ", item=" + item + ", quantity=" + quantity
+				+ ", getId()=" + getId() + ", getCart()=" + getCart() + ", getItem()=" + getItem() + ", getQuantity()="
+				+ getQuantity() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
+				+ super.toString() + "]";
+	}
+	
+	
+
 }
