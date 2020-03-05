@@ -40,9 +40,9 @@ The registerConnector function validates the connector object before initializat
     
     myConnector.getData = function (table, doneCallback) {
     	let tableauDataBackendUrl= "http://localhost:4040/api/tableauData";
-		 $.getScript("static/js/config.js", function(){
-			 tableauDataBackendUrl = appConfig.tableau_data_backend_url;
-		 })
+//		 $.getScript("static/js/config.js", function(){
+//			 tableauDataBackendUrl = appConfig.tableau_data_backend_url;
+//		 })
     	 $.ajax({
 			url: tableauDataBackendUrl,
 	        dataType: "json",
@@ -79,9 +79,9 @@ The registerConnector function validates the connector object before initializat
 $(document).ready(function () {
     $("#submitButton").click(function () {
     	let tableauConnectionName= "PO Request Viz";
-		 $.getScript("static/js/config.js", function(){
+		/* $.getScript("static/js/config.js", function(){
 			 tableauConnectionName = appConfig.tableau_connection_name;
-		 });
+		 });*/
         tableau.connectionName = tableauConnectionName;
         tableau.submit();
     });

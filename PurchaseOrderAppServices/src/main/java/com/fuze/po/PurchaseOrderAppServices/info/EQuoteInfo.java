@@ -31,7 +31,7 @@ public class EQuoteInfo {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
@@ -143,4 +143,14 @@ public class EQuoteInfo {
 	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
 	}
+
+	@Override
+	public String toString() {
+		return "EQuoteInfo [id=" + id + ", name=" + name + ", subMarket=" + subMarket + ", siteType=" + siteType
+				+ ", siteSubType=" + siteSubType + ", vendorName=" + vendorName + ", projectType=" + projectType
+				+ ", candidateType=" + candidateType + ", activityType=" + activityType + ", RANVendor=" + RANVendor
+				+ ", encloser=" + encloser + ", generator=" + generator + ", band=" + band + ", createdBy=" + createdBy
+				+ ", createdOn=" + createdOn + "]";
+	}
+
 }

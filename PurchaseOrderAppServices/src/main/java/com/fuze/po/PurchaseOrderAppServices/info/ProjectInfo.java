@@ -123,5 +123,13 @@ public class ProjectInfo {
 	public void setTeritory(String teritory) {
 		this.teritory = teritory;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "ProjectInfo [id=" + id + ", siteName=" + siteName + ", projectName=" + projectName + ", market="
+				+ market + ", subMarket=" + subMarket + ", projectType=" + projectType + ", fuzeProject=" + fuzeProject
+				+ ", pslc=" + pslc + ", projectStatus=" + projectStatus + ", type=" + type + ", customProjectType="
+				+ customProjectType + ", siteTracker=" + siteTracker + ", teritory=" + teritory + "]";
+	}
+
 }

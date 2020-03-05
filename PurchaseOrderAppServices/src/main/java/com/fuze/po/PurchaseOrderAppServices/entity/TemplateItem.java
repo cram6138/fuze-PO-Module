@@ -16,18 +16,18 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "template_item")
 public class TemplateItem {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@ManyToOne
 	@JoinColumn(name = "template_id")
 	private Template template;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "item_id")
 	private Item item;
-	
+
 	@Column(name = "quantity")
 	private int quantity;
 
@@ -61,6 +61,11 @@ public class TemplateItem {
 
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+
+	@Override
+	public String toString() {
+		return "TemplateItem [id=" + id + ", template=" + template + ", item=" + item + ", quantity=" + quantity + "]";
 	}
 
 }

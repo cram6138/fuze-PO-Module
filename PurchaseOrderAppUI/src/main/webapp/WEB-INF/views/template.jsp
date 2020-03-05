@@ -26,8 +26,8 @@
 			</span>
 		</div>
 		<br>
-		<div id="templateDetails"></div><br>
 	</div>
+	<div style="margin-left: 5%" id="templateDetails"></div>
 		<div id="grid"></div>
 
 	<%@ include file="footer.jsp"%>
@@ -70,11 +70,11 @@
 					var htmlString = "<span><b>Template Name : </b>"+this.name +"</span> &nbsp"+
 					"<span><b>Site Type : </b>"+this.siteType +"</span> &nbsp"+
 					"<span><b>Site Sub Type : </b>"+this.siteSubType +"</span> &nbsp"+
-					"<span><b>Sub Market : </b>"+this.subMarket +"</span><br>"+
+					"<span><b>Sub Market : </b>"+this.subMarket +"</span>&nbsp"+
 					"<span><b>Vendor Name : </b>"+this.vendorName +"</span> &nbsp"+
-					"<span><b>Project Type : </b>"+this.projectType +"</span> &nbsp"+
+					"<span><b>Project Type : </b>"+this.projectType +"</span><br>"+
 					"<span><b>Candidate Type : </b>"+this.candidateType +"</span> &nbsp"+
-					"<span><b>Encloser : </b>"+this.encloser +"</span><br>"+
+					"<span><b>Encloser : </b>"+this.encloser +"</span>"+
 					"<span><b>Generator : </b>"+this.generator +"</span> &nbsp"+
 					"<span><b>Ran Vendor : </b>"+this.ranVendor +"</span> &nbsp"+
 					"<span><b>Activity Type : </b> "+this.activityType +"</span> &nbsp"+
@@ -100,10 +100,10 @@
                          name: {type:"string"},
                        	 model: {type:"string"}, 
                        	 description: {type:"string"},
-                       	 quantity: {type:"string"},
-                       	 activity: {type:"string"},
-                       	 comments: {type:"string"},
-                       	 contactId: {type:"string"}
+                       	 quantity: {type:"string"}
+                       	 //activity: {type:"string"},
+                       	 //comments: {type:"string"},
+                       	 //contactId: {type:"string"}
                         }
                     }
 		        },
@@ -121,10 +121,10 @@
 		            columns: [{field: "items.name", title: "Name"},
 		            	{field: "items.model", title: "Model"},
 		            	{field: "items.description", title: "Descripton"}, 
-		            	{field: "quantity", title: "Quantity"}, 
-		            	{field: "items.activity", title: "Activity"},
-		            	{field: "items.comments", title: "Comments"},
-		            	{field: "items.contactId", title: "Contact Id"}
+		            	{field: "quantity", title: "Quantity"}
+		            	//{field: "items.activity", title: "Activity"},
+		            	//{field: "items.comments", title: "Comments"},
+		            	//{field: "items.contactId", title: "Contact Id"}
 		            ]
 		        });
 				

@@ -13,22 +13,26 @@ import javax.persistence.Table;
  * @author Bhajuram.c
  *
  */
+/**
+ * @author Bhajuram.c
+ *
+ */
 @Entity
 @Table(name = "equote_item")
 public class EquoteItems {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "equote_id")
 	private EQuotes equote;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "item_id")
 	private Item item;
-	
+
 	@Column(name = "quantity")
 	private int quantity;
 
@@ -62,6 +66,11 @@ public class EquoteItems {
 
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+
+	@Override
+	public String toString() {
+		return "EquoteItems [id=" + id + ", equote=" + equote + ", item=" + item + ", quantity=" + quantity + "]";
 	}
 
 }

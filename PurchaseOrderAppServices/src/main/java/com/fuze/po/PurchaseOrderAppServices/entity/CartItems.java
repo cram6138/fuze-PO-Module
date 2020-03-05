@@ -18,7 +18,7 @@ public class CartItems {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "cart_id", nullable = false)
 	private Cart cart;
@@ -26,7 +26,7 @@ public class CartItems {
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "item_id", nullable = false)
 	private Item item;
-	
+
 	@Column(name = "quantity")
 	private int quantity;
 
@@ -61,5 +61,10 @@ public class CartItems {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "CartItems [id=" + id + ", cart=" + cart + ", item=" + item + ", quantity=" + quantity + "]";
+	}
+
 }

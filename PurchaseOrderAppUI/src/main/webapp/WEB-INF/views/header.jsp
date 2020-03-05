@@ -201,14 +201,11 @@
               <!-- Dropdown - Alerts -->
             </li>
 
-            <li class="nav-item dropdown no-arrow mx-1">
+            <%-- <li class="nav-item dropdown no-arrow mx-1">
               <a class="nav-link dropdown-toggle ${POTracker}" href="POTracker" id="alertsDropdown">
                 PO Tracker
-                <!-- Counter - Alerts -->
-                <!-- <span class="badge badge-danger badge-counter">3+</span> -->
               </a>
-              <!-- Dropdown - Alerts -->
-            </li>
+            </li> --%>
 
             <li class="nav-item dropdown no-arrow mx-1">
               <a class="nav-link dropdown-toggle ${classActiveSettings}" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -229,7 +226,7 @@
             </li>
 
             <li class="nav-item dropdown no-arrow mx-1">
-              <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a class="nav-link dropdown-toggle" href="reports" id="alertsDropdown">
                 Reports
                 <!-- Counter - Alerts -->
                 <!-- <span class="badge badge-danger badge-counter">3+</span> -->

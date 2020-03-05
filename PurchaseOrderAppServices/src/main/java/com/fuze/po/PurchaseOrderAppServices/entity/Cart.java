@@ -18,24 +18,34 @@ public class Cart {
 	private String marketId;
 	@Column(name = "project_id")
 	private int projectId;
-	
+
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
 	public int getProjectId() {
 		return projectId;
 	}
+
 	public void setProjectId(int projectId) {
 		this.projectId = projectId;
 	}
+
 	public String getMarketId() {
 		return marketId;
 	}
+
 	public void setMarketId(String marketId) {
 		this.marketId = marketId;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Cart [id=" + id + ", marketId=" + marketId + ", projectId=" + projectId + "]";
+	}
+
 }

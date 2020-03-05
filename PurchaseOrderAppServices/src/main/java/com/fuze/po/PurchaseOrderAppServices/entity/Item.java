@@ -20,7 +20,7 @@ public class Item {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+
 	@Column(name = "name")
 	private String name;
 
@@ -50,6 +50,12 @@ public class Item {
 
 	@Column(name = "in_stock")
 	private boolean inStock;
+	
+	@Column(name = "vendor")
+	private String vendor;
+
+	@Column(name = "vendor_id")
+	private String vendorId;
 
 	public int getId() {
 		return id;
@@ -127,6 +133,23 @@ public class Item {
 		return activity;
 	}
 
+
+	public String getVendor() {
+		return vendor;
+	}
+
+	public void setVendor(String vendor) {
+		this.vendor = vendor;
+	}
+
+	public String getVendorId() {
+		return vendorId;
+	}
+
+	public void setVendorId(String vendorId) {
+		this.vendorId = vendorId;
+	}
+
 	public void setActivity(String activity) {
 		this.activity = activity;
 	}
@@ -138,5 +161,12 @@ public class Item {
 	public void setComments(String comments) {
 		this.comments = comments;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Item [id=" + id + ", name=" + name + ", contractId=" + contractId + ", dueDate=" + dueDate
+				+ ", shipToId=" + shipToId + ", activity=" + activity + ", comments=" + comments + ", model=" + model
+				+ ", description=" + description + ", price=" + price + ", inStock=" + inStock + "]";
+	}
+
 }

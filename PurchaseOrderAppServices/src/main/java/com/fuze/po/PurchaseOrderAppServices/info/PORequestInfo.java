@@ -1,5 +1,7 @@
 package com.fuze.po.PurchaseOrderAppServices.info;
 
+import java.util.Set;
+
 /**
  * @author Bhajuram.c
  *
@@ -7,14 +9,13 @@ package com.fuze.po.PurchaseOrderAppServices.info;
 public class PORequestInfo {
 
 	private int id;
-	private String projectName;
-	private String projectId;
 	private String pslc;
-	private String psProject;
-	private String projectStatus;
-	private String type;
-	private String projectType;
-	private String customerProjectType;
+	private String poName;
+	private String teritory;
+	private String market;
+	private String poStatus;
+	private Set<ProjectInfo> projects;
+	private Set<ItemInfo> items;
 	private String siteTracker;
 
 	public int getId() {
@@ -25,22 +26,6 @@ public class PORequestInfo {
 		this.id = id;
 	}
 
-	public String getProjectName() {
-		return projectName;
-	}
-
-	public void setProjectName(String projectName) {
-		this.projectName = projectName;
-	}
-
-	public String getProjectId() {
-		return projectId;
-	}
-
-	public void setProjectId(String projectId) {
-		this.projectId = projectId;
-	}
-
 	public String getPslc() {
 		return pslc;
 	}
@@ -49,44 +34,52 @@ public class PORequestInfo {
 		this.pslc = pslc;
 	}
 
-	public String getPsProject() {
-		return psProject;
+	public String getPoName() {
+		return poName;
 	}
 
-	public void setPsProject(String psProject) {
-		this.psProject = psProject;
+	public void setPoName(String poName) {
+		this.poName = poName;
 	}
 
-	public String getProjectStatus() {
-		return projectStatus;
+	public String getTeritory() {
+		return teritory;
 	}
 
-	public void setProjectStatus(String projectStatus) {
-		this.projectStatus = projectStatus;
+	public void setTeritory(String teritory) {
+		this.teritory = teritory;
 	}
 
-	public String getType() {
-		return type;
+	public String getMarket() {
+		return market;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setMarket(String market) {
+		this.market = market;
 	}
 
-	public String getProjectType() {
-		return projectType;
+	public String getPoStatus() {
+		return poStatus;
 	}
 
-	public void setProjectType(String projectType) {
-		this.projectType = projectType;
+	public void setPoStatus(String poStatus) {
+		this.poStatus = poStatus;
 	}
 
-	public String getCustomerProjectType() {
-		return customerProjectType;
+	public Set<ProjectInfo> getProjects() {
+		return projects;
 	}
 
-	public void setCustomerProjectType(String customerProjectType) {
-		this.customerProjectType = customerProjectType;
+	public void setProjects(Set<ProjectInfo> projects) {
+		this.projects = projects;
+	}
+
+	public Set<ItemInfo> getItems() {
+		return items;
+	}
+
+	public void setItems(Set<ItemInfo> items) {
+		this.items = items;
 	}
 
 	public String getSiteTracker() {
