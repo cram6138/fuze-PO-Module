@@ -33,6 +33,12 @@ public class ItemController {
 		return new ResponseEntity<PORequestInfo>(itemService.getItems(itemInfo), HttpStatus.OK);
 	}
 	
+	/**
+	 * For Getting Item info for a particular search
+	 * 
+	 * @param Id,name,description,vendor,vendorId
+	 * @return List<Item> itemInfo
+	 */
 	@PostMapping("/searchItems")
 	public ResponseEntity<List<ItemInfo>>searchItemsList(@RequestBody ItemInfo itemInfo) {
 		return new ResponseEntity<List<ItemInfo>>(itemService.searchItemsList(itemInfo), HttpStatus.OK);
