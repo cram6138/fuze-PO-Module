@@ -20,4 +20,12 @@ public interface CartItemRepository extends JpaRepository<CartItemsEntity, Integ
 	@Modifying
 	@Query(value = "delete from CartItemsEntity cie where cie.cart.id = 1")
 	public void deleteAllCartItemsByCartId();
+	
+	
+	
+	@Transactional
+	@Modifying
+	@Query(value = "delete from ItemEntity ie where ie.id =:id")
+	public void deleteAllItemsByItemId(@Param(value = "id") int id);
+	
 }

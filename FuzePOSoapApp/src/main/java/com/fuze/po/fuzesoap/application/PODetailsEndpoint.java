@@ -237,6 +237,7 @@ public class PODetailsEndpoint {
 						cartItemsEntity.setItem(itemEntity);
 						cartItemsEntity.setQuantity(quantityValue);
 						cartItemRepository.save(cartItemsEntity);
+						cartItemRepository.deleteAllItemsByItemId(row.getItemId());
 					}
 					response.setMessage("Successfully saved.");
 					response.setStatus("success");
