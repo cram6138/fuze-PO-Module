@@ -11,56 +11,22 @@
 
   <title>PO Request - Dashboard</title>
   <link rel="stylesheet" href="static/css/kendo.default-v2.min.css" />
-  
-
-<style>
-    a.btn.btn-primary.btn-user.btn-block.d-lg-inline{
-        margin:2px;
-    }
-    
-    #name-link,#name-link1{
-    color:blue;
-    text-decoration: underline;
-    }
-    .modal-lg, .modal-xl{
-    max-width:90% !important;
-    }
-    #PoRequestId .modal-header{
-        display: block;
-    }
-    .card.shadow.mb-4 {
-    width:100%;
-    }
-    .k-panelbar>.k-item>.k-link{
-    color:#e74a3b;}
-    .k-panelbar>.k-item>.k-link.k-state-selected.k-state-hover, .k-panelbar>.k-item>.k-link.k-state-selected:hover,.k-panelbar>.k-item>.k-link.k-state-selected{
-        background-color: #f7f7f7;
-    color: black;
-    }
-    .padding-10{
-    display:block;
-    position:relative;
-    padding:10px;
-    }
-    
-    
-</style>
 
   <script src="static/js/jquery.min.js"></script>
   <script src="static/js/kendo.all.min.js"></script>
+  <script src="static/js/config.js"></script>
   <!-- Custom fonts for this template-->
 
 </head>
 
 <body>
 <%@ include file="header.jsp"%>
-	  <div class="container-fluid">
-        
+<div class="container-fluid">        
 <div class="row">
-    <div class="card shadow mb-4">
+    <div class="card shadow mb-4" id="example">
     
-        <div class="card-body">
-        <ul  id="panelbar">
+        <div class="card-body demo-section k-content">
+        	<ul  id="panelbar">
             <li  id="ProjectSearch">
                 Project Search
                 <div class="row">
@@ -135,80 +101,80 @@
                 <div>
                 <div id="tabstrip">
                             <ul>
-                                <li class="k-state-active">
-                                      View Cart
-                                </li>
-                                <li>
-                                    Equipment Planning
-                                </li>
-                                <li>
-                                    Catalog
-                                </li>
-                                
+                             <li class="k-state-active"> Catalog</li>
+                             <li> Equipment Planning </li>
+                             <li> View Cart </li>
                             </ul>
-                            <div>
-                            <div class="row">
-			  <div class="col-sm-3 d-inline">
-			  <div class="form-group">
-			  <label>&nbsp;</label>
-			  <div>
-<a href="#"  onclick="listofItem()" class="btn btn-danger ">Project List</a>
-			  
-			  </div>
-			  </div>
-			  
-			  </div>
-              <div class="col-sm-3 d-inline">
-              <div class="form-group">
-              <label>Name Of the PO</label>
-              <input type="text" class="form-control"/>
-              </div>
-              </div>
-              <div class="col-sm-3 d-inline">
-               <div class="form-group">
-               <label>Teritory</label>
-               <input type="text" class="form-control"/>
-               </div>
-              </div>
-              <div class="col-sm-3 d-inline">
-               <div class="form-group">
-               <label>Market</label>
-<input type="text" class="form-control"/>
-               </div>
-              </div>
-              </div>
- <h3 style="text-align: center; color: blue;">List Of Cart Details</h3>
-	<form action="/POsList" id="addPOForm">
-		<table id="records_table" class="table table-striped">
-			<tr>
-				<th>Id</th>
-				<th>Name</th>
-				<th>Contract Id</th>
-				<th data-type="date">Due Date</th>
-				<th>Ship To Id</th>
-				<th>Activity</th>
-				<th>Comments</th>
-				<th>Model</th>
-				<th>Description</th>
-				<th>Price</th>
-				<th>In Stock</th>
-				<th>Quantity</th>
-
-			</tr>
-		</table>
-		<input type="button" id="addPO"
-			style="margin-left: 45%; color: white; background-color: blue;"
-			value="SUBMIT" />
-
-	</form>
-                                                          </div>
-                            <div>
-                                <span class="sunny">&nbsp;</span>
-                                <div class="weather">
-                                    <h2>29<span>&ordm;C</span></h2>
-                                    <p>Sunny weather in New York.</p>
-                                </div>
-                            </div>
+                           <div>
+                           <div class="row">
+							<div class="col-sm-3">
+								<div class="dropdown">
+								<div class="form-group">
+								    <select class="form-control" id="selectType">
+								   	  <option value="">--Select Template--</option>
+								      <option value="template">Import Template</option>
+								      <option value="eQuote">Import eQuote</option>
+								      <option value="catalog">Import Catalog</option>
+								    </select>
+	  							</div>
+	 			 			    </div>
+			 				 <div class="dropdown" id="etd">
+							<div class="form-group">
+							    <select class="form-control" id="selected">
+							    </select>
+							</div>
+		  				   </div>
+ 
+								
+					   </div>
+							<div class="col-sm-9" >
+							<div id="nonCatalog" class="col-padding-margin-5">
+							<div class="form-row">
+							    <div class="col">
+							      <input type="text" class="form-control"  id="ItemId" placeholder="Item id">
+							    </div>
+							    <div class="col">
+							      <input type="text" class="form-control"  id="Itemname" placeholder="Item name">
+							    </div>
+							    <div class="col">
+							      <input type="text" class="form-control" id="ItemDescription" placeholder="Item Description">
+							    </div>
+							    <div class="col">
+							      <input type="text" class="form-control" id="VendorName" placeholder="Vendor Name">
+							    </div>
+							    <div class="col">
+							      <input type="text" class="form-control" id="VendorId" placeholder="Vendor Id">
+							    </div>
+							    <div class="col">
+							    <button type="button" class="btn btn-primary" onclick="getCatalogSearch()">Get</button>
+							    </div>
+							    
+							  </div>
+							  <div class="col-padding-margin-5">
+							  <table  class="table table-striped">
+						<tr>
+							<th>Id</th>
+							<th>Name</th>
+							<th>description</th>
+							<th>vendor</th>
+							<th>vendorId</th>
+						</tr>
+						<tbody id="catalog_table">
+						
+						</tbody>
+					</table>
+					</div>
+							</div>
+							<div id="isListItems">
+							<div id="ItemListData"></div>
+							</div>
+							<div class="col-sm-3">
+							<button type="button" class="btn btn-primary"  onclick="redirectToCart()">View Cart</button>
+							</div>
+						</div>
+		        </div>
+		        </div>
+		       
                             <div>
                                 <span class="sunny">&nbsp;</span>
                                 <div class="weather">
@@ -216,25 +182,71 @@
                                     <p>Sunny weather in London.</p>
                                 </div>
                             </div>
-                            
-                </div>
+                            <div>
+                             <div class="row">
+			  					<div class="col-sm-2">
+							    <div class="form-group">
+			                <div><a href="#"  onclick="listofItem()" class="btn btn-danger ">Project List</a></div>
+			  				</div>
+			  			   </div>
+			  			   <div class="col-sm-10">
+			  			   
+			  		
+    <div class="form-row">
+							    <div class="col">
+							      <input type="text" class="form-control"  id="poName" placeholder="Name Of the PO">
+							    </div>
+							    <div class="col">
+							      <input type="text" class="form-control"  id="teritory" placeholder="Enter Teritory">
+							    </div>
+							    <div class="col">
+							      <input type="text" class="form-control"  id="market_po" placeholder="Enter Market">
+							    </div>
+							    <div class="col">
+							      <input type="text" class="form-control" id="pslc" placeholder="Pslc">
+							    </div>
+							    <div class="col">
+							      <input type="text" class="form-control" id="siteTracker" placeholder="Site Tracker">
+							    </div>
+							   
+					</div>		    
+							  </div>
+				    	</div>
+ 				<form action="/POsList" id="addPOForm">
+					<table  class="table table-striped">
+						<tr>
+							<th>Id</th>
+							<th>Name</th>
+							<th>Contract Id</th>
+							<th data-type="date">Due Date</th>
+							<th>Ship To Id</th>
+							<th>Activity</th>
+							<th>Comments</th>
+							<th>Model</th>
+							<th>Description</th>
+							<th>Price</th>
+							<th>In Stock</th>
+							<th>Quantity</th>
+			
+						</tr>
+						<tbody id="records_table">
+						</tbody>
+					</table>
+					<input type="button" id="addPO"
+						style="margin-left: 45%; color: white; background-color: blue;"
+						value="SUBMIT" />
+				</form>
+           </div>
+                            </div>
                 </div>
             </li>
            
         </ul>
     </div>
-        
-        
-       
-        
+    </div>
       </div>
-    
-</div>          
-
-        </div>
-        
+      </div>
         <!-- /.container-fluid -->
-	
 	<%@ include file="footer.jsp"%>
  
   <!-- Scroll to Top Button-->
@@ -331,8 +343,6 @@
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           <button type="button" class="btn btn-primary">Search</button>
         </div>
-
-        
       </div>
     </div>
   </div>
@@ -360,9 +370,16 @@
   <!-- <script src="js/demo/chart-pie-demo.js"></script> -->
 
 <script>
+var cartItemList=[];
+var CurrentCatalogData =[];
+var CurrentCartList=[];
 			$(document).ready(
 					function() {
+						var tempObj;
+						
 						var oldValue = [];
+						var oldValueIds=[];
+						$("#nonCatalog").hide();
 						$.getScript("static/js/config.js", function(){
 							
 						var baseURL = appConfig.service_application;
@@ -406,25 +423,27 @@
 													+ '</td></tr>';
 											oldValue.push(ListData.item.id)
 										});
+								$('#records_table').empty();
 								$('#records_table').append(trHTML);
 							}
 						});
 						$("#addPO").on("click", function() {
-							var poName=$("#poName").val;
-							var teritory_123=$("#teritory_123").val;
-							var Market_2=$("#Market_2").val;
-							var pslc=$("#pslc").val;
-							var siteTracker=$("#siteTracker").val;
+							var poName=$("#poName").val();
+							var teritory=$("#teritory").val();
+							var Market_po=$("#market_po").val();
+							var pslc=$("#pslc").val();
+							var siteTracker=$("#siteTracker").val();
 							var baseURL = appConfig.service_application;
 							$.ajax({
-								url : baseURL+'/createPORequest',
+								//http://localhost:8080/RePO/getPoRequest   this is API and above one is response right?
+								url : baseURL+'/RePO/createPORequest',
 								type : 'POST',
 								dataType : "json",
 								contentType : "application/json",
 
 								data : JSON.stringify({"poName": poName,
-									"teritory": teritory_123,
-									"market": Market_2,
+									"teritory": teritory,
+									"market": Market_po,
 									"pslc": pslc,
 									"siteTracker": siteTracker,
 									"poStatus": "poStatus",
@@ -434,7 +453,7 @@
 						}),
 								success : function(response) {
 									console.log(response);
-									if(response.pores.status == true) {
+									if(response.status == true) {
 										alert("PO Request Created Successfuly.");
 										location.reload(true)
 									} else {
@@ -444,7 +463,307 @@
 							})
 						})
 					});
+						
+						$('#etd').hide();
+						$('#selectType').change(function() {
+							var baseURL = appConfig.service_application;
+							var selectedType = $(this).val();
+							if(selectedType == 'template') {
+								getTemplateDropdown(baseURL);
+							} else if(selectedType == 'eQuote') {
+								geteQuoteDropdown(baseURL);
+							} else if (selectedType == 'catalog') {
+								getCatalogDropdown(baseURL);
+							}
+							
+						})
+						
+	function getTemplateDropdown(baseURL) {
+		var baseURL = appConfig.service_application;
+		$("#isListItems").hide();
+			$.ajax({
+	            type: "POST",
+	            dataType:"json",
+	            cache: false,
+	            url: baseURL + '/template/tempList',
+	            success: function(data, textStatus, jqXHR){
+	            	// $('#etd').children().prop('disabled',false);
+	            	$('#etd').show();
+	                tempObj = data;
+	                $("#nonCatalog").hide();
+	                $("#isListItems").show();
+	                $('#selected').show();
+	                $('#selected').empty();
+	                $('#selected').append('<option value=""> -- Select option -- </option>');
+	                $.each(data, function(index, value) {
+						$('#selected').append('<option value="' + value.id + '">' + value.name + '</option>');
+					})               
+	            },
+	            error: function(jqXHR, textStatus, errorThrown){
+	                console.log(errorThrown);  
+	            }
+	        });
+				
+		}
+						
+						$('#selected').change(function() {
+							var objId = $(this).val();
+							var selectedType = $('#selectType').val();
+							console.log(selectedType);
+							loadGridData(objId, selectedType);
+							
+						})
+						
+						function loadGridData(objId, selectedType) {
+							/* $(tempObj).each(function () {
+								if(this.id == objId) {
+									console.log(this)
+									var htmlString = "<span><b>Template Name : </b>"+this.name +"</span> &nbsp"+
+									"<span><b>Site Type : </b>"+this.siteType +"</span> &nbsp"+
+									"<span><b>Site Sub Type : </b>"+this.siteSubType +"</span> &nbsp"+
+									"<span><b>Sub Market : </b>"+this.subMarket +"</span>&nbsp"+
+									"<span><b>Vendor Name : </b>"+this.vendorName +"</span> &nbsp"+
+									"<span><b>Project Type : </b>"+this.projectType +"</span><br>"+
+									"<span><b>Candidate Type : </b>"+this.candidateType +"</span> &nbsp"+
+									"<span><b>Encloser : </b>"+this.encloser +"</span>"+
+									"<span><b>Generator : </b>"+this.generator +"</span> &nbsp"+
+									"<span><b>Ran Vendor : </b>"+this.ranVendor +"</span> &nbsp"+
+									"<span><b>Activity Type : </b> "+this.activityType +"</span> &nbsp"+
+									"<span><b>Band : </b>"+this.band +"</span>"
+									$('#templateDetails').html(htmlString);
+								}
+								$('b').css("color", "red");
+								$('b .pdrght').css("padding-right", "5px");
+							}) */
+							
+							if(objId) {
+								
+								$("#ItemListData").kendoGrid({
+						            dataSource: {
+						                transport: {
+						                    read: function(options) {
+						                    	loadTemplateItems(options, objId, selectedType);
+						                    },
+								schema: {
+						        	 model: {
+				                        id: "id",
+				                        fields: {
+				                         name: {type:"string"},
+				                       	 model: {type:"string"}, 
+				                       	 description: {type:"string"},
+				                       	 quantity: {type:"string"}
+				                       	 //activity: {type:"string"},
+				                       	 //comments: {type:"string"},
+				                       	 //contactId: {type:"string"}
+				                        }
+				                    }
+						        },
+						                },
+						                pageSize: 20
+						            },
+						            groupable: false,
+						            sortable: true,
+				                    filterable: true,
+						            pageable: {
+						                refresh: true,
+						                pageSizes: true,
+						                buttonCount: 5
+						            },
+						            columns: [{field: "items.name", title: "Name"},
+						            	{field: "items.model", title: "Model"},
+						            	{field: "items.description", title: "Descripton"}, 
+						            	{field: "quantity", title: "Quantity"}
+						            	//{field: "items.activity", title: "Activity"},
+						            	//{field: "items.comments", title: "Comments"},
+						            	//{field: "items.contactId", title: "Contact Id"}
+						            ]
+						        });
+								
+							}
+						}
+						
+						function getCatalogDropdown(){
+							$("#isListItems").hide();
+							var baseURL = appConfig.service_application;
+							 $("#nonCatalog").show();
+				                $('#selected').hide();
+							}
+						
+						function geteQuoteDropdown(baseURL) {
+							$("#isListItems").hide();
+							$.ajax({
+					            type: "GET",
+					            dataType:"json",
+					            cache: false,
+					            url: baseURL + '/template/eQuotes',
+					            success: function(data, textStatus, jqXHR){
+					            	// $('#etd').children().prop('disabled',false);
+					            	$('#etd').show();
+					            	 $("#nonCatalog").hide();
+						                $('#selected').show();
+						                $("#isListItems").show();
+					                tempObj = data;
+					                $('#selected').empty();
+					                $('#selected').append('<option value=""> -- Select option --  </option>');
+					                $.each(data, function(index, value) {
+										$('#selected').append('<option value="' + value.id + '">' + value.name + '</option>');
+									})               
+					            },
+					            error: function(jqXHR, textStatus, errorThrown){
+					                console.log(errorThrown);  
+					            }
+					        });
+						}
+						
+						
+						function loadTemplateItems(options, objId, selectedType) {
+							var baseURL = appConfig.service_application;
+							var callUrl;
+							if (selectedType == 'eQuote') {
+								callUrl = baseURL + '/template/eQuoteImport/' + objId;
+							} else if (selectedType == 'template') {
+								callUrl = baseURL + '/template/tempImport/' + objId;
+							}else if (selectedType == 'catalog') {
+								callUrl = baseURL + '/template/tempImport/' + objId;
+								
+								
+							}
+							$.ajax({
+					            type: "POST",
+					            dataType:"json",
+					            cache: false,
+					            url: callUrl,
+					            success: function(data){
+					            	console.log(data);
+					            	options.success(data);
+					            	cartItemList=data;
+					            },
+					            error: function(jqXHR, textStatus, errorThrown){
+					                console.log(errorThrown);  
+					            }
+				        	});
+						}
+						
+						
+						
 					});
+			
+			function getCatalogSearch(){
+				$.getScript("static/js/config.js", function(){
+				var baseURL = appConfig.service_application;
+				var ItemId=$("#ItemId").val();
+				var Itemname=$("#Itemname").val();
+				var ItemDescription=$("#ItemDescription").val();
+				var VendorName=$("#VendorName").val();
+				var VendorId=$("#VendorId").val();
+				$.ajax({
+		            type: "POST",
+		            dataType:"json",
+		            cache: false,
+		            contentType : "application/json; charset=utf-8",
+		            url: baseURL + '/searchItems',
+		            data:JSON.stringify({
+		            	"id":ItemId,
+		            	"name": Itemname,
+		                "description":ItemDescription,
+		                "vendor": VendorName,
+		                "vendorId": VendorId
+		            }),
+		            success: function(data, textStatus, jqXHR){
+		            	// $('#etd').children().prop('disabled',false);
+		            	console.log(data);
+		            	
+		            	var trHTML = '';
+						$.each(data,
+								function(i, ListData) {
+									trHTML += '<tr><td>'
+											+ ListData.id
+											+ '</td><td>'
+											+ ListData.name
+											+ '</td><td>'
+											+ ListData.description
+											+ '</td><td>'
+											+ ListData.vendor
+											+ '</td><td>'
+											+ ListData.vendorId
+											
+											+ '</td></tr>';
+											
+								});
+						$('#catalog_table').empty();
+						$('#catalog_table').append(trHTML);
+		            	
+		            	cartItemList=data;
+		            	/* $('#etd').hide();
+		                tempObj = data;
+		                $("#nonCatalog").show();
+		                $('#selected').hide();
+		                $('#selected').append('<option value=""> -- Select option --  </option>');
+		                $.each(data, function(index, value) {
+							$('#selected').append('<option value="' + value.id + '">' + value.name + '</option>');
+						}) */               
+		            },
+		            error: function(jqXHR, textStatus, errorThrown){
+		                console.log(errorThrown);  
+		            }
+		        });
+				
+				});
+			}
+			
+			function redirectToCart(){
+		     var listText=cartItemList[0].id;
+				$.getScript("static/js/config.js", function(){
+					var baseURL = appConfig.service_application;
+						$.ajax({
+			            type: "POST",
+			            dataType:"json",
+			            cache: false,
+			            url: baseURL + '/addCartItems',
+			            contentType : "application/json; charset=utf-8",
+			            data:JSON.stringify({
+			            	   "cartId" : 1,
+			            	    "itemIds":[{
+			            	    	"itemId":listText,
+			            	    	"quantity":20
+			            	    	}]
+			            	    	
+			            	    
+			            	}),
+			            success: function(data, textStatus, jqXHR){
+			            	// $('#etd').children().prop('disabled',false);
+			            	console.log(data);
+			            	if(data.status == "success") {
+								alert("List of Items Added into Cart.");
+								location.reload(true);
+							} else {
+								alert("Something went wrong.");
+							}
+			            	
+			            	/* $('#etd').hide();
+			                tempObj = data;
+			                $("#nonCatalog").show();
+			                $('#selected').hide();
+			                $('#selected').append('<option value=""> -- Select option --  </option>');
+			                $.each(data, function(index, value) {
+								$('#selected').append('<option value="' + value.id + '">' + value.name + '</option>');
+							}) */               
+			            },
+			            error: function(jqXHR, textStatus, errorThrown){
+			                console.log(errorThrown);  
+			            }
+			        });
+					
+					});
+				
+			}
+			 var checkedProjectList=[];
+		        function onChange(e) {
+		        	var arryList =[];
+		        	checkedProjectList= this.selectedKeyNames().join(", ");
+		        	console.log("The selected product ids are: [{" + this.selectedKeyNames().join(", ") + "}]" );
+		            //kendoConsole.log("The selected product ids are: [" + this.selectedKeyNames().join(", ") + "]");
+		        };
 		</script>
 </body>
 

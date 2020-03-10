@@ -54,6 +54,11 @@ public class PurchaseOrderController {
 		//model.addAttribute("POViewCart","active");
 		return "reports";
 	}
+	@RequestMapping("/reservations")
+	public String viewReservations() {
+		//model.addAttribute("POViewCart","active");
+		return "reservations";
+	}
 	
 	
 }

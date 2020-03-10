@@ -221,7 +221,7 @@
 						                    { field:" teritory", title:"Teritory" },
 						                    { field:" market",title:"Market" },
 						                    { field:" poStatus", title:"PoStatus" ,width: "120px",customBoolEditor1},
-						                    
+						                    { command: ["edit", "destroy"], title: "&nbsp;", width: "200px" }
 				                             ],
 				                   editable: "popup"
 				                   		});
