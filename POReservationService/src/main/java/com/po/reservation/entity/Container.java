@@ -16,7 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "table")
+@Table(name = "container")
 public class Container {
 
 	@Id
@@ -29,7 +29,7 @@ public class Container {
 	@Column(name = "sub_market")
 	private String subMarket;
 	@Column(name = "local_market")
-	private String locatMarket;
+	private String localMarket;
 	@Column(name = "container_code")
 	private String containerCode;
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -90,12 +90,20 @@ public class Container {
 		this.subMarket = subMarket;
 	}
 
-	public String getLocatMarket() {
-		return locatMarket;
+	public String getLocalMarket() {
+		return localMarket;
 	}
 
-	public void setLocatMarket(String locatMarket) {
-		this.locatMarket = locatMarket;
+	public void setLocalMarket(String localMarket) {
+		this.localMarket = localMarket;
+	}
+
+	public String getFuzeReservationId() {
+		return fuzeReservationId;
+	}
+
+	public void setFuzeReservationId(String fuzeReservationId) {
+		this.fuzeReservationId = fuzeReservationId;
 	}
 
 	public String getContainerCode() {
