@@ -1,5 +1,8 @@
 package com.fuze.po.PurchaseOrderAppServices.service;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -7,10 +10,16 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fuze.po.PurchaseOrderAppServices.config.GenerateExcel;
 import com.fuze.po.PurchaseOrderAppServices.entity.POItems;
 import com.fuze.po.PurchaseOrderAppServices.entity.PORequest;
 import com.fuze.po.PurchaseOrderAppServices.entity.Project;
@@ -98,9 +107,15 @@ public class POService {
 				poRequestInfoList.add(poRequestInfo);
 			}
 		}
-		return poRequestInfoList;
+    	return poRequestInfoList;
 	}
 
+	public List<PORequestInfo> generatePoRequestExcel() {
+		List<PORequestInfo> poRequestInfoList = getPOList();
+		GenerateExcel.generatePOItemsExcel(poRequestInfoList);
+		return poRequestInfoList;
+	}
+	
 	private PORequestInfo populatePOInfo(PORequest po) {
 		PORequestInfo poRequestInfo = new PORequestInfo();
 		poRequestInfo.setId(po.getId());
