@@ -29,6 +29,7 @@ import com.fuze.po.PurchaseOrderAppServices.info.ItemInfo;
 import com.fuze.po.PurchaseOrderAppServices.info.PORequestInfo;
 import com.fuze.po.PurchaseOrderAppServices.info.ProjectInfo;
 import com.fuze.po.PurchaseOrderAppServices.info.ResponseInfo;
+import com.fuze.po.PurchaseOrderAppServices.repository.CartItemRepository;
 import com.fuze.po.PurchaseOrderAppServices.repository.ItemRepository;
 import com.fuze.po.PurchaseOrderAppServices.repository.POItemsRepository;
 import com.fuze.po.PurchaseOrderAppServices.repository.PORequestRepository;
@@ -52,6 +53,9 @@ public class POService {
 	
 	@Autowired
 	private ProjectRepository projectRepository;
+	
+	@Autowired
+    private CartItemRepository cartItemRepository;
 
 	public ResponseInfo createPoRequest(PORequestForm requestForm) {
 		ResponseInfo response = new ResponseInfo();
@@ -71,6 +75,7 @@ public class POService {
 				poItems.setPoRequest(poRequest);
 				poItemRepository.save(poItems);
 			}
+			cartItemRepository.deleteAllItemsByCartId();
 		} catch (Exception e) {
 			response.setStatus(false);
 		}
