@@ -75,8 +75,7 @@
             <div class="padding-10">
 			<div class="row">
 			  <div class="col-sm-2 d-inline">
-			  
-			  <a href="#"   onclick="getRequestData()"  class="btn btn-danger">Create PO Request </a>
+		      <a href="#"   onclick="getRequestData()"  class="btn btn-danger">Create PO Request </a>
 			  </div>
               <!-- <div class="col-sm-5 d-inline">
               <div class="form-group">
@@ -90,8 +89,11 @@
                <textarea rows="2" cols="2" class="form-control"></textarea>
                </div>
               </div> -->
-              </div>
-              </div>
+               <div class="col-sm-3 mb-3 mb-sm-0">
+               <a href="#"   onclick="generateExcel()"  class="btn btn-danger">Generate Excel </a>
+          </div>
+            </div>
+               </div>
 			<div class="table-responsive">
 			<div id="details"></div>
 			</div>
@@ -710,8 +712,7 @@ var CurrentCartList=[];
 				
 				});
 			}
-			
-			function redirectToCart(){
+					function redirectToCart(){
 		     var listText=cartItemList[0].id;
 				$.getScript("static/js/config.js", function(){
 					var baseURL = appConfig.service_application;

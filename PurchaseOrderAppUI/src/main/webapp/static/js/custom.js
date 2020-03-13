@@ -263,6 +263,27 @@ function readData(options){
 	
 }
 
+function generateExcel(){
+	var host_name;
+	 $.getScript("static/js/config.js", function(){
+		 host_name = appConfig.service_application;
+		 $.ajax({
+			 url: host_name + "/RePO/generatePORequestExcel",
+	        contentType: "application/json",
+	        type:"GET",
+	        success: function (result) {
+	        
+	        
+	        },
+	        error: function (result) {
+	        	options.error(result);
+	         }
+	       });
+	 })
+	
+}
+
+
 
 $('#filter').on('input', function (e) {
     var grid = $('#grid').data('kendoGrid');
