@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.po.reservation.exception.ContainerResourceNotFoundException;
 import com.po.reservation.form.ContainerForm;
+import com.po.reservation.form.ContainerSearchForm;
 import com.po.reservation.info.ContainerInfo;
 import com.po.reservation.service.ContainerService;
 
@@ -44,6 +45,19 @@ public class ContainerController {
 			logger.error("Exception in searchContainers method" + e.getMessage());
 		}*/
 		logger.info("Completed searchContainers functionality in Container controller");
+		return new ResponseEntity<List<ContainerInfo>>(containerList, HttpStatus.OK);
+	}
+	
+	@PostMapping("/searchByCheckBox/container")
+	public ResponseEntity<List<ContainerInfo>> searchContainersBasedOnCheckBox(@RequestBody final ContainerSearchForm containerSearchForm) {
+		logger.info("Entering into searchContainersBasedOnCheckBox method in Container controller");
+		List<ContainerInfo> containerList = new ArrayList<>();
+		try {
+			containerList = containerService.searchContainersBasedOnCheckBox(containerSearchForm);
+		} catch (Exception e) {
+			logger.error("Exception in searchContainersBasedOnCheckBox method" + e.getMessage());
+		}
+		logger.info("Completed searchContainersBasedOnCheckBox functionality in Container controller");
 		return new ResponseEntity<List<ContainerInfo>>(containerList, HttpStatus.OK);
 	}
 }

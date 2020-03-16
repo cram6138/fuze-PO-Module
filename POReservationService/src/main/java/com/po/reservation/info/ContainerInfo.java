@@ -4,15 +4,15 @@ public class ContainerInfo {
 
 	private int id;
 	private String containerCode;
-	private String MROrderCode;
-	private String MRSource;
+	private String mrOrderCode;
+	private String mrSource;
 	private String d;
 	private String fuzeReservationId;
 	private String fuzeProjectId;
 	private String PSProject;
 	private String pslc;
-	private String reservedUsername;
-	private String userByDate;
+	private String reservedBy;
+	private String userBy;
 	private String reservationCreationDate;
 	private String fuzeStatus;
 	private String catsStatus;
@@ -35,20 +35,20 @@ public class ContainerInfo {
 		this.containerCode = containerCode;
 	}
 
-	public String getMROrderCode() {
-		return MROrderCode;
+	public String getMrOrderCode() {
+		return mrOrderCode;
 	}
 
-	public void setMROrderCode(String mROrderCode) {
-		MROrderCode = mROrderCode;
+	public void setMrOrderCode(String mrOrderCode) {
+		this.mrOrderCode = mrOrderCode;
 	}
 
-	public String getMRSource() {
-		return MRSource;
+	public String getMrSource() {
+		return mrSource;
 	}
 
-	public void setMRSource(String mRSource) {
-		MRSource = mRSource;
+	public void setMrSource(String mrSource) {
+		this.mrSource = mrSource;
 	}
 
 	public String getD() {
@@ -91,20 +91,20 @@ public class ContainerInfo {
 		this.pslc = pslc;
 	}
 
-	public String getReservedUsername() {
-		return reservedUsername;
+	public String getReservedBy() {
+		return reservedBy;
 	}
 
-	public void setReservedUsername(String reservedUsername) {
-		this.reservedUsername = reservedUsername;
+	public void setReservedBy(String reservedBy) {
+		this.reservedBy = reservedBy;
 	}
 
-	public String getUserByDate() {
-		return userByDate;
+	public String getUserBy() {
+		return userBy;
 	}
 
-	public void setUserByDate(String userByDate) {
-		this.userByDate = userByDate;
+	public void setUserBy(String userBy) {
+		this.userBy = userBy;
 	}
 
 	public String getReservationCreationDate() {
