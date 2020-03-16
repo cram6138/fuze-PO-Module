@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -33,7 +34,8 @@ public class AuthenticationController {
 	private MessageSource messageSource;
 	
 	@PostMapping("/login")
-	public String getToken(@ModelAttribute("loginForm") UserCredential login, HttpServletRequest request) {
+	public String getToken(@ModelAttribute("loginForm") UserCredential login, 
+			HttpServletRequest request, HttpServletResponse response) {
 		
 		final AuthenticationToken authenticationToken = new AuthenticationToken();
 		User user = null;
@@ -58,6 +60,9 @@ public class AuthenticationController {
 		this.populateAuthentionToken(authenticationToken, user);
 		request.getSession(true).setAttribute("currentUserInfo", user);
 		//return authenticationToken;
+		response.setHeader("token", authenticationToken.getAccessToken());
+		request.getSession().setAttribute("token", authenticationToken.getAccessToken());
+		request.getSession().setAttribute("username", user.getUsername());
 		return "redirect:/index";
 	}
 
@@ -67,7 +72,7 @@ public class AuthenticationController {
 		final String accessToken = Jwts.builder().setSubject(user.getUsername()).setIssuedAt(new Date())
 				.setExpiration(getExpirationDate()).claim("id", user.getId()).claim("username", user.getUsername())
 				.claim("roles", roles).signWith(SignatureAlgorithm.HS256, "secretKey").compact();
-		authenticationToken.setAccessToken(accessToken);
+		authenticationToken.setAccessToken("Bearer " + accessToken);
 		authenticationToken.setUserInfo(userInfo);
 	}
 	

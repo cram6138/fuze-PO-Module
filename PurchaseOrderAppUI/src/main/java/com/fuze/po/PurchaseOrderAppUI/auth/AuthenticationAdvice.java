@@ -10,16 +10,16 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 public class AuthenticationAdvice {
-	
+
 	@Autowired
 	HttpServletRequest request;
 
 	@Before("execution(* com.fuze.po.PurchaseOrderAppUI.controller..*(..)))")
 	public void validateUserSession() {
 		String uri = request.getRequestURI();
-		if(!uri.equals("/") && request.getSession().getAttribute("currentUserInfo") == null) {
+		if (!uri.equals("/") && request.getSession().getAttribute("currentUserInfo") == null) {
 			throw new AuthenticationException();
 		}
 	}
-	
+
 }

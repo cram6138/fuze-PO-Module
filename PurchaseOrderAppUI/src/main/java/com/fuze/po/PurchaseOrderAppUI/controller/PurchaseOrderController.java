@@ -72,10 +72,11 @@ public class PurchaseOrderController {
 		return "reservations";
 	}
 	
-	@PostMapping("/logout")
+	@GetMapping("/logout")
 	public String logout(HttpServletRequest request) {
 		request.getSession().invalidate();
-		return "/";
+		System.out.println(request.getSession());
+		return "redirect:/";
 	}
 	
 }
