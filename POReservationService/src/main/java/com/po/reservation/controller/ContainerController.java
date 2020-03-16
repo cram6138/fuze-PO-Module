@@ -3,6 +3,8 @@ package com.po.reservation.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.po.reservation.exception.ContainerResourceNotFoundException;
 import com.po.reservation.form.ContainerForm;
 import com.po.reservation.info.ContainerInfo;
 import com.po.reservation.service.ContainerService;
@@ -28,14 +31,18 @@ public class ContainerController {
 	private ContainerService containerService;
 	
 	@PostMapping("/search/container")
-	public ResponseEntity<List<ContainerInfo>> searchContainers(@RequestBody final ContainerForm containerForm) {
+	public ResponseEntity<List<ContainerInfo>> searchContainers(@Valid @RequestBody final ContainerForm containerForm) {
 		logger.info("Entering into searchContainers method in Container controller");
 		List<ContainerInfo> containerList = new ArrayList<>();
-		try {
+		//try {
 			containerList = containerService.searchContainers(containerForm);
-		} catch (Exception e) {
+		    if(containerList.isEmpty()) {
+		    	throw new ContainerResourceNotFoundException("No Containers Found.");
+		    }           
+		//} 
+	/*	catch (Exception e) {
 			logger.error("Exception in searchContainers method" + e.getMessage());
-		}
+		}*/
 		logger.info("Completed searchContainers functionality in Container controller");
 		return new ResponseEntity<List<ContainerInfo>>(containerList, HttpStatus.OK);
 	}

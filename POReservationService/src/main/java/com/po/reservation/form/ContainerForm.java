@@ -1,5 +1,7 @@
 package com.po.reservation.form;
 
+import javax.validation.constraints.Min;
+
 public class ContainerForm {
 
 	private String territory;
@@ -8,8 +10,24 @@ public class ContainerForm {
 	private String localMarket;
 	private String containerCode;
 	private String buyer;
+	@Min(1)
 	private int projectId;
 	private String searchKey;
+
+	public ContainerForm() {}
+	
+	public ContainerForm(String territory, String market, String subMarket, String localMarket, String containerCode,
+			String buyer, @Min(0) int projectId, String searchKey) {
+		super();
+		this.territory = territory;
+		this.market = market;
+		this.subMarket = subMarket;
+		this.localMarket = localMarket;
+		this.containerCode = containerCode;
+		this.buyer = buyer;
+		this.projectId = projectId;
+		this.searchKey = searchKey;
+	}
 
 	public String getTerritory() {
 		return territory;
@@ -75,4 +93,10 @@ public class ContainerForm {
 		this.searchKey = searchKey;
 	}
 
+	@Override
+	public String toString() {
+		return "ContainerForm [territory=" + territory + ", market=" + market + ", subMarket=" + subMarket
+				+ ", localMarket=" + localMarket + ", containerCode=" + containerCode + ", buyer=" + buyer
+				+ ", projectId=" + projectId + ", searchKey=" + searchKey + "]";
+	}
 }
