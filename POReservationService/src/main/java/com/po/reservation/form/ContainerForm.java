@@ -1,6 +1,8 @@
 package com.po.reservation.form;
 
 import javax.validation.constraints.Min;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 
 public class ContainerForm {
 
