@@ -40,17 +40,17 @@ public class AuthenticationController {
 		final AuthenticationToken authenticationToken = new AuthenticationToken();
 		User user = null;
 		if(login.getUsername() == null || login.getPassword() == null) {
-			return "redirect:/*";
+			return "redirect:/";
 			//throw new InvalidRequestException();
 		} else if ((user = authenticated(login)) == null) {
-			return "redirect:/*";
+			return "redirect:/";
 			//throw new AuthenticationException();
 		}
 		
 		if(!user.isActive()) {
 			authenticationToken.setMessage("User is inactive");
 			//return authenticationToken;
-			return "redirect:/*";
+			return "redirect:/";
 		}
 		
 		if(user.getUserRoles() == null) {
