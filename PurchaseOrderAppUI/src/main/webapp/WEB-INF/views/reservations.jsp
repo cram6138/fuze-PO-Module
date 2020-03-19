@@ -358,15 +358,16 @@
               test1
                 </div>
             </li>
-               <li id="containerReserve">
-                Container Reserve/ Reserve
+               <li id="ContainerReserve">
+                Container Reserve/ UnReserve
             <div class="padding-10">
 			<div class="row">
-			  test2
-              
+			  
               </div>
               </div>
-			
+              <div class="table-responsive">
+			<div id="containerdetails"></div>
+			</div>
          </li>
         </ul>
     </div>
@@ -433,7 +434,7 @@
 
 
   <!-- Bootstrap core JavaScript-->
-  <!-- <script src="vendor/jquery/jquery.min.js"></script> -->
+  <script src="vendor/jquery/jquery.min.js"></script> 
   <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="https://demos.telerik.com/kendo-ui/content/shared/js/console.js"></script>
 
