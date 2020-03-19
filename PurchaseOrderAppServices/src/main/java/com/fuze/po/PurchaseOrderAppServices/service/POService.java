@@ -1,5 +1,8 @@
 package com.fuze.po.PurchaseOrderAppServices.service;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -7,10 +10,17 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fuze.po.PurchaseOrderAppServices.exception.PurchaseOrderResourceNotFoundException;
+import com.fuze.po.PurchaseOrderAppServices.config.GenerateExcel;
 import com.fuze.po.PurchaseOrderAppServices.entity.POItems;
 import com.fuze.po.PurchaseOrderAppServices.entity.PORequest;
 import com.fuze.po.PurchaseOrderAppServices.entity.Project;
@@ -20,6 +30,7 @@ import com.fuze.po.PurchaseOrderAppServices.info.ItemInfo;
 import com.fuze.po.PurchaseOrderAppServices.info.PORequestInfo;
 import com.fuze.po.PurchaseOrderAppServices.info.ProjectInfo;
 import com.fuze.po.PurchaseOrderAppServices.info.ResponseInfo;
+import com.fuze.po.PurchaseOrderAppServices.repository.CartItemRepository;
 import com.fuze.po.PurchaseOrderAppServices.repository.ItemRepository;
 import com.fuze.po.PurchaseOrderAppServices.repository.POItemsRepository;
 import com.fuze.po.PurchaseOrderAppServices.repository.PORequestRepository;
@@ -43,6 +54,9 @@ public class POService {
 	
 	@Autowired
 	private ProjectRepository projectRepository;
+	
+	@Autowired
+    private CartItemRepository cartItemRepository;
 
 	public ResponseInfo createPoRequest(PORequestForm requestForm) {
 		ResponseInfo response = new ResponseInfo();
@@ -62,6 +76,7 @@ public class POService {
 				poItems.setPoRequest(poRequest);
 				poItemRepository.save(poItems);
 			}
+			cartItemRepository.deleteAllItemsByCartId();
 		} catch (Exception e) {
 			response.setStatus(false);
 		}
@@ -82,8 +97,11 @@ public class POService {
 	}
 
 	public List<PORequestInfo> getPOList() {
-		List<PORequest> poRequestList = poRequestRepo.findAll();
-		List<PORequestInfo> poRequestInfoList = new ArrayList<PORequestInfo>();
+		  List<PORequest> poRequestList = poRequestRepo.findAll();
+	      List<PORequestInfo> poRequestInfoList = new ArrayList<PORequestInfo>();
+		if(poRequestList ==null || poRequestList.isEmpty()) {
+	    	throw new PurchaseOrderResourceNotFoundException("PurchaseOrders NotFound.");
+	      }
 		if (poRequestList != null && !poRequestList.isEmpty()) {
 			for (PORequest po : poRequestList) {
 				PORequestInfo poRequestInfo = populatePOInfo(po);
@@ -98,9 +116,15 @@ public class POService {
 				poRequestInfoList.add(poRequestInfo);
 			}
 		}
-		return poRequestInfoList;
+    	return poRequestInfoList;
 	}
 
+	public List<PORequestInfo> generatePoRequestExcel() {
+		List<PORequestInfo> poRequestInfoList = getPOList();
+		GenerateExcel.generatePOItemsExcel(poRequestInfoList);
+		return poRequestInfoList;
+	}
+	
 	private PORequestInfo populatePOInfo(PORequest po) {
 		PORequestInfo poRequestInfo = new PORequestInfo();
 		poRequestInfo.setId(po.getId());

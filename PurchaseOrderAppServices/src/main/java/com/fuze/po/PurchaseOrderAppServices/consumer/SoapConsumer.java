@@ -44,13 +44,14 @@ public class SoapConsumer {
 		logger.info("Entering in SoapConsumer class in getCartItemsDetails method");
 		webServiceTemplate = new WebServiceTemplate(jaxb2Marshaller);
 		CartItemsDetailsResponse cartItemsDetailsResponse = null;
-		try {
+		//try {
 			cartItemsDetailsResponse = (CartItemsDetailsResponse) webServiceTemplate
 					.marshalSendAndReceive(cartItemsUrl + "/getCartDetails", request);
 
-		} catch (Exception e) {
-			logger.error("Exception in getCartItemsDetails method" + e.getMessage());
-		}
+		/*
+		  } catch (Exception e) {
+		  logger.error("Exception in getCartItemsDetails method" + e.getMessage()); }
+		 */
 		return cartItemsDetailsResponse;
 	}
 
@@ -58,12 +59,12 @@ public class SoapConsumer {
 		webServiceTemplate = new WebServiceTemplate(jaxb2Marshaller);
 		logger.info("Entering in SoapConsumer class in addPORequest method");
 		AddPODetailsResponse addPODetailsResponse = null;
-		try {
+		//try {
 			addPODetailsResponse = (AddPODetailsResponse) webServiceTemplate
 					.marshalSendAndReceive(cartItemsUrl + "/createPO", request);
-		} catch (Exception e) {
+		/*} catch (Exception e) {
 			logger.error("Exception in addPORequest method" + e.getMessage());
-		}
+		}*/
 		return addPODetailsResponse;
 	}
 
@@ -71,12 +72,12 @@ public class SoapConsumer {
 		logger.info("Entering in SoapConsumer class in getPOItemsList method");
 		webServiceTemplate = new WebServiceTemplate(jaxb2Marshaller);
 		POListResponse poListResponse = null;
-		try {
+		//try {
 			poListResponse = (POListResponse) webServiceTemplate
 					.marshalSendAndReceive(cartItemsUrl + "/poList",request);
-		} catch (Exception e) {
+		/*} catch (Exception e) {
 			logger.info("Exception  in getPOItemsList method" + e.getMessage());
-		}
+		}*/
 		return poListResponse;
 	}
 
@@ -84,12 +85,12 @@ public class SoapConsumer {
 		logger.info("Entering in SoapConsumer class in getPOStatus method");
 		webServiceTemplate = new WebServiceTemplate(jaxb2Marshaller);
 		POReqStatusResponse poReqStatusResponse = null;
-		try {
+		//try {
 			poReqStatusResponse = (POReqStatusResponse) webServiceTemplate
 					.marshalSendAndReceive(cartItemsUrl + "/poReqStatus", PORequest);
-		} catch (Exception e) {
+		/*} catch (Exception e) {
 			logger.info("Exception  in getPOStatus method" + e.getMessage());
-		}
+		}*/
 		return poReqStatusResponse;
 	}
 
@@ -97,12 +98,12 @@ public class SoapConsumer {
 		logger.info("Entering in SoapConsumer class in poRequestEdit method");
 		webServiceTemplate = new WebServiceTemplate(jaxb2Marshaller);
 		POReqEditResponse poReqEditResponse = null;
-		try {
+		/*try {
 			poReqEditResponse = (POReqEditResponse) webServiceTemplate
 					.marshalSendAndReceive(cartItemsUrl + "/poReqEdit", poReqEditRequest);
 		} catch (Exception e) {
 			logger.info("Exception  in poRequestEdit method" + e.getMessage());
-		}
+		}*/
 		return poReqEditResponse;
 	}
 	
@@ -110,12 +111,12 @@ public class SoapConsumer {
 		logger.info("Entering in SoapConsumer class in addCartItemsResponse method");
 		webServiceTemplate = new WebServiceTemplate(jaxb2Marshaller);
 		AddCartItemsResponse addCartItemsResponse = null;
-		try {
+		//try {
 			addCartItemsResponse = (AddCartItemsResponse) webServiceTemplate
 					.marshalSendAndReceive(cartItemsUrl + "/addCartItems", addCartItemsRequest);
-		} catch (Exception e) {
+		/*} catch (Exception e) {
 			logger.info("Exception  in addCartItemsResponse method" + e.getMessage());
-		}
+		}*/
 		return addCartItemsResponse;
 	}
 

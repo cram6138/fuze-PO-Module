@@ -38,6 +38,12 @@ public class POController {
 
 	}
 	
+	@GetMapping("/generatePORequestExcel")
+	public ResponseEntity<List<PORequestInfo>> generatePORequestExcel() {
+		return new ResponseEntity<List<PORequestInfo>>(poRequestService.generatePoRequestExcel(), HttpStatus.OK);
+
+	}
+	
 	/*
 	 * @GetMapping("/poItems/{poRequestId}") public ResponseEntity<List<ItemInfo>>
 	 * getListOfItemsByPORequestId(@PathVariable int poRequestId) { return new

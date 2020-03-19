@@ -54,9 +54,32 @@ public class Container {
 	private Date useBy;
 	@Column(name = "reservation_creation_date")
 	private Date reservationCreationDate;
+	@Column(name = "ps_project")
+	private String PSProject;
+	@Column(name = "pslc")
+	private String pslc;
+	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "container_items", joinColumns = @JoinColumn(name = "container_id"), inverseJoinColumns = @JoinColumn(name = "item_id"))
 	private Set<Item> items;
+	
+	
+
+	public String getPSProject() {
+		return PSProject;
+	}
+
+	public void setPSProject(String pSProject) {
+		PSProject = pSProject;
+	}
+
+	public String getPslc() {
+		return pslc;
+	}
+
+	public void setPslc(String pslc) {
+		this.pslc = pslc;
+	}
 
 	public int getId() {
 		return id;

@@ -15,12 +15,34 @@
 
   <!-- Custom styles for this template-->
   <link href="static/css/po-admin.min.css" rel="stylesheet">
+  <style>
+    .red-square {
+  position: fixed;
+  left: 30%;
+  top: 40%;
   
+}
+.border-left-primary:hover{
+border-left: .25rem solid #1cc88a!important;
+}
+.border-left-primary:hover a.sibling-highlight {
+color:#1cc88a;
+}
+.text-xs{
+font-size:.9rem;
+}
+  </style>
   
 
 </head>
 
 <body id="page-top">
+<%
+	/* String token = (String)session.getAttribute("token");
+	String username = (String)session.getAttribute("username");
+	Cookie cookie = new Cookie(username, token); */
+%>
+
 
   <!-- Page Wrapper -->
   <div id="wrapper">
@@ -184,7 +206,7 @@
         <!-- End of Topbar -->
 
    <!-- Begin Page Content -->
-        <div class="container-fluid">
+        <div class="container red-square">
 
           <!-- Page Heading -->
           <!-- <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -196,12 +218,12 @@
           <div class="row">
 
             <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4" onclick="PORequest">
+            <div class="col-xl-3 col-md-6 mb-4" onClick="location.href='PORequest';" style="cursor: pointer;">
               <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"><a href="PORequest">Purchase Order</a></div>
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"><a href="PORequest" class="sibling-highlight">Purchase Order</a></div>
                       
                     </div>
                     <div class="col-auto">
@@ -213,12 +235,12 @@
             </div>
 
             <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
-              <div class="card border-left-success shadow h-100 py-2" >
+            <div class="col-xl-3 col-md-6 mb-4" onClick="location.href='reservations'" style="cursor: pointer;">
+              <div class="card border-left-primary shadow h-100 py-2" >
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1"><a href="reservations">Reservations</a></div>
+                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1"><a href="reservations" class="sibling-highlight">Reservations</a></div>
                       
                     </div>
                     <div class="col-auto">
@@ -331,9 +353,13 @@
 	<!-- 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
 
   
+</div>
+</div>
+</div>
+</div>
 
      
-      <%@ include file="footer.jsp"%>
+      <%-- <%@ include file="footer.jsp"%> --%>
 
   
   <!-- End of Page Wrapper -->
@@ -356,7 +382,7 @@
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="/">Logout</a>
+          <a class="btn btn-primary" href="logout">Logout</a>
         </div>
       </div>
     </div>

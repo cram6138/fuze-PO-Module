@@ -8,7 +8,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-
   <title>PO Request - Dashboard</title>
   <link rel="stylesheet" href="static/css/kendo.default-v2.min.css" />
 
@@ -21,7 +20,8 @@
 
 <body>
 <%@ include file="header.jsp"%>
-<div class="container-fluid">        
+<div class="container-fluid">  
+<span id="popupNotification"></span>      
 <div class="row">
     <div class="card shadow mb-4" id="example">
     
@@ -90,6 +90,9 @@
                <textarea rows="2" cols="2" class="form-control"></textarea>
                </div>
               </div> -->
+              <div class="col-sm-3 mb-3 mb-sm-0">
+               <a href="#"   onclick="generateExcel()"  class="btn btn-danger">Generate Excel </a>
+          </div>
               </div>
               </div>
 			<div class="table-responsive">
@@ -101,9 +104,9 @@
                 <div>
                 <div id="tabstrip">
                             <ul>
-                             <li class="k-state-active"> Catalog</li>
-                             <li> Equipment Planning </li>
-                             <li> View Cart </li>
+                             <li id="tab1" class="k-state-active"> Catalog</li>
+                             <li id="tab2"> Equipment Planning </li>
+                             <li id="tab3"> View Cart </li>
                             </ul>
                            <div>
                            <div class="row">
@@ -151,7 +154,7 @@
 							    
 							  </div>
 							  <div class="col-padding-margin-5">
-							  <table  class="table table-striped">
+							  <table  class="table table-bordered table-sm">
 						<tr>
 							<th>Id</th>
 							<th>Name</th>
@@ -169,11 +172,12 @@
 							<div id="ItemListData"></div>
 							</div>
 							<div class="col-sm-3">
-							<button type="button" class="btn btn-primary"  onclick="redirectToCart()">View Cart</button>
+							<button type="button" id="addCart" class="btn btn-primary"  onclick="redirectToCart()">Add to Cart</button>
 							</div>
 						</div>
-		        </div>
-		        </div>
+		        			</div>
+		        			</div>
+		        			
 		       
                             <div>
                                 <span class="sunny">&nbsp;</span>
@@ -182,70 +186,74 @@
                                     <p>Sunny weather in London.</p>
                                 </div>
                             </div>
-                            <div>
+                           <div>
                              <div class="row">
-			  					<div class="col-sm-2">
-							    <div class="form-group">
-			                <div><a href="#"  onclick="listofItem()" class="btn btn-danger ">Project List</a></div>
-			  				</div>
-			  			   </div>
-			  			   <div class="col-sm-10">
-			  			   
-			  		
-    <div class="form-row">
-							    <div class="col">
-							      <input type="text" class="form-control"  id="poName" placeholder="Name Of the PO">
-							    </div>
-							    <div class="col">
-							      <input type="text" class="form-control"  id="teritory" placeholder="Enter Teritory">
-							    </div>
-							    <div class="col">
-							      <input type="text" class="form-control"  id="market_po" placeholder="Enter Market">
-							    </div>
-							    <div class="col">
-							      <input type="text" class="form-control" id="pslc" placeholder="Pslc">
-							    </div>
-							    <div class="col">
-							      <input type="text" class="form-control" id="siteTracker" placeholder="Site Tracker">
-							    </div>
-							   
-					</div>		    
+			  					<div class="col-sm-3">
+			  					 <form action="/POsList" id="addPOForm">
+							<div class="form-group">
+							<label>Enter PO Name:</label>
+        	<input type="text" class="form-control"  id="poName" placeholder="Enter PO Name">
+        </div>
+		<div class="form-group">
+		<label>Enter Teritory:</label>
+            <input type="text" class="form-control"  id="teritory" placeholder="Enter Teritory">
+        </div>
+        <div class="form-group">
+        <label>Enter Market:</label>
+            <input type="text" class="form-control"  id="market_po" placeholder="Enter Market">
+        </div>
+        <div class="form-group">
+        <label>Enter Pslc:</label>
+            <input type="text" class="form-control" id="pslc" placeholder="Pslc">
+        </div>
+        <div class="form-group">
+        <label>Enter Site Tracker:</label>
+            <input type="text" class="form-control" id="siteTracker" placeholder="Site Tracker">
+        </div>
+        <div class="form-group">
+          <input type="button"  onclick="listofItem()" class="btn btn-danger" value="Select ProjectList" />
+			               
+        	<input type="button" id="addPO" class="btn btn-info" value="Generate PO" />
+		</div>		
+				
+        </form>
+        </div>	
+			  				<div class="col-sm-9">
+          
+							<table  class="table-responsive table table-bordered table-sm">
+								<tr>
+								<th>Id</th>
+								<th>Name</th>
+								<th>Contract Id</th>
+								<th data-type="date">Due Date</th>
+								<th>Ship To Id</th>
+								<th>Activity</th>
+								<th>Comments</th>
+								<th>Model</th>
+								<th>Description</th>
+								<th>Price</th>
+								<th>In Stock</th>
+								<th>Quantity</th>
+			
+								</tr>
+							<tbody id="records_table"></tbody>
+							</table>
+									    
 							  </div>
 				    	</div>
- 				<form action="/POsList" id="addPOForm">
-					<table  class="table table-striped">
-						<tr>
-							<th>Id</th>
-							<th>Name</th>
-							<th>Contract Id</th>
-							<th data-type="date">Due Date</th>
-							<th>Ship To Id</th>
-							<th>Activity</th>
-							<th>Comments</th>
-							<th>Model</th>
-							<th>Description</th>
-							<th>Price</th>
-							<th>In Stock</th>
-							<th>Quantity</th>
-			
-						</tr>
-						<tbody id="records_table">
-						</tbody>
-					</table>
-					<input type="button" id="addPO"
-						style="margin-left: 45%; color: white; background-color: blue;"
-						value="SUBMIT" />
-				</form>
+ 				
+           </div>
+           
            </div>
                             </div>
-                </div>
+               
             </li>
-           
-        </ul>
+         	</ul>
+        </div>
+        </div>
     </div>
     </div>
-      </div>
-      </div>
+      
         <!-- /.container-fluid -->
 	<%@ include file="footer.jsp"%>
  
@@ -261,7 +269,7 @@
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">Ã—</span>
+            <span aria-hidden="true">×</span>
           </button>
         </div>
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
@@ -323,7 +331,7 @@
 			</div>
 	 </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal1" onclick="closeModel()">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal1" onclick="closeModel()">Submit</button>
       </div>
     </div>
 </div>
@@ -347,7 +355,21 @@
     </div>
   </div>
 
-
+<div id="elementToasert" aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px;">
+  <div class="toast" style="position: absolute; top: 0; right: 0;">
+    <div class="toast-header">
+      <img src="..." class="rounded mr-2" alt="...">
+      <strong class="mr-auto">Bootstrap</strong>
+      <small>11 mins ago</small>
+      <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="toast-body">
+      Hello, world! This is a toast message.
+    </div>
+  </div>
+</div>
 
   <!-- Bootstrap core JavaScript-->
   <!-- <script src="vendor/jquery/jquery.min.js"></script> -->
@@ -370,20 +392,31 @@
   <!-- <script src="js/demo/chart-pie-demo.js"></script> -->
 
 <script>
+var tabToActivate1 = $("#tab1");
+var tabToActivate2 = $("#tab2");
+var tabToActivate3 = $("#tab3");
 var cartItemList=[];
 var CurrentCatalogData =[];
 var CurrentCartList=[];
-			$(document).ready(
+var currentSelectedtype ="";
+var cart="";
+var oldValue = [];
+var oldValueIds=[];
+var tempObj;
+var popupNotification = $("#popupNotification").kendoNotification({
+		 position: {
+             pinned: true,
+             top: 30,
+             right: 30
+         }
+         }).data("kendoNotification");
+		$(document).ready(
 					function() {
-						var tempObj;
-						
-						var oldValue = [];
-						var oldValueIds=[];
-						$("#nonCatalog").hide();
+	$("#nonCatalog").hide();
+						$("#addCart").hide();
 						$.getScript("static/js/config.js", function(){
-							
 						var baseURL = appConfig.service_application;
-						$.ajax({
+			        	$.ajax({
 							url : baseURL+'/getCartItemsDetails',
 							type : 'POST',
 							dataType : "json",
@@ -427,6 +460,7 @@ var CurrentCartList=[];
 								$('#records_table').append(trHTML);
 							}
 						});
+						
 						$("#addPO").on("click", function() {
 							var poName=$("#poName").val();
 							var teritory=$("#teritory").val();
@@ -448,16 +482,25 @@ var CurrentCartList=[];
 									"siteTracker": siteTracker,
 									"poStatus": "poStatus",
 									"poitems" : oldValue,
-									"projectIds" : [2]
+									"projectIds" :[2]
+									//"projectIds" :[checkedProjectList.toString()]
 							
 						}),
 								success : function(response) {
 									console.log(response);
 									if(response.status == true) {
-										alert("PO Request Created Successfuly.");
-										location.reload(true)
+										//alert("PO Request Created Successfuly.");
+					                    popupNotification.show("PO Request Created Successfuly", "info");
+										//var refreshGrid =$("#grid").data("kendoGrid");
+										//$("#details").data("kendoGrid").refresh();
+										//refreshGrid.refresh();
+										//selectedPODetail();
+										//openPODetail();
+										//clearCart();
+										location.reload(true);
 									} else {
-										alert("Something went wrong.");
+										popupNotification.show("Something went wrong", "error");
+										//alert("Something went wrong.");
 									}
 								}
 							})
@@ -475,6 +518,7 @@ var CurrentCartList=[];
 							} else if (selectedType == 'catalog') {
 								getCatalogDropdown(baseURL);
 							}
+							currentSelectedtype=selectedType;
 							
 						})
 						
@@ -494,6 +538,7 @@ var CurrentCartList=[];
 	                $("#isListItems").show();
 	                $('#selected').show();
 	                $('#selected').empty();
+	                $("#addCart").show();
 	                $('#selected').append('<option value=""> -- Select option -- </option>');
 	                $.each(data, function(index, value) {
 						$('#selected').append('<option value="' + value.id + '">' + value.name + '</option>');
@@ -587,6 +632,7 @@ var CurrentCartList=[];
 							var baseURL = appConfig.service_application;
 							 $("#nonCatalog").show();
 				                $('#selected').hide();
+				                $("#addCart").show();
 							}
 						
 						function geteQuoteDropdown(baseURL) {
@@ -604,6 +650,7 @@ var CurrentCartList=[];
 						                $("#isListItems").show();
 					                tempObj = data;
 					                $('#selected').empty();
+					                $("#addCart").show();
 					                $('#selected').append('<option value=""> -- Select option --  </option>');
 					                $.each(data, function(index, value) {
 										$('#selected').append('<option value="' + value.id + '">' + value.name + '</option>');
@@ -712,7 +759,27 @@ var CurrentCartList=[];
 			}
 			
 			function redirectToCart(){
-		     var listText=cartItemList[0].id;
+				var listText=[];
+				var CartList={};
+				if(cart== ""){
+					if(currentSelectedtype=="catalog"){
+						listText.push('{"itemId":' + cartItemList[0].id +',"quantity":'+cartItemList[0].vendorId+'}');
+							
+					}else{
+						$.each(cartItemList, function(index, value) {
+					    	 listText.push('{"itemId":' + value.items.id +',"quantity":'+value.quantity+'}');	
+							})
+					}
+					//var obj={};
+					//obj= JSON.parse('{"cartId":1,"itemIds":['+listText+']}');
+				var	obj= '{"cartId":1,"itemIds":['+listText+']}';
+					//var coverJson=[];
+					//coverJson.push(obj);
+				}
+				
+				//console.log(cartItemList);
+				
+			//	alert(cart);
 				$.getScript("static/js/config.js", function(){
 					var baseURL = appConfig.service_application;
 						$.ajax({
@@ -721,33 +788,23 @@ var CurrentCartList=[];
 			            cache: false,
 			            url: baseURL + '/addCartItems',
 			            contentType : "application/json; charset=utf-8",
-			            data:JSON.stringify({
-			            	   "cartId" : 1,
-			            	    "itemIds":[{
-			            	    	"itemId":listText,
-			            	    	"quantity":20
-			            	    	}]
-			            	    	
-			            	    
-			            	}),
+			            data:obj,
+			            textStatus:"Success",
 			            success: function(data, textStatus, jqXHR){
-			            	// $('#etd').children().prop('disabled',false);
-			            	console.log(data);
 			            	if(data.status == "success") {
-								alert("List of Items Added into Cart.");
-								location.reload(true);
+			            		//$('#elementToasert').toast('show')
+			            		// var d = new Date();
+			                  //  popupNotification.show(kendo.toString(d, 'HH:MM:ss.') + kendo.toString(d.getMilliseconds(), "000"), "error");
+			             
+			            	popupNotification.show("List of Items Added into Cart.", "info");
+								//alert("List of Items Added into Cart.");
+								//selectedPODetail();
+								$("#tabstrip").kendoTabStrip().data("kendoTabStrip").activateTab(tabToActivate3);
+								getCartItemList1();
 							} else {
-								alert("Something went wrong.");
+								popupNotification.show("Something went wrong", "error");
+								//alert("Something went wrong.");
 							}
-			            	
-			            	/* $('#etd').hide();
-			                tempObj = data;
-			                $("#nonCatalog").show();
-			                $('#selected').hide();
-			                $('#selected').append('<option value=""> -- Select option --  </option>');
-			                $.each(data, function(index, value) {
-								$('#selected').append('<option value="' + value.id + '">' + value.name + '</option>');
-							}) */               
 			            },
 			            error: function(jqXHR, textStatus, errorThrown){
 			                console.log(errorThrown);  
@@ -764,6 +821,56 @@ var CurrentCartList=[];
 		        	console.log("The selected product ids are: [{" + this.selectedKeyNames().join(", ") + "}]" );
 		            //kendoConsole.log("The selected product ids are: [" + this.selectedKeyNames().join(", ") + "]");
 		        };
+		        function getCartItemList1(){
+		        	var tempObj;
+					$.getScript("static/js/config.js", function(){
+						var baseURL = appConfig.service_application;
+			        	$.ajax({
+							url : baseURL+'/getCartItemsDetails',
+							type : 'POST',
+							dataType : "json",
+							data : JSON.stringify({
+								"id" : 1
+							}),
+							contentType : "application/json; charset=utf-8",
+							success : function(response) {
+								console.log(response);
+								var trHTML = '';
+								$.each(response.cartitems,
+										function(i, ListData) {
+											trHTML += '<tr><td>'
+													+ ListData.item.id
+													+ '</td><td>'
+													+ ListData.item.name
+													+ '</td><td>'
+													+ ListData.item.contractId
+													+ '</td><td>'
+													+ ListData.item.dueDate
+													+ '</td><td>'
+													+ ListData.item.shipToId
+													+ '</td><td>'
+													+ ListData.item.activity
+													+ '</td><td>'
+													+ ListData.item.comments
+													+ '</td><td>'
+													+ ListData.item.model
+													+ '</td><td>'
+													+ ListData.item.description
+													+ '</td><td>'
+													+ ListData.item.price
+													+ '</td><td>'
+													+ ListData.item.inStock
+													+ '</td><td>'
+													+ ListData.quantity
+													+ '</td></tr>';
+											oldValue.push(ListData.item.id)
+										});
+								$('#records_table').empty();
+								$('#records_table').append(trHTML);
+							}
+						});
+		        	});
+		        }
 		</script>
 </body>
 

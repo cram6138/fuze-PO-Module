@@ -283,6 +283,16 @@
                 My Reservations
                 <div class="row">
                 <div class="col-sm-12">
+                <div id="details"></div>
+                </div>
+                
+        </div>
+            </li>
+            <li id="SiteProjectDetails">
+                Container Search / Reserve
+            <div class="padding-10">
+			<div class="row">
+			  <div class="col-sm-12">
                 
                  <form class="user">
                <div class="form-group row">
@@ -336,33 +346,26 @@
           
         </div>
         </form>
-       
+       <div id="grid"></div>
         
         </div>
-        </div>
-            </li>
-            <li id="SiteProjectDetails">
-                Container Search / Reserve
-            <div class="padding-10">
-			<div class="row">
-			  
               </div>
               </div>
 			<div class="table-responsive">
-			<div id="details"></div>
+		Test	
 			</div>
          </li>
             <li id="PORequestDetails">
                 Container Details
                 <div>
-              test1
+              <div id="childPart"></div>
                 </div>
             </li>
                <li id="containerReserve">
-                Container Reserve/ Reserve
-            <div class="padding-10">
-			<div class="row">
-			  test2
+                Container Reserve/ Un Reserve
+            <div>
+			<div>
+			<div id="grid1"></div>
               
               </div>
               </div>
