@@ -58,7 +58,7 @@ public class AuthenticationController {
 		}
 		
 		this.populateAuthentionToken(authenticationToken, user);
-		request.getSession(true).setAttribute("currentUserInfo", user);
+		request.getSession(true).setAttribute("currentUserInfo", populateUserInfo(user));
 		//return authenticationToken;
 		response.setHeader("token", authenticationToken.getAccessToken());
 		request.getSession().setAttribute("token", authenticationToken.getAccessToken());
