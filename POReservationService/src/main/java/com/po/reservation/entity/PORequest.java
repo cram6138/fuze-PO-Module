@@ -14,6 +14,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * @author Bhajuram.c
  *
@@ -40,6 +42,7 @@ public class PORequest {
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "po_projects", joinColumns = @JoinColumn(name = "po_request_id"), inverseJoinColumns = @JoinColumn(name = "project_id"))
+	@JsonIgnore
 	private Set<Project> projects;
 
 	public int getId() {

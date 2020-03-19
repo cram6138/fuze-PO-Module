@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * @author Bhajuram.c
  *
@@ -47,6 +49,7 @@ public class Project {
 	private String teritory;
 
 	@ManyToMany(mappedBy = "projects")
+	@JsonIgnore
 	private Set<PORequest> porequests;
 
 	public int getId() {
@@ -153,12 +156,21 @@ public class Project {
 		this.teritory = teritory;
 	}
 
+	public Set<PORequest> getPorequests() {
+		return porequests;
+	}
+
+	public void setPorequests(Set<PORequest> porequests) {
+		this.porequests = porequests;
+	}
+
 	@Override
 	public String toString() {
 		return "Project [id=" + id + ", siteName=" + siteName + ", projectName=" + projectName + ", market=" + market
 				+ ", subMarket=" + subMarket + ", projectType=" + projectType + ", fuzeProject=" + fuzeProject
 				+ ", pslc=" + pslc + ", projectStatus=" + projectStatus + ", type=" + type + ", customProjectType="
-				+ customProjectType + ", siteTracker=" + siteTracker + ", teritory=" + teritory + "]";
+				+ customProjectType + ", siteTracker=" + siteTracker + ", teritory=" + teritory + ", porequests="
+				+ porequests + "]";
 	}
 
 }

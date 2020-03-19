@@ -2,6 +2,7 @@ package com.po.reservation.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,4 +62,11 @@ public class ContainerController {
 		logger.info("Completed searchContainersBasedOnCheckBox functionality in Container controller");
 		return new ResponseEntity<List<ContainerInfo>>(containerList, HttpStatus.OK);
 	}
+	
+	@GetMapping("/getContainerDetails")
+	public Map<String, Object> getContainerDetails() {
+		logger.info("Entering into gettingContainerDetails method in Container controller");
+		return containerService.getContainerDetails();
+	}
+	
 }
