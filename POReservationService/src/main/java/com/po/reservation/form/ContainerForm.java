@@ -12,7 +12,6 @@ public class ContainerForm {
 	private String localMarket;
 	private String containerCode;
 	private String buyer;
-	@Min(1)
 	private int projectId;
 	private String searchKey;
 

@@ -1,23 +1,72 @@
 package com.po.reservation.info;
 
+import java.util.Date;
+import java.util.List;
+
+
 public class ContainerInfo {
 
 	private int id;
 	private String containerCode;
-	private String mrOrderCode;
-	private String mrSource;
-	private String d;
+	private String MROrderCode;
+	private String MRSource;
+	private String territory;
 	private String fuzeReservationId;
-	private String fuzeProjectId;
+	private int fuzeProjectId;
+	private String projectName;
 	private String PSProject;
 	private String pslc;
-	private String reservedBy;
-	private String userBy;
-	private String reservationCreationDate;
+	private String reservedUsername;
+	private Date useByDate;
+	private Date reservationCreationDate;
 	private String fuzeStatus;
 	private String catsStatus;
-	private String location;
-	private String dateAdded;
+	private String market;
+	private String localMarket;
+	private String subMarket;
+	private int buyerId;
+	private String buyerName;
+	private List<ItemInfo> itemsInfo;
+	
+	public List<ItemInfo> getItemsInfo() {
+		return itemsInfo;
+	}
+
+	public void setItemsInfo(List<ItemInfo> itemsInfo) {
+		this.itemsInfo = itemsInfo;
+	}
+
+	public String getTerritory() {
+		return territory;
+	}
+
+	public void setTerritory(String territory) {
+		this.territory = territory;
+	}
+
+	public String getMarket() {
+		return market;
+	}
+
+	public void setMarket(String market) {
+		this.market = market;
+	}
+
+	public String getLocalMarket() {
+		return localMarket;
+	}
+
+	public void setLocalMarket(String localMarket) {
+		this.localMarket = localMarket;
+	}
+
+	public String getSubMarket() {
+		return subMarket;
+	}
+
+	public void setSubMarket(String subMarket) {
+		this.subMarket = subMarket;
+	}
 
 	public int getId() {
 		return id;
@@ -35,28 +84,20 @@ public class ContainerInfo {
 		this.containerCode = containerCode;
 	}
 
-	public String getMrOrderCode() {
-		return mrOrderCode;
+	public String getMROrderCode() {
+		return MROrderCode;
 	}
 
-	public void setMrOrderCode(String mrOrderCode) {
-		this.mrOrderCode = mrOrderCode;
+	public void setMROrderCode(String mROrderCode) {
+		MROrderCode = mROrderCode;
 	}
 
-	public String getMrSource() {
-		return mrSource;
+	public String getMRSource() {
+		return MRSource;
 	}
 
-	public void setMrSource(String mrSource) {
-		this.mrSource = mrSource;
-	}
-
-	public String getD() {
-		return d;
-	}
-
-	public void setD(String d) {
-		this.d = d;
+	public void setMRSource(String mRSource) {
+		MRSource = mRSource;
 	}
 
 	public String getFuzeReservationId() {
@@ -65,14 +106,6 @@ public class ContainerInfo {
 
 	public void setFuzeReservationId(String fuzeReservationId) {
 		this.fuzeReservationId = fuzeReservationId;
-	}
-
-	public String getFuzeProjectId() {
-		return fuzeProjectId;
-	}
-
-	public void setFuzeProjectId(String fuzeProjectId) {
-		this.fuzeProjectId = fuzeProjectId;
 	}
 
 	public String getPSProject() {
@@ -91,27 +124,62 @@ public class ContainerInfo {
 		this.pslc = pslc;
 	}
 
-	public String getReservedBy() {
-		return reservedBy;
+	public String getReservedUsername() {
+		return reservedUsername;
+	}
+	
+
+	public int getFuzeProjectId() {
+		return fuzeProjectId;
 	}
 
-	public void setReservedBy(String reservedBy) {
-		this.reservedBy = reservedBy;
+	public void setFuzeProjectId(int fuzeProjectId) {
+		this.fuzeProjectId = fuzeProjectId;
 	}
 
-	public String getUserBy() {
-		return userBy;
+	public String getProjectName() {
+		return projectName;
 	}
 
-	public void setUserBy(String userBy) {
-		this.userBy = userBy;
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
 	}
 
-	public String getReservationCreationDate() {
+	public int getBuyerId() {
+		return buyerId;
+	}
+
+	public void setBuyerId(int buyerId) {
+		this.buyerId = buyerId;
+	}
+
+	public String getBuyerName() {
+		return buyerName;
+	}
+
+	public void setBuyerName(String buyerName) {
+		this.buyerName = buyerName;
+	}
+
+	public void setReservedUsername(String reservedUsername) {
+		this.reservedUsername = reservedUsername;
+	}
+
+	
+
+	public Date getUseByDate() {
+		return useByDate;
+	}
+
+	public void setUseByDate(Date useByDate) {
+		this.useByDate = useByDate;
+	}
+
+	public Date getReservationCreationDate() {
 		return reservationCreationDate;
 	}
 
-	public void setReservationCreationDate(String reservationCreationDate) {
+	public void setReservationCreationDate(Date reservationCreationDate) {
 		this.reservationCreationDate = reservationCreationDate;
 	}
 
@@ -131,20 +199,5 @@ public class ContainerInfo {
 		this.catsStatus = catsStatus;
 	}
 
-	public String getLocation() {
-		return location;
-	}
-
-	public void setLocation(String location) {
-		this.location = location;
-	}
-
-	public String getDateAdded() {
-		return dateAdded;
-	}
-
-	public void setDateAdded(String dateAdded) {
-		this.dateAdded = dateAdded;
-	}
 
 }

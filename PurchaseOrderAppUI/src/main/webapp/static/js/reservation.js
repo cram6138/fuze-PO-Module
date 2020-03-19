@@ -1,4 +1,4 @@
- var oldPageSize = 0;
+var oldPageSize = 0;
  var checkedProjectList=[];
         function onChange(e) {
         	var arryList =[];
@@ -33,7 +33,9 @@
 			        }
 									 var wnd,detailsTemplate;
 									 $(document).ready(function(){
+										 detailInit();
 										 selectedPODetail();
+										 listofItem();
 										 
 										 $("#panelbar").kendoPanelBar({
 											 expandMode: "multiple"
@@ -140,8 +142,7 @@
 									 	         pageSize: 10
 									 	    },
 									 	  sortable: true,
-									         change: onChange,
-									 	    pageable: true,
+									        pageable: true,
 									         filterable: true,
 									 	    resizable:true,
 									 	   columns: [
@@ -212,8 +213,7 @@
 									    pageable: true,
 				                        filterable: true,
 									    resizable:true,
-									    detailInit: detailInit,
-				                       columns: [
+									   columns: [
 									    	
 						                    { field:"id", title:"Id", width: "80px"},
 						                    { field:"pslc", title:"pslc" ,width: "120px"},
@@ -221,9 +221,9 @@
 						                    { field:" teritory", title:"Teritory" },
 						                    { field:" market",title:"Market" },
 						                    { field:" poStatus", title:"PoStatus" ,width: "120px",customBoolEditor1},
-						                    { command: ["edit", "destroy"], title: "&nbsp;", width: "200px" }
-				                             ],
-				                   editable: "popup"
+						                    
+				                            ]
+				                   
 				                   		});
                                   
                                      
@@ -235,9 +235,7 @@
 					                     //window.location.href='empInfo/'+ e;
 					                 }
 									
-				function closeModel(){
-					$("#PoRequestId").modal("hide");
-				}
+				
 
 										
 function readData(options){
@@ -313,9 +311,8 @@ $('#filter').on('input', function (e) {
     });
     grid.dataSource.filter(filter);
   });
-
-function detailInit(e) {
-    $("<div/>").appendTo(e.detailCell).kendoGrid({
+   function detailInit() {
+	$("#childPart").kendoGrid({
     	dataSource: {
     	      transport: {
     	         read: function (options) {
@@ -369,35 +366,7 @@ function detailInit(e) {
 
 
 var checkedIds = {};
-//on click of the checkbox:
-//function selectRow() {
-//    var checked = this.checked,
-//        row = $(this).closest("tr"),
-//        grid = $("#grid").data("kendoGrid"),
-//        dataItem = grid.dataItem(row);
-//
-//    checkedIds[dataItem.id] = checked;
-//
-//    if (checked) {
-//        //-select the row
-//        row.addClass("k-state-selected");
-//
-//        var checkHeader = true;
-//
-//        $.each(grid.items(), function (index, item) {
-//            if (!($(item).hasClass("k-state-selected"))) {
-//                checkHeader = false;
-//            }
-//        });
-//
-//        $("#header-chb")[0].checked = checkHeader;
-//    } else {
-//        //-remove selection
-//        row.removeClass("k-state-selected");
-//        $("#header-chb")[0].checked = false;
-//    }
-//}
-//on dataBound event restore previous selected rows:
+
 function onDataBound(e) {
 	//this.expandRow(this.tbody.find("tr.k-master-row").first());
     var view = this.dataSource.view();
@@ -457,7 +426,6 @@ function toolbar_click() {
 			}
 
 function listofItem(){
-	$("#PoRequestId").modal("show");
 	var grid1=$("#grid1").kendoGrid({
 		dataSource: {
 	      transport: {
@@ -493,20 +461,12 @@ function listofItem(){
 	        },
 	         pageSize: 10
 	    },
-	    persistSelection: true,
-        sortable: true,
-        change: onChange,
+	    sortable: true,
+        
 	    pageable: true,
         filterable: true,
 	    resizable:true,
-	    dataBound:onDataBound,
-	   columns: [
-	    	{
-                selectable: true,
-                width: "50px"
-            },
-
-            { field:"siteName", title:"siteName", width: "180px" },
+	   columns: [ { field:"siteName", title:"siteName", width: "180px" },
             { field:" fuzeProject",title:"fuzeProject" , width: "120px" },
             { field:"projectName", title:"projectName" ,width: "120px"},
             { field:" market",title:"market" , width: "120px"},

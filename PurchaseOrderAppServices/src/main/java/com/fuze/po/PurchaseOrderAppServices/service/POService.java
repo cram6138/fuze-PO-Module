@@ -19,6 +19,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fuze.po.PurchaseOrderAppServices.exception.PurchaseOrderResourceNotFoundException;
 import com.fuze.po.PurchaseOrderAppServices.config.GenerateExcel;
 import com.fuze.po.PurchaseOrderAppServices.entity.POItems;
 import com.fuze.po.PurchaseOrderAppServices.entity.PORequest;
@@ -96,8 +97,11 @@ public class POService {
 	}
 
 	public List<PORequestInfo> getPOList() {
-		List<PORequest> poRequestList = poRequestRepo.findAll();
-		List<PORequestInfo> poRequestInfoList = new ArrayList<PORequestInfo>();
+		  List<PORequest> poRequestList = poRequestRepo.findAll();
+	      List<PORequestInfo> poRequestInfoList = new ArrayList<PORequestInfo>();
+		if(poRequestList ==null || poRequestList.isEmpty()) {
+	    	throw new PurchaseOrderResourceNotFoundException("PurchaseOrders NotFound.");
+	      }
 		if (poRequestList != null && !poRequestList.isEmpty()) {
 			for (PORequest po : poRequestList) {
 				PORequestInfo poRequestInfo = populatePOInfo(po);

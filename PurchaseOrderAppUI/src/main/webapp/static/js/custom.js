@@ -3,6 +3,7 @@
         function onChange(e) {
         	var arryList =[];
         	checkedProjectList= this.selectedKeyNames().join(", ");
+        	console.log(checkedProjectList);
         	console.log("The selected product ids are: [{" + this.selectedKeyNames().join(", ") + "}]" );
             //kendoConsole.log("The selected product ids are: [" + this.selectedKeyNames().join(", ") + "]");
         };
@@ -33,6 +34,11 @@
 			        }
 									 var wnd,detailsTemplate;
 									 $(document).ready(function(){
+										 
+
+										 
+										
+										// openPODetail();
 										 selectedPODetail();
 										 
 										 $("#panelbar").kendoPanelBar({
@@ -45,7 +51,6 @@
 						                            }
 						                        }
 						                    });
-										 var server_name;
 										 $.getScript("static/js/config.js", function(){
 											 server_name = appConfig.service_application;
 										 })
@@ -145,23 +150,24 @@
 									         filterable: true,
 									 	    resizable:true,
 									 	   columns: [
-									 	    	  { field:"siteName", title:"siteName", width: "180px" },
-									             { field:" fuzeProject",title:"fuzeProject" , width: "120px",template:"<a href='javascript:openPODetail()' id='name-link1'>#=fuzeProject#</a>" },
-									             { field:"projectName", title:"projectName" ,width: "120px"},
-									             { field:" market",title:"market" , width: "120px"},
-									             { field:" subMarket", title:"subMarket" ,width: "120px"},
-									             { field:" projectType",title:"projectType" , width: "120px"},
+									 	    	  { field:"siteName", title:"Site Name", width: "180px" },
+									             { field:" fuzeProject",title:"Fuze Project" , width: "120px",template:"<a href='javascript:openPODetail()' id='name-link1'>#=fuzeProject#</a>" },
+									             { field:"projectName", title:"Project Name" ,width: "120px"},
+									             { field:" market",title:"Market" , width: "120px"},
+									             { field:" subMarket", title:"Sub Market" ,width: "120px"},
+									             { field:" projectType",title:"Project Type" , width: "120px"},
 									             { field:" pslc", title:"pslc" ,width: "120px"},
-									             { field:" projectStatus", title:"projectStatus" ,width: "120px"},
-									             { field:" type",title:"type" , width: "120px"},
-									             { field:" customProjectType", title:"customProjectType" ,width: "120px"},
-									             { field:" siteTracker",title:"siteTracker" , width: "120px"},
+									             { field:" projectStatus", title:"Project Status" ,width: "120px"},
+									             { field:" type",title:"Type" , width: "120px"},
+									             { field:" customProjectType", title:"Custom ProjectType" ,width: "120px"},
+									             { field:" siteTracker",title:"Site Tracker" , width: "120px"},
 									         
 									              ],
 									    editable: "popup"
 									 	   
 									 	   
 									 });
+									     openPODetail();
 										
 										//var element = $("#gridPOData").data("kendoGrid");
 										// element.thead.on("click", ".k-checkbox", onClick);
@@ -212,15 +218,16 @@
 									    pageable: true,
 				                        filterable: true,
 									    resizable:true,
+									    
 									    detailInit: detailInit,
 				                       columns: [
 									    	
-						                    { field:"id", title:"Id", width: "80px"},
-						                    { field:"pslc", title:"pslc" ,width: "120px"},
+						                    { field:"id", title:"Id",width:"80px"},
+						                    { field:"pslc", title:"pslc",width:"200px"},
 						                    { field:" poName",title:"Name"},
 						                    { field:" teritory", title:"Teritory" },
 						                    { field:" market",title:"Market" },
-						                    { field:" poStatus", title:"PoStatus" ,width: "120px",customBoolEditor1},
+						                    { field:" poStatus", title:"Po Status",customBoolEditor1},
 						                    
 				                             ],
 				                   editable: "popup"
@@ -251,7 +258,7 @@ function readData(options){
 	        success: function (result) {
 	        	 $.each(result, function(index, value) {
 	        		 options.success(result[index].projects);
-	 	        	console.log(result[[index]].projects);
+	 	        	//console.log(result[[index]].projects);
 					}) 
 	        	
 	        },
@@ -262,7 +269,6 @@ function readData(options){
 	 })
 	
 }
-
 function generateExcel(){
 	var host_name;
 	 $.getScript("static/js/config.js", function(){
@@ -280,9 +286,7 @@ function generateExcel(){
 	         }
 	       });
 	 })
-	
-}
-
+	}
 
 
 $('#filter').on('input', function (e) {
@@ -340,7 +344,7 @@ function detailInit(e) {
     	dataSource: {
     	      transport: {
     	         read: function (options) {
-    	        	 readDataChild(options);
+    	        	 readDataChild(options,e.data.id);
     	        	// console.log(options);
     	             },
     	      
@@ -369,13 +373,14 @@ function detailInit(e) {
     	    
     	    sortable: true,
     	   resizable:true,
+    	   filter: { field: "id", operator: "eq", value: e.data.id },
     	    columns: [
-    	    	{ field:"id",title: "Id", width: "140px" },
-    	    	{ field:"name",title: "name", width: "120px"},
-    	    	{ field:"description",title: "description", width: "120px"},
-    	    	{ field:"model",title: "model", width: "120px"},
-    	    	{ field:"price",title: "name", price: "120px"},
-    	    	{ field:"inStock",title: "inStock", width: "120px" }
+    	    	{ field:"id",title: "Id"},
+    	    	{ field:"name",title: "Name"},
+    	    	{ field:"description",title: "Description",width:"200px"},
+    	    	{ field:"model",title: "Model"},
+    	    	{ field:"price",title: "Price"},
+    	    	{ field:"inStock",title: "in-Stock"}
     	    	 ],
     	editable: "popup"
     });
@@ -431,7 +436,7 @@ function onDataBound(e) {
         }
     }
 }
-function readDataChild(options){
+function readDataChild(options,e){
 	var host_name;
 	 $.getScript("static/js/config.js", function(){
 		 host_name = appConfig.service_application;
@@ -440,11 +445,13 @@ function readDataChild(options){
 	        dataType: "json",
 	        cache: false,
 	        success: function (result) {
+	        	if(result.length > 0){
 	        	 $.each(result, function(index, value) {
-	        		 options.success(result[index].items);
-					}) 
-	        	    
-	          
+	        		 if(result[index].id == parseInt(e)){
+	        			 options.success(result[index].items);
+	        		 }
+	        		}) 
+	        	}
 	        },
 	        error: function (result) {
 	        	options.error(result);
@@ -470,6 +477,24 @@ function poreadData(options){
 	 })
 	
 }
+//function getAllProjects(){
+//	var host_name;
+//	 $.getScript("static/js/config.js", function(){
+//		 host_name = appConfig.service_application;
+//		 $.ajax({
+//			 url: host_name + "/RePO/getPoRequest",
+//	        dataType: "json",
+//	        cache: false,
+//	        success: function (result) {
+//	         options.success(result);
+//	       },
+//	        error: function (result) {
+//	        	options.error(result);
+//	         }
+//	       });
+//	 })
+//	
+//}
 
 
 function toolbar_click() {
@@ -527,17 +552,17 @@ function listofItem(){
                 width: "50px"
             },
 
-            { field:"siteName", title:"siteName", width: "180px" },
-            { field:" fuzeProject",title:"fuzeProject" , width: "120px" },
-            { field:"projectName", title:"projectName" ,width: "120px"},
-            { field:" market",title:"market" , width: "120px"},
-            { field:" subMarket", title:"subMarket" ,width: "120px"},
-            { field:" projectType",title:"projectType" , width: "120px"},
+            { field:"siteName", title:"Site Name", width: "180px" },
+            { field:" fuzeProject",title:"Fuze Project" , width: "120px" },
+            { field:"projectName", title:"Project Name" ,width: "120px"},
+            { field:" market",title:"Market" , width: "120px"},
+            { field:" subMarket", title:"Sub Market" ,width: "120px"},
+            { field:" projectType",title:"Project Type" , width: "120px"},
             { field:" pslc", title:"pslc" ,width: "120px"},
-            { field:" projectStatus", title:"projectStatus" ,width: "120px"},
-            { field:" type",title:"type" , width: "120px"},
-            { field:" customProjectType", title:"customProjectType" ,width: "120px"},
-            { field:" siteTracker",title:"siteTracker" , width: "120px"},
+            { field:" projectStatus", title:"Project Status" ,width: "120px"},
+            { field:" type",title:"Type" , width: "120px"},
+            { field:" customProjectType", title:"Custom ProjectType" ,width: "120px"},
+            { field:" siteTracker",title:"Site Tracker" , width: "120px"},
         
              ],
    editable: "popup"
@@ -560,3 +585,14 @@ function getRequestData(){
 	panelBar.collapse($("#SiteProjectDetails"));
 	panelBar.collapse($("#ProjectSearch"));
  }
+
+
+function clearCart(){
+	var poName="";
+	var teritory="";
+	var Market_po="";
+	var pslc="";
+	var siteTracker="";
+	
+}
+
