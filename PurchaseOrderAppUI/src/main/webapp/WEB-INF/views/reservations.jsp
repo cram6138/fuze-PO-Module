@@ -283,6 +283,16 @@
                 My Reservations
                 <div class="row">
                 <div class="col-sm-12">
+                <div id="details"></div>
+                </div>
+                
+        </div>
+            </li>
+            <li id="SiteProjectDetails">
+                Container Search / Reserve
+            <div class="padding-10">
+			<div class="row">
+			  <div class="col-sm-12">
                 
                  <form class="user">
                <div class="form-group row">
@@ -336,38 +346,30 @@
           
         </div>
         </form>
-       
+       <div id="grid"></div>
         
         </div>
-        </div>
-            </li>
-            <li id="SiteProjectDetails">
-                Container Search / Reserve
-            <div class="padding-10">
-			<div class="row">
-			  
               </div>
               </div>
 			<div class="table-responsive">
-			<div id="details"></div>
+		Test	
 			</div>
          </li>
             <li id="PORequestDetails">
                 Container Details
                 <div>
-              test1
+              <div id="childPart"></div>
                 </div>
             </li>
-               <li id="ContainerReserve">
-                Container Reserve/ UnReserve
-            <div class="padding-10">
-			<div class="row">
-			  
+               <li id="containerReserve">
+                Container Reserve/ Un Reserve
+            <div>
+			<div>
+			<div id="grid1"></div>
+              
               </div>
               </div>
-              <div class="table-responsive">
-			<div id="containerdetails"></div>
-			</div>
+			
          </li>
         </ul>
     </div>
@@ -434,7 +436,7 @@
 
 
   <!-- Bootstrap core JavaScript-->
-  <script src="vendor/jquery/jquery.min.js"></script> 
+  <!-- <script src="vendor/jquery/jquery.min.js"></script> -->
   <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="https://demos.telerik.com/kendo-ui/content/shared/js/console.js"></script>
 
