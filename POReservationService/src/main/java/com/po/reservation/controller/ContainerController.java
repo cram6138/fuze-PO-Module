@@ -35,10 +35,10 @@ public class ContainerController {
 	private ContainerService containerService;
 
 	@PostMapping("/search/container")
-	public ResponseEntity<List<ContainerInfo>> searchContainers(@Valid @RequestBody final ContainerForm containerForm) {
+	public ResponseEntity<List<ContainerInfo>> searchContainers(@Valid @RequestBody final ContainerForm containerForm,final UserInfo userInfo) {
 		List<ContainerInfo> containerList = new ArrayList<>();
 		try {
-			containerList = containerService.searchContainers(containerForm);
+			containerList = containerService.searchContainers(containerForm,userInfo);
 			if (containerList.isEmpty()) {
 				throw new ContainerResourceNotFoundException("No Containers Found.");
 			}
