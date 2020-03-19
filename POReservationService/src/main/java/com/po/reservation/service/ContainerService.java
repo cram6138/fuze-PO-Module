@@ -12,6 +12,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.po.reservation.common.service.CatsStatus;
 import com.po.reservation.entity.Container;
 import com.po.reservation.entity.Item;
 import com.po.reservation.form.ContainerForm;
@@ -27,9 +28,9 @@ import com.po.reservation.repository.ContainerRepository;
  */
 @Service
 public class ContainerService {
-	
+
 	private static Logger logger = LoggerFactory.getLogger(ContainerService.class);
-	
+
 	@Autowired
 	private ContainerRepository containerRepository;
 
@@ -39,60 +40,74 @@ public class ContainerService {
 		List<ContainerInfo> ContainerInfoList = new ArrayList<>();
 		if (!containerList.isEmpty() && containerList != null) {
 			if (containerForm.getTerritory() != null) {
-				if(containerForm.getTerritory().equals(userInfo.getTerritory())) {
-				 containerList = containerList.stream()
+				if (containerForm.getTerritory().equals(userInfo.getTerritory())) {
+					containerList = containerList.stream()
 							.filter(container -> container.getTerritory().equals(containerForm.getTerritory()))
 							.collect(Collectors.toList());
+				} else {
+					containerList = containerList.stream()
+							.filter(container -> container.getCatsStatus().equals(CatsStatus.AVAILABLE_ACCESS.getValue())
+									&& container.getTerritory().equals(containerForm.getTerritory()))
+							.collect(Collectors.toList());
 				}
-				else {
-				containerList = containerList.stream()
-						.filter(container -> container.getCatsStatus().equals("EA") && 
-						container.getTerritory().equals(containerForm.getTerritory()))
-						.collect(Collectors.toList());
-				}
-			} if (containerForm.getMarket() != null) {
-				if(containerForm.getMarket().equals(userInfo.getMarket())) {
+			}
+			if (containerForm.getMarket() != null) {
+				if (containerForm.getMarket().equals(userInfo.getMarket())) {
 					containerList = containerList.stream()
 							.filter(container -> container.getMarket().equals(containerForm.getMarket()))
 							.collect(Collectors.toList());
-				}else {
-				containerList = containerList.stream()
-						.filter(container -> container.getCatsStatus().equals("EA") && container.getMarket().equals(containerForm.getMarket()))
-						.collect(Collectors.toList());
+				} else {
+					containerList = containerList.stream()
+							.filter(container -> container.getCatsStatus().equals(CatsStatus.AVAILABLE_ACCESS.getValue())
+									&& container.getMarket().equals(containerForm.getMarket()))
+							.collect(Collectors.toList());
 				}
-			} if (containerForm.getSubMarket() != null) {
+			}
+			if (containerForm.getSubMarket() != null) {
 				containerList = containerList.stream()
-						.filter(container -> container.getCatsStatus().equals("EA") && container.getSubMarket().equals(containerForm.getSubMarket()))
+						.filter(container -> container.getCatsStatus().equals(CatsStatus.AVAILABLE_ACCESS.getValue())
+								&& container.getSubMarket().equals(containerForm.getSubMarket()))
 						.collect(Collectors.toList());
-			} if (containerForm.getLocalMarket() != null) {
-				containerList = containerList.stream().filter(
-						container -> container.getCatsStatus().equals("EA") && container.getLocalMarket().equals(containerForm.getLocalMarket()))
-						.collect(Collectors.toList());
-			} if (containerForm.getContainerCode() != null) {
-				containerList = containerList.stream().filter(
-						container -> container.getCatsStatus().equals("EA") && container.getContainerCode().contains(containerForm.getContainerCode()))
-						.collect(Collectors.toList());
-			} if (containerForm.getBuyer() != null) {
+			}
+			if (containerForm.getLocalMarket() != null) {
 				containerList = containerList.stream()
-						.filter(container -> container.getCatsStatus().equals("EA") && container.getBuyer().getUsername().equals(containerForm.getBuyer()))
+						.filter(container -> container.getCatsStatus().equals(CatsStatus.AVAILABLE_ACCESS.getValue())
+								&& container.getLocalMarket().equals(containerForm.getLocalMarket()))
 						.collect(Collectors.toList());
-			} if (containerForm.getBuyer() != null) {
+			}
+			if (containerForm.getContainerCode() != null) {
 				containerList = containerList.stream()
-						.filter(container -> container.getCatsStatus().equals("EA") && container.getBuyer().getUsername().equals(containerForm.getBuyer()))
+						.filter(container -> container.getCatsStatus().equals(CatsStatus.AVAILABLE_ACCESS.getValue())
+								&& container.getContainerCode().contains(containerForm.getContainerCode()))
 						.collect(Collectors.toList());
-			} if (containerForm.getProjectId() != 0) {
+			}
+			if (containerForm.getBuyer() != null) {
 				containerList = containerList.stream()
-						.filter(container -> container.getCatsStatus().equals("EA") && container.getProject().getId() == (containerForm.getProjectId()))
+						.filter(container -> container.getCatsStatus().equals(CatsStatus.AVAILABLE_ACCESS.getValue())
+								&& container.getBuyer().getUsername().equals(containerForm.getBuyer()))
 						.collect(Collectors.toList());
-			} if (containerForm.getSearchKey() != null) {
+			}
+			if (containerForm.getBuyer() != null) {
+				containerList = containerList.stream()
+						.filter(container -> container.getCatsStatus().equals(CatsStatus.AVAILABLE_ACCESS.getValue())
+								&& container.getBuyer().getUsername().equals(containerForm.getBuyer()))
+						.collect(Collectors.toList());
+			}
+			if (containerForm.getProjectId() != 0) {
+				containerList = containerList.stream()
+						.filter(container -> container.getCatsStatus().equals(CatsStatus.AVAILABLE_ACCESS.getValue())
+								&& container.getProject().getId() == (containerForm.getProjectId()))
+						.collect(Collectors.toList());
+			}
+			if (containerForm.getSearchKey() != null) {
 				containerList = getContainerListBasedOnSearchKey(containerForm.getSearchKey(), containerList);
 			}
-			ContainerInfoList = setContainerInfoList(containerList);	
+			ContainerInfoList = setContainerInfoList(containerList);
 		}
 
 		return ContainerInfoList;
 	}
-	
+
 	/**
 	 * @param Set<Item> items
 	 * @return List<ItemInfo> itemsInfoList
@@ -152,22 +167,25 @@ public class ContainerService {
 	}
 
 	public List<ContainerInfo> searchContainersBasedOnCheckBox(ContainerSearchForm containerSearchForm) {
-		
+
 		List<Container> containerList = new ArrayList<>();
-		List<ContainerInfo> containerInfoList =new ArrayList<>();
-		if(containerSearchForm.getIsReserved()!= null && "Y".equals(containerSearchForm.getIsReserved())) {
-			containerList = containerRepository.findByCatsStatusAndMrOrderCodeIsNull("ER");
-		}else if(containerSearchForm.getContainerOnMrOrder()!=null && "Y".equals(containerSearchForm.getContainerOnMrOrder())) {
-			containerList = containerRepository.findByCatsStatusAndMrOrderCodeIsNotNull("ER");
-		}else if(containerSearchForm.getIncludeContainersOnReceived()!=null && "Y".equals(containerSearchForm.getIncludeContainersOnReceived())) {
-			containerList = containerRepository.findByCatsStatus("C");
-		}else if(containerSearchForm.getSearchContainerNationwide()!=null && "Y".equals(containerSearchForm.getSearchContainerNationwide())) {
-			containerList = containerRepository.findByCatsStatus("EA");
+		List<ContainerInfo> containerInfoList = new ArrayList<>();
+		if (containerSearchForm.getIsReserved() != null && "Y".equals(containerSearchForm.getIsReserved())) {
+			containerList = containerRepository.findByCatsStatusAndMrOrderCodeIsNull(CatsStatus.RESERVED_ACCESS.getValue());
+		} else if (containerSearchForm.getContainerOnMrOrder() != null
+				&& "Y".equals(containerSearchForm.getContainerOnMrOrder())) {
+			containerList = containerRepository.findByCatsStatusAndMrOrderCodeIsNotNull(CatsStatus.RESERVED_ACCESS.getValue());
+		} else if (containerSearchForm.getIncludeContainersOnReceived() != null
+				&& "Y".equals(containerSearchForm.getIncludeContainersOnReceived())) {
+			containerList = containerRepository.findByCatsStatus(CatsStatus.RECIEVED.getValue());
+		} else if (containerSearchForm.getSearchContainerNationwide() != null
+				&& "Y".equals(containerSearchForm.getSearchContainerNationwide())) {
+			containerList = containerRepository.findByCatsStatus(CatsStatus.AVAILABLE_ACCESS.getValue());
 		}
 		containerInfoList = setContainerInfoList(containerList);
 		return containerInfoList;
 	}
-	
+
 	/**
 	 * @param UserInfo userInfo
 	 * @return List<ContainerInfo> containerInfoList
@@ -181,7 +199,7 @@ public class ContainerService {
 		 * at nation wide
 		 */
 		containers = containers.stream()
-				.filter(container -> container.getCatsStatus().equals("EA")
+				.filter(container -> container.getCatsStatus().equals(CatsStatus.AVAILABLE_ACCESS.getValue())
 						|| (container.getTerritory().equals(userInfo.getTerritory())
 								&& container.getMarket().equals(userInfo.getMarket())
 								&& container.getBuyer().getId() == userInfo.getId()))
@@ -203,10 +221,10 @@ public class ContainerService {
 	 * @return List<ContainerInfo> containerInfoList
 	 */
 	public List<ContainerInfo> getReservedContainerByUser(final UserInfo userInfo) {
-		List<Container> containers = containerRepository.findAllReservedContainerByUser(
-				userInfo.getTerritory(), userInfo.getMarket(), userInfo.getId());
+		List<Container> containers = containerRepository.findAllReservedContainerByUser(userInfo.getTerritory(),
+				userInfo.getMarket(), userInfo.getId());
 		List<ContainerInfo> containerInfoList = new ArrayList<ContainerInfo>();
-		
+
 		if (containers != null && !containers.isEmpty()) {
 			for (Container container : containers) {
 				ContainerInfo containerInfo = getContainerInfo(container);
@@ -218,31 +236,31 @@ public class ContainerService {
 
 		return containerInfoList;
 	}
-	
+
 	private List<Container> getContainerListBasedOnSearchKey(String searchKey, List<Container> containerList) {
 
 		List<Container> searchKeylist = new ArrayList<Container>();
 		for (Container c : containerList) {
 			if (c.getContainerCode().contains(searchKey)) {
-				searchKeylist = containerList.stream()
-						.filter(container -> container.getCatsStatus().equals("EA") && container.getContainerCode().equals(searchKey))
-						.collect(Collectors.toList());
+				searchKeylist = containerList.stream().filter(container -> container.getCatsStatus().equals(CatsStatus.AVAILABLE_ACCESS.getValue())
+						&& container.getContainerCode().equals(searchKey)).collect(Collectors.toList());
 			} else if (String.valueOf(c.getProject().getId()).equals(searchKey)) {
 				searchKeylist = containerList.stream()
-						.filter(container -> container.getCatsStatus().equals("EA") && container.getProject().getId() == (Integer.valueOf(searchKey)))
+						.filter(container -> container.getCatsStatus().equals(CatsStatus.AVAILABLE_ACCESS.getValue())
+								&& container.getProject().getId() == (Integer.valueOf(searchKey)))
 						.collect(Collectors.toList());
 			} else if (c.getProject().getPslc().contains(searchKey)) {
-				searchKeylist = containerList.stream()
-						.filter(container -> container.getCatsStatus().equals("EA") && container.getProject().getPslc().equals(searchKey))
-						.collect(Collectors.toList());
+				searchKeylist = containerList.stream().filter(container -> container.getCatsStatus().equals(CatsStatus.AVAILABLE_ACCESS.getValue())
+						&& container.getProject().getPslc().equals(searchKey)).collect(Collectors.toList());
 			} else if (String.valueOf(c.getBuyer().getId()).equals(searchKey)) {
 				searchKeylist = containerList.stream()
-						.filter(container -> container.getCatsStatus().equals("EA") && container.getBuyer().getId() == Integer.valueOf(searchKey))
+						.filter(container -> container.getCatsStatus().equals(CatsStatus.AVAILABLE_ACCESS.getValue())
+								&& container.getBuyer().getId() == Integer.valueOf(searchKey))
 						.collect(Collectors.toList());
 			}
-			if(!searchKeylist.isEmpty() && searchKeylist!= null) {
+			if (!searchKeylist.isEmpty() && searchKeylist != null) {
 				break;
-			}else {
+			} else {
 				continue;
 			}
 		}
@@ -256,9 +274,9 @@ public class ContainerService {
 			for (Container container : containerList) {
 				ContainerInfo containerInfo = new ContainerInfo();
 				BeanUtils.copyProperties(container, containerInfo);
-				//containerInfo.setFuzeProjectId(container.getProject().getFuzeProject());
+				// containerInfo.setFuzeProjectId(container.getProject().getFuzeProject());
 				containerInfo.setPslc(container.getProject().getPslc());
-				//containerInfo.setLocation(container.getProject().getSiteName());
+				// containerInfo.setLocation(container.getProject().getSiteName());
 				containerInfo.setPSProject(container.getProject().getProjectName());
 				ContainerInfoList.add(containerInfo);
 			}
