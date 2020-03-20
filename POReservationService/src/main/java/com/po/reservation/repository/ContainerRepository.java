@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import com.po.reservation.entity.Container;
 
-public interface ContainerRepository extends JpaRepository<Container, Integer>{
+public interface ContainerRepository extends JpaRepository<Container, Integer> {
 
 	List<Container> findByCatsStatusAndMrOrderCodeIsNull(String catsStatus);
 

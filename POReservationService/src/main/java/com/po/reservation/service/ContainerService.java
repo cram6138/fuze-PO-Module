@@ -1,6 +1,11 @@
 package com.po.reservation.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -11,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import com.po.reservation.common.service.CatsStatus;
 import com.po.reservation.entity.Container;
@@ -282,6 +288,66 @@ public class ContainerService {
 			}
 		}
 		return ContainerInfoList;
+	}
+	
+	public Map<String, Object> getContainerDetails() {
+		Map<String, Object> response = new HashMap<>();
+		Map<String, Object> map = new HashMap<>();
+		Map<String, Object> userInfoMap = new HashMap<>();
+		Map<String, Object> projectInfoMap = new HashMap<>();
+		List<Map<String, Object>> mapList = new ArrayList<>();
+		try {
+			List<Container> dbContainersList = containerRepository.findAll();
+			System.out.println(dbContainersList);
+			if (!CollectionUtils.isEmpty(dbContainersList)) {
+				for (Container row : dbContainersList) {
+					map.put("id", row.getId());
+					map.put("territory", row.getTerritory());
+					map.put("market", row.getMarket());
+					map.put("subMarket", row.getSubMarket());
+					map.put("localMarket", row.getLocalMarket());
+					map.put("containerCode", row.getContainerCode());
+					map.put("isReserved", row.isReserved());
+					map.put("mrOrderCode", row.getMrOrderCode());
+					map.put("fuzeReservationId", row.getFuzeReservationId());
+					map.put("reserverdBy", row.getReservedBy());
+					map.put("fuzeStatus", row.getFuzeStatus());
+					map.put("catsStatus", row.getCatsStatus());
+					map.put("useBy", row.getUseBy());
+					map.put("reservationCreationDate", row.getReservationCreationDate());
+
+					userInfoMap.put("id", row.getBuyer().getId());
+					userInfoMap.put("userName", row.getBuyer().getUsername());
+					userInfoMap.put("isActive", row.getBuyer().isActive());
+					userInfoMap.put("userRole", row.getBuyer().getUserRoles());
+					userInfoMap.put("firstName", row.getBuyer().getFirstName());
+					userInfoMap.put("lastName", row.getBuyer().getLastName());
+
+					projectInfoMap.put("id", row.getProject().getId());
+					projectInfoMap.put("siteName", row.getProject().getSiteName());
+					projectInfoMap.put("projectName", row.getProject().getProjectName());
+					projectInfoMap.put("pslc", row.getProject().getPslc());
+					projectInfoMap.put("fuzeProject", row.getProject().getFuzeProject());
+					projectInfoMap.put("projectStatus", row.getProject().getProjectStatus());
+					projectInfoMap.put("poRequestInfo", row.getProject().getPorequests());
+
+					map.put("userInfo", userInfoMap);
+					map.put("projectInfo", projectInfoMap);
+					map.put("itemInfo", row.getItems());
+					mapList.add(map);
+				}
+				response.put("status", 1);
+				response.put("containersDetails", mapList);
+				return response;
+			} else {
+				response.put("status", 0);
+				response.put("status", "Containers details are empty.");
+				return response;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return response;
 	}
 
 }

@@ -14,6 +14,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "user")
 public class User {
@@ -21,24 +23,33 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+
 	@Column(name = "username")
 	private String username;
+
 	@Column(name = "password")
 	private String password;
+
 	@Column(name = "active")
 	private boolean isActive;
-	
+
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+	@JsonIgnore
 	private Set<UserRole> userRoles;
+
 	@Column(name = "first_name")
 	private String firstName;
+
 	@Column(name = "last_name")
 	private String lastName;
+
 	@Column(name = "created_on")
 	private Date createdOn;
+
 	@Column(name = "territory")
 	private String territory;
+
 	@Column(name = "market")
 	private String Market;
 
@@ -121,5 +132,12 @@ public class User {
 	public void setUserRoles(Set<UserRole> userRoles) {
 		this.userRoles = userRoles;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", isActive=" + isActive
+				+ ", userRoles=" + userRoles + ", firstName=" + firstName + ", lastName=" + lastName + ", createdOn="
+				+ createdOn + ", territory=" + territory + ", Market=" + Market + "]";
+	}
+
 }

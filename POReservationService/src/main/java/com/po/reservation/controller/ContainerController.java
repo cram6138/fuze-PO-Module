@@ -2,6 +2,7 @@ package com.po.reservation.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -59,6 +60,13 @@ public class ContainerController {
 		}
 		return new ResponseEntity<List<ContainerInfo>>(containerList, HttpStatus.OK);
 	}
+	
+	@GetMapping("/getContainerDetails")
+	public Map<String, Object> getContainerDetails() {
+		logger.info("Entering into gettingContainerDetails method in Container controller");
+		return containerService.getContainerDetails();
+	}
+	
 
 	/**
 	 * @param containerId

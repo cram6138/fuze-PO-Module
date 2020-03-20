@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * @author Bhajuram.c
  *
@@ -60,6 +62,7 @@ public class Item {
 	private String vendorId;
 	
 	@ManyToMany(mappedBy = "items")
+	@JsonIgnore
 	private Set<Container> containers;
 
 	public int getId() {
