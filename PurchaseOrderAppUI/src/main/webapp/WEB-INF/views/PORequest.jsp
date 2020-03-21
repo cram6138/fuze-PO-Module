@@ -15,13 +15,27 @@
   <script src="static/js/kendo.all.min.js"></script>
   <script src="static/js/config.js"></script>
   <!-- Custom fonts for this template-->
+  <style>
+  
+  #appendto {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 200px;
+  }
+  .k-animation-container,.k-widget.k-popup.k-notification.k-notification-info.k-state-border-up{
+     width: 215px !important;
+    height: 50px !important;
+  }
+  
+  </style>
 
 </head>
 
 <body>
 <%@ include file="header.jsp"%>
 <div class="container-fluid">  
-<span id="popupNotification"></span>      
+<span id="popupNotification" style="display:none;"></span>      
 <div class="row">
     <div class="card shadow mb-4" id="example">
     
@@ -74,9 +88,10 @@
                 Site Project Details
             <div class="padding-10">
 			<div class="row">
-			  <div class="col-sm-2 d-inline">
+			  <div class="col-sm-4 d-inline">
 			  
 			  <a href="#"   onclick="getRequestData()"  class="btn btn-danger">Create PO Request </a>
+			   <a href="#"   onclick="generateExcel()"  class="btn btn-danger">Generate Excel </a>
 			  </div>
               <!-- <div class="col-sm-5 d-inline">
               <div class="form-group">
@@ -90,9 +105,7 @@
                <textarea rows="2" cols="2" class="form-control"></textarea>
                </div>
               </div> -->
-              <div class="col-sm-3 mb-3 mb-sm-0">
-               <a href="#"   onclick="generateExcel()"  class="btn btn-danger">Generate Excel </a>
-          </div>
+             
               </div>
               </div>
 			<div class="table-responsive">
@@ -354,6 +367,7 @@
       </div>
     </div>
   </div>
+  <div id="appendto"></div>
 
 <div id="elementToasert" aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px;">
   <div class="toast" style="position: absolute; top: 0; right: 0;">
@@ -407,7 +421,8 @@ var popupNotification = $("#popupNotification").kendoNotification({
 		 position: {
              pinned: true,
              top: 30,
-             right: 30
+             right: 30,
+             appendTo: "#appendto"
          }
          }).data("kendoNotification");
 		$(document).ready(
@@ -872,6 +887,28 @@ var popupNotification = $("#popupNotification").kendoNotification({
 		        	});
 		        }
 		</script>
+		<script id="emailTemplate" type="text/x-kendo-template">
+        <div class="new-mail">
+            <img src="../content/web/notification/envelope.png" />
+            <h3>#= title #</h3>
+            <p>#= message #</p>
+        </div>
+    </script>
+
+    <script id="errorTemplate" type="text/x-kendo-template">
+        <div class="wrong-pass">
+            <img src="../content/web/notification/error-icon.png" />
+            <h3>#= title #</h3>
+            <p>#= message #</p>
+        </div>
+    </script>
+
+    <script id="successTemplate" type="text/x-kendo-template">
+        <div class="upload-success">
+            <img src="../content/web/notification/success-icon.png" />
+            <h3>#= message #</h3>
+        </div>
+    </script>
 </body>
 
 </html>

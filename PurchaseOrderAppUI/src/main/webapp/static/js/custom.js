@@ -107,7 +107,7 @@
 									    	 var terirory =  Teritory.text(),
 								              markts =  Markets.text(),
 								              subMrks =Submarkets.text();
-									          alert("Order details:\n" + terirory +":"+Teritory.value() +"\n"+ markts+":"+Markets.value()  +"\n"+ subMrks +":"+Submarkets.value()+"");
+									          //alert("Order details:\n" + terirory +":"+Teritory.value() +"\n"+ markts+":"+Markets.value()  +"\n"+ subMrks +":"+Submarkets.value()+"");
 									      }); 
 
 									     var grid=$("#grid").kendoGrid({
