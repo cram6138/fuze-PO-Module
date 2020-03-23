@@ -151,21 +151,13 @@ public class ContainerService {
 	 */
 	private ContainerInfo getContainerInfo(Container container) {
 		ContainerInfo containerInfo = new ContainerInfo();
-		containerInfo.setCatsStatus(container.getCatsStatus());
-		containerInfo.setContainerCode(container.getContainerCode());
+		BeanUtils.copyProperties(container, containerInfo);
 		containerInfo.setUseByDate(container.getUseBy());
 		containerInfo.setFuzeProjectId(container.getProject().getId());
 		containerInfo.setProjectName(container.getProject().getProjectName());
-		containerInfo.setFuzeReservationId(container.getFuzeReservationId());
 		containerInfo.setBuyerId(container.getBuyer().getId());
-		containerInfo.setBuyerName(container.getBuyer().getFirstName() + " " + container.getBuyer().getFirstName());
+		containerInfo.setBuyerName(container.getBuyer().getFirstName() + " " + container.getBuyer().getLastName());
 		containerInfo.setMROrderCode(container.getMrOrderCode());
-		containerInfo.setFuzeStatus(container.getFuzeStatus());
-		containerInfo.setMarket(container.getMarket());
-		containerInfo.setSubMarket(container.getSubMarket());
-		containerInfo.setLocalMarket(container.getLocalMarket());
-		containerInfo.setPslc(container.getPslc());
-		containerInfo.setPSProject(container.getPSProject());
 
 		containerInfo.setItemsInfo(getItemsInfo(container.getItems()));
 

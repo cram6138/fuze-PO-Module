@@ -21,75 +21,51 @@ import com.po.reservation.service.CommonService;
 @RestController
 @CrossOrigin("*")
 public class CommonController {
-	
+
 	private static Logger logger = LoggerFactory.getLogger(CommonController.class);
-	
+
 	@Autowired
 	private CommonService commonService;
 
 	@GetMapping("/territories")
 	public ResponseEntity<List<TerritoryInfo>> getTerritories() {
 		List<TerritoryInfo> territoryInfoList = new ArrayList<TerritoryInfo>(0);
-		try {
-			territoryInfoList = commonService.getTerritories();
-		} catch (Exception e) {
-			logger.info(e.toString());
-		}
+		territoryInfoList = commonService.getTerritories();
 		return new ResponseEntity<List<TerritoryInfo>>(territoryInfoList, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/territory/{territoryId}")
 	public ResponseEntity<TerritoryInfo> getTerritoryById(@PathVariable("territoryId") final int territoryId) {
 		TerritoryInfo territoryInfo = null;
-		try {
-			territoryInfo = commonService.getTerritoryById(territoryId);
-		} catch (Exception e) {
-			logger.info(e.toString());
-		}
+		territoryInfo = commonService.getTerritoryById(territoryId);
 		return new ResponseEntity<TerritoryInfo>(territoryInfo, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/markets")
 	public ResponseEntity<List<MarketInfo>> getMarkets() {
 		List<MarketInfo> marketInfoList = new ArrayList<MarketInfo>(0);
-		try {
-			marketInfoList = commonService.getMarkets();
-		} catch (Exception e) {
-			logger.info(e.toString());
-		}
+		marketInfoList = commonService.getMarkets();
 		return new ResponseEntity<List<MarketInfo>>(marketInfoList, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/market/{marketId}")
 	public ResponseEntity<MarketInfo> getMarketById(@PathVariable("marketId") final int marketId) {
 		MarketInfo marketInfo = null;
-		try {
-			marketInfo = commonService.getMarketById(marketId);
-		} catch (Exception e) {
-			logger.info(e.toString());
-		}
+		marketInfo = commonService.getMarketById(marketId);
 		return new ResponseEntity<MarketInfo>(marketInfo, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/subMarkets")
 	public ResponseEntity<List<SubMarketInfo>> getSubMarkets() {
 		List<SubMarketInfo> subMarketInfoList = new ArrayList<SubMarketInfo>(0);
-		try {
-			subMarketInfoList = commonService.getSubMarkets();
-		} catch (Exception e) {
-			logger.info(e.toString());
-		}
+		subMarketInfoList = commonService.getSubMarkets();
 		return new ResponseEntity<List<SubMarketInfo>>(subMarketInfoList, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/subMarket/{subMarketId}")
 	public ResponseEntity<SubMarketInfo> getSubMarketById(@PathVariable("subMarketId") final int subMarketId) {
 		SubMarketInfo subMarketInfo = null;
-		try {
-			subMarketInfo = commonService.getSubMarketById(subMarketId);
-		} catch (Exception e) {
-			logger.info(e.toString());
-		}
+		subMarketInfo = commonService.getSubMarketById(subMarketId);
 		return new ResponseEntity<SubMarketInfo>(subMarketInfo, HttpStatus.OK);
 	}
 }

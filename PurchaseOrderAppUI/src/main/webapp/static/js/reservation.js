@@ -34,7 +34,7 @@ var oldPageSize = 0;
 									 var wnd,detailsTemplate;
 									 $(document).ready(function(){
 										 detailInit();
-										 selectedPODetail();
+										 //selectedPODetail();
 										 listofItem();
 										 
 										 $("#panelbar").kendoPanelBar({
@@ -179,55 +179,7 @@ var oldPageSize = 0;
 					                     $('<label class="k-checkbox-label" for="' + guid + '">​</label>').appendTo(container);
 					                 }
 									
-									function selectedPODetail(){
-										
-                                      var details=$("#details").kendoGrid({
-									dataSource: {
-									      transport: {
-									         read: function (options) {
-									        	 poreadData(options);
-									             },
-									        parameterMap: function (options, operation) {
-									        		if (operation !== "read" && options.models) {
-									              		return { models: kendo.stringify(options.models) };
-									              		}
-									            	}
-									          },
-									        schema: {
-									        	 model: {
-				                                     id: "id",
-				                                     fields: {
-				                                    	 id: {type:"string"},
-				                                    	 pslc: {type:"string"},
-				                                    	 poName: {type:"string"},
-				                                    	 teritory: {type:"string"},
-				                                    	 market: {type:"string"},
-				                                    	 poStatus: {type:"string"},
-				                                     }
-				                                 }
-									        },
-									         pageSize: 10
-									    },
-									   sortable: true,
-						                change: onChange,
-									    pageable: true,
-				                        filterable: true,
-									    resizable:true,
-									   columns: [
-									    	
-						                    { field:"id", title:"Id", width: "80px"},
-						                    { field:"pslc", title:"pslc" ,width: "120px"},
-						                    { field:" poName",title:"Name"},
-						                    { field:" teritory", title:"Teritory" },
-						                    { field:" market",title:"Market" },
-						                    { field:" poStatus", title:"PoStatus" ,width: "120px",customBoolEditor1},
-						                    
-				                            ]
-				                   
-				                   		});
-                                  
-                                     
-									}
+									
 									function showDetail(e) {
 					                     //localStorage.removeItem('currentValue');
 					                     console.log(e);
@@ -241,9 +193,9 @@ var oldPageSize = 0;
 function readData(options){
 	var host_name;
 	 $.getScript("static/js/config.js", function(){
-		 host_name = appConfig.service_application;
+		 host_name = appConfig.reservation_application;
 		 $.ajax({
-			 url: host_name + "/RePO/getPoRequest",
+			 url: host_name + "reservation/container/reserved",
 	        contentType: "application/json",
 	        type:"GET",
 	        success: function (result) {

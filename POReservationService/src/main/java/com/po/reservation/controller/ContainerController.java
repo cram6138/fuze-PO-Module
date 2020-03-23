@@ -98,6 +98,7 @@ public class ContainerController {
 		return new ResponseEntity<List<ContainerInfo>>(containerInfos, HttpStatus.OK);
 	}
 
+	@PostMapping("/container/reserved")
 	public ResponseEntity<List<ContainerInfo>> getReservedContainerByUser(@RequestBody final UserInfo userInfo) {
 		List<ContainerInfo> reservedContainerList = new ArrayList<ContainerInfo>();
 		try {
