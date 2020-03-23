@@ -61,10 +61,10 @@ public class ContainerController {
 		return new ResponseEntity<List<ContainerInfo>>(containerList, HttpStatus.OK);
 	}
 	
-	@GetMapping("/getContainerDetails")
-	public Map<String, Object> getContainerDetails() {
+	@PostMapping("/containersByUserInfo")
+	public Map<String, Object> containerByUserInfo(@RequestBody UserInfo request) {
 		logger.info("Entering into gettingContainerDetails method in Container controller");
-		return containerService.getContainerDetails();
+		return containerService.containersByUserInfo(request);
 	}
 	
 
@@ -98,6 +98,7 @@ public class ContainerController {
 		return new ResponseEntity<List<ContainerInfo>>(containerInfos, HttpStatus.OK);
 	}
 
+	@PostMapping("/container/reserved")
 	public ResponseEntity<List<ContainerInfo>> getReservedContainerByUser(@RequestBody final UserInfo userInfo) {
 		List<ContainerInfo> reservedContainerList = new ArrayList<ContainerInfo>();
 		try {

@@ -151,21 +151,13 @@ public class ContainerService {
 	 */
 	private ContainerInfo getContainerInfo(Container container) {
 		ContainerInfo containerInfo = new ContainerInfo();
-		containerInfo.setCatsStatus(container.getCatsStatus());
-		containerInfo.setContainerCode(container.getContainerCode());
+		BeanUtils.copyProperties(container, containerInfo);
 		containerInfo.setUseByDate(container.getUseBy());
 		containerInfo.setFuzeProjectId(container.getProject().getId());
 		containerInfo.setProjectName(container.getProject().getProjectName());
-		containerInfo.setFuzeReservationId(container.getFuzeReservationId());
 		containerInfo.setBuyerId(container.getBuyer().getId());
-		containerInfo.setBuyerName(container.getBuyer().getFirstName() + " " + container.getBuyer().getFirstName());
+		containerInfo.setBuyerName(container.getBuyer().getFirstName() + " " + container.getBuyer().getLastName());
 		containerInfo.setMROrderCode(container.getMrOrderCode());
-		containerInfo.setFuzeStatus(container.getFuzeStatus());
-		containerInfo.setMarket(container.getMarket());
-		containerInfo.setSubMarket(container.getSubMarket());
-		containerInfo.setLocalMarket(container.getLocalMarket());
-		containerInfo.setPslc(container.getPslc());
-		containerInfo.setPSProject(container.getPSProject());
 
 		containerInfo.setItemsInfo(getItemsInfo(container.getItems()));
 
@@ -290,62 +282,33 @@ public class ContainerService {
 		return ContainerInfoList;
 	}
 	
-	public Map<String, Object> getContainerDetails() {
+	public Map<String, Object> containersByUserInfo(UserInfo request) {
 		Map<String, Object> response = new HashMap<>();
-		Map<String, Object> map = new HashMap<>();
-		Map<String, Object> userInfoMap = new HashMap<>();
-		Map<String, Object> projectInfoMap = new HashMap<>();
-		List<Map<String, Object>> mapList = new ArrayList<>();
+		List<ContainerInfo> containerInfoList = new ArrayList<>();
 		try {
 			List<Container> dbContainersList = containerRepository.findAll();
-			System.out.println(dbContainersList);
-			if (!CollectionUtils.isEmpty(dbContainersList)) {
+			dbContainersList = dbContainersList.stream()
+					.filter(container -> container.getCatsStatus().equals(CatsStatus.AVAILABLE_ACCESS.getValue())
+							|| (container.getTerritory().equals(request.getTerritory())
+									&& container.getMarket().equals(request.getMarket())
+									&& container.getBuyer().getId() == request.getId()))
+					.collect(Collectors.toList());
+			if (!CollectionUtils.isEmpty(dbContainersList) && dbContainersList != null) {
 				for (Container row : dbContainersList) {
-					map.put("id", row.getId());
-					map.put("territory", row.getTerritory());
-					map.put("market", row.getMarket());
-					map.put("subMarket", row.getSubMarket());
-					map.put("localMarket", row.getLocalMarket());
-					map.put("containerCode", row.getContainerCode());
-					map.put("isReserved", row.isReserved());
-					map.put("mrOrderCode", row.getMrOrderCode());
-					map.put("fuzeReservationId", row.getFuzeReservationId());
-					map.put("reserverdBy", row.getReservedBy());
-					map.put("fuzeStatus", row.getFuzeStatus());
-					map.put("catsStatus", row.getCatsStatus());
-					map.put("useBy", row.getUseBy());
-					map.put("reservationCreationDate", row.getReservationCreationDate());
-
-					userInfoMap.put("id", row.getBuyer().getId());
-					userInfoMap.put("userName", row.getBuyer().getUsername());
-					userInfoMap.put("isActive", row.getBuyer().isActive());
-					userInfoMap.put("userRole", row.getBuyer().getUserRoles());
-					userInfoMap.put("firstName", row.getBuyer().getFirstName());
-					userInfoMap.put("lastName", row.getBuyer().getLastName());
-
-					projectInfoMap.put("id", row.getProject().getId());
-					projectInfoMap.put("siteName", row.getProject().getSiteName());
-					projectInfoMap.put("projectName", row.getProject().getProjectName());
-					projectInfoMap.put("pslc", row.getProject().getPslc());
-					projectInfoMap.put("fuzeProject", row.getProject().getFuzeProject());
-					projectInfoMap.put("projectStatus", row.getProject().getProjectStatus());
-					projectInfoMap.put("poRequestInfo", row.getProject().getPorequests());
-
-					map.put("userInfo", userInfoMap);
-					map.put("projectInfo", projectInfoMap);
-					map.put("itemInfo", row.getItems());
-					mapList.add(map);
+					ContainerInfo containerInfo = getContainerInfo(row);
+					containerInfoList.add(containerInfo);
 				}
 				response.put("status", 1);
-				response.put("containersDetails", mapList);
+				response.put("containerInfoDetails", containerInfoList);
 				return response;
 			} else {
 				response.put("status", 0);
-				response.put("status", "Containers details are empty.");
+				response.put("status", "Containers are empty.");
 				return response;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			logger.info("method :: containersByUserInfo ::: Something went wrong" + e);
 		}
 		return response;
 	}
