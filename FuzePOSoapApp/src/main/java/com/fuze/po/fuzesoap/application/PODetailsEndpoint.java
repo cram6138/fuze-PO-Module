@@ -1,11 +1,14 @@
 package com.fuze.po.fuzesoap.application;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Optional;
 
+import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
@@ -18,6 +21,8 @@ import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
+import com.addcontainerdetails.addcontainerdetails.AddContainerDetailsRequest;
+import com.addcontainerdetails.addcontainerdetails.AddContainerDetailsResponse;
 import com.cartproduceritem.cartdetails.CartDetailsRequest;
 import com.cartproduceritem.cartdetails.CartItemsDetailsResponse;
 import com.cartproduceritem.cartdetails.Cartitems;
@@ -28,14 +33,20 @@ import com.createpocartproducer.createpo.Itempojo;
 import com.createpocartproducer.createpo.Pores;
 import com.fuze.po.fuzesoap.application.entity.CartEntity;
 import com.fuze.po.fuzesoap.application.entity.CartItemsEntity;
+import com.fuze.po.fuzesoap.application.entity.ContainerEntity;
 import com.fuze.po.fuzesoap.application.entity.ItemEntity;
 import com.fuze.po.fuzesoap.application.entity.POItemsEntity;
 import com.fuze.po.fuzesoap.application.entity.PORequestEntity;
+import com.fuze.po.fuzesoap.application.entity.ProjectEntity;
+import com.fuze.po.fuzesoap.application.entity.UserEntity;
 import com.fuze.po.fuzesoap.application.repository.CartEntityRepository;
 import com.fuze.po.fuzesoap.application.repository.CartItemRepository;
+import com.fuze.po.fuzesoap.application.repository.ContainerEntityRepository;
 import com.fuze.po.fuzesoap.application.repository.ItemEntityRepository;
 import com.fuze.po.fuzesoap.application.repository.POItemsEntityRepository;
 import com.fuze.po.fuzesoap.application.repository.PORequestEntityRepository;
+import com.fuze.po.fuzesoap.application.repository.ProjectEntityRepository;
+import com.fuze.po.fuzesoap.util.RandomNumberUtil;
 import com.poaddcartitemsproducer.addcartitems.AddCartItemsRequest;
 import com.poaddcartitemsproducer.addcartitems.AddCartItemsResponse;
 import com.poaddcartitemsproducer.addcartitems.ItemIdsPojo;
@@ -64,6 +75,8 @@ public class PODetailsEndpoint {
 
 	private static final String NAMESPACE_URI_ADD_CART_ITEMS = "http://www.poaddcartitemsproducer.com/addcartitems";
 
+	private static final String NAMESPACE_URI_ADD_CONTAINER_DETAILS = "http://www.addcontainerdetails.com/addcontainerdetails";
+
 	@Autowired
 	private CartItemRepository cartItemRepository;
 
@@ -78,6 +91,12 @@ public class PODetailsEndpoint {
 
 	@Autowired
 	private CartEntityRepository cartEntityRepository;
+
+	@Autowired
+	private ProjectEntityRepository projectEntityRepository;
+
+	@Autowired
+	private ContainerEntityRepository containerEnityRepository;
 
 	@ResponsePayload
 	@PayloadRoot(namespace = NAMESPACE_URI_CART_DETAILS, localPart = "CartDetailsRequest")
@@ -258,51 +277,51 @@ public class PODetailsEndpoint {
 	
 	// save the container details in container table
 
-		@ResponsePayload
-		@PayloadRoot(namespace = NAMESPACE_URI_ADD_CONTAINER_DETAILS, localPart = "AddContainerDetailsRequest")
-		public AddContainerDetailsResponse addContainerDetails(@RequestPayload AddContainerDetailsRequest request) {
+	@ResponsePayload
+	@PayloadRoot(namespace = NAMESPACE_URI_ADD_CONTAINER_DETAILS, localPart = "AddContainerDetailsRequest")
+	public AddContainerDetailsResponse addContainerDetails(@RequestPayload AddContainerDetailsRequest request) {
 
-			AddContainerDetailsResponse response = new AddContainerDetailsResponse();
-			try {
+		AddContainerDetailsResponse response = new AddContainerDetailsResponse();
+		try {
 
-				Optional<PORequestEntity> dbPORequest = poRequestEntityRepository.findById(request.getPoRequestId());
-				Optional<ProjectEntity> dbProject = projectEntityRepository
-						.findById(Integer.parseInt(dbPORequest.get().getProjectId()));
-				if (dbPORequest.isPresent()) {
-					ContainerEntity containerEntity = new ContainerEntity();
-					UserEntity userEntity = new UserEntity();
-					userEntity.setId(request.getUserId());
+			Optional<PORequestEntity> dbPORequest = poRequestEntityRepository.findById(request.getPoRequestId());
+			Optional<ProjectEntity> dbProject = projectEntityRepository
+					.findById(Integer.parseInt(dbPORequest.get().getProjectId()));
+			if (dbPORequest.isPresent()) {
+				ContainerEntity containerEntity = new ContainerEntity();
+				UserEntity userEntity = new UserEntity();
+				userEntity.setId(request.getUserId());
 
-					DateTimeFormatter dtf = DateTimeFormatter.ofPattern("ddMyyyyhhmmss");
-					LocalDateTime now = LocalDateTime.now();
+				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("ddMyyyyhhmmss");
+				LocalDateTime now = LocalDateTime.now();
 
-					String containercode = dbPORequest.get().getTeritory().substring(0, 2).toUpperCase()
-							+ dbProject.get().getMarket().substring(0, 2).toUpperCase()
-							+ dbProject.get().getSubMarket().substring(0, 2).toUpperCase()
-							+ dbProject.get().getLocalMarket().substring(0, 2).toUpperCase() + dtf.format(now);
+				String containercode = dbPORequest.get().getTeritory().substring(0, 2).toUpperCase()
+						+ dbProject.get().getMarket().substring(0, 2).toUpperCase()
+						+ dbProject.get().getSubMarket().substring(0, 2).toUpperCase()
+						+ dbProject.get().getLocalMarket().substring(0, 2).toUpperCase() + dtf.format(now);
 
-					containerEntity.setMarket(dbProject.get().getMarket());
-					containerEntity.setTerritory(dbPORequest.get().getTeritory());
-					containerEntity.setSubMarket(dbProject.get().getSubMarket());
-					containerEntity.setLocalMarket(dbProject.get().getLocalMarket());
-					containerEntity.setProject(dbProject.get());
-					containerEntity.setBuyer(userEntity);
-					containerEntity.setContainerCode(containercode);
-					containerEntity.setPslc(dbProject.get().getPslc());
-					containerEntity.setPSProject(dbPORequest.get().getPsProject());
+				containerEntity.setMarket(dbProject.get().getMarket());
+				containerEntity.setTerritory(dbPORequest.get().getTeritory());
+				containerEntity.setSubMarket(dbProject.get().getSubMarket());
+				containerEntity.setLocalMarket(dbProject.get().getLocalMarket());
+				containerEntity.setProject(dbProject.get());
+				containerEntity.setBuyer(userEntity);
+				containerEntity.setContainerCode(containercode);
+				containerEntity.setPslc(dbProject.get().getPslc());
+				containerEntity.setPSProject(dbPORequest.get().getPsProject());
 
-					containerEnityRepository.save(containerEntity);
-					response.setMessage("Successfully saved.");
-					response.setStatus(1);
-				} else {
-					response.setMessage("failed");
-					response.setStatus(0);
-				}
-
-			} catch (Exception e) {
-				e.printStackTrace();
+				containerEnityRepository.save(containerEntity);
+				response.setMessage("Successfully saved.");
+				response.setStatus(1);
+			} else {
+				response.setMessage("failed");
+				response.setStatus(0);
 			}
-			return response;
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		return response;
+	}
 
 }
