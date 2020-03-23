@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope
+	xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+	xmlns:us="http://www.addcontainerdetails.com/addcontainerdetails">
+
+	<soapenv:Body>
+		<us:AddContainerDetailsRequest>
+			<us:poRequestId>4</us:poRequestId>
+			<us:userId>1</us:userId>
+		</us:AddContainerDetailsRequest>
+	</soapenv:Body>
+</soapenv:Envelope>

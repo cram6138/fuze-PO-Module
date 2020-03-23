@@ -11,6 +11,8 @@ import org.springframework.ws.client.core.WebServiceTemplate;
 
 import com.fuze.po.PurchaseOrderAppServices.bean.AddCartItemsRequest;
 import com.fuze.po.PurchaseOrderAppServices.bean.AddCartItemsResponse;
+import com.fuze.po.PurchaseOrderAppServices.bean.AddContainerDetailsRequest;
+import com.fuze.po.PurchaseOrderAppServices.bean.AddContainerDetailsResponse;
 import com.fuze.po.PurchaseOrderAppServices.bean.AddPODetailsRequest;
 import com.fuze.po.PurchaseOrderAppServices.bean.AddPODetailsResponse;
 import com.fuze.po.PurchaseOrderAppServices.bean.CartDetailsRequest;
@@ -21,6 +23,8 @@ import com.fuze.po.PurchaseOrderAppServices.bean.POReqEditRequest;
 import com.fuze.po.PurchaseOrderAppServices.bean.POReqEditResponse;
 import com.fuze.po.PurchaseOrderAppServices.bean.POReqStatusRequest;
 import com.fuze.po.PurchaseOrderAppServices.bean.POReqStatusResponse;
+import com.fuze.po.PurchaseOrderAppServices.bean.ReuseProjectDetailsRequest;
+import com.fuze.po.PurchaseOrderAppServices.bean.ReuseProjectDetailsResponse;
 
 /**
  * @author Gobinda Majhi
@@ -107,6 +111,9 @@ public class SoapConsumer {
 		return poReqEditResponse;
 	}
 	
+	
+	
+	
 	public AddCartItemsResponse addCartItems(AddCartItemsRequest addCartItemsRequest) {
 		logger.info("Entering in SoapConsumer class in addCartItemsResponse method");
 		webServiceTemplate = new WebServiceTemplate(jaxb2Marshaller);
@@ -119,5 +126,33 @@ public class SoapConsumer {
 		}*/
 		return addCartItemsResponse;
 	}
+	
+	public ReuseProjectDetailsResponse getReuseProjectDetails(ReuseProjectDetailsRequest request) {
+		logger.info("Entering in SoapConsumer class in getReuseProjectDetails method");
+		webServiceTemplate = new WebServiceTemplate(jaxb2Marshaller);
+		ReuseProjectDetailsResponse reuseprojectdetailsResponse = null;
+		try {
+			reuseprojectdetailsResponse = (ReuseProjectDetailsResponse) webServiceTemplate
+					.marshalSendAndReceive(cartItemsUrl + "/reUseProjectDetails", request);
+
+		} catch (Exception e) {
+			logger.error("Exception in  method" + e.getMessage());
+		}
+		return reuseprojectdetailsResponse;
+	}
+	
+	public AddContainerDetailsResponse addContainerDetails(AddContainerDetailsRequest poReqEditRequest) {
+		logger.info("Entering in SoapConsumer class in AddContainerDetails method");
+		webServiceTemplate = new WebServiceTemplate(jaxb2Marshaller);
+		AddContainerDetailsResponse addContainerDetailsResponse = null;
+		try {
+			addContainerDetailsResponse = (AddContainerDetailsResponse) webServiceTemplate
+					.marshalSendAndReceive(cartItemsUrl + "/addContainerDetails", poReqEditRequest);
+		} catch (Exception e) {
+			logger.info("Exception  in AddContainerDetails  method" + e.getMessage());
+		}
+		return addContainerDetailsResponse;
+	}
+
 
 }

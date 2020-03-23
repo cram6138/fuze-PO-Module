@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.fuze.reservation.application.com/reuseprojectdetails"
+	xmlns:tnspo="http://www.fuze.reservation.application.com/reuseprojectdetails"
+	elementFormDefault="qualified">
+
+	<xs:element name="ReuseProjectDetailsRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="pslcLocationCode" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ReuseProjectDetailsResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="psProject" type="xs:string" />
+				<xs:element name="fuzeProjectId" type="xs:string" />
+				<xs:element name="psProjectStatus" type="xs:string" />
+				<xs:element name="psProjectEffectiveDate" type="xs:date" />
+				<xs:element name="useByDate" type="xs:date" />
+				<xs:element name="psProjectDescription" type="xs:string" />
+				<xs:element name="pslcDescription" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
