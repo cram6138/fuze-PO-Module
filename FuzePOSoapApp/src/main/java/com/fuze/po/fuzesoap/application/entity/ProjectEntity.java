@@ -26,6 +26,14 @@ public class ProjectEntity {
 	@Column(name = "site_name")
 	private String siteName;
 
+	public String getLocalMarket() {
+		return localMarket;
+	}
+
+	public void setLocalMarket(String localMarket) {
+		this.localMarket = localMarket;
+	}
+
 	@Column(name = "project_name")
 	private String projectName;
 
@@ -34,6 +42,9 @@ public class ProjectEntity {
 
 	@Column(name = "sub_market")
 	private String subMarket;
+	
+	@Column(name = "local_market")
+	private String localMarket;
 
 	@Column(name = "project_type")
 	private String projectType;
@@ -58,6 +69,9 @@ public class ProjectEntity {
 
 	@Column(name = "teritory")
 	private String teritory;
+	
+	@Column(name = "usebydate")
+	private Date useByDate;
 
 	@Column(name = "effective_date")
 	private Date effectiveDate;
@@ -89,6 +103,14 @@ public class ProjectEntity {
 
 	public void setProject_description(String project_description) {
 		this.project_description = project_description;
+	}
+
+	public Date getUseByDate() {
+		return useByDate;
+	}
+
+	public void setUseByDate(Date useByDate) {
+		this.useByDate = useByDate;
 	}
 
 	public String getPslc_description() {

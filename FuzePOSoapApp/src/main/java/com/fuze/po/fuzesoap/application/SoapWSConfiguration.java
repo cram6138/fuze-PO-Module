@@ -124,6 +124,22 @@ public class SoapWSConfiguration extends WsConfigurerAdapter {
 		addCartItemsWsdl.setSchemaCollection(addCartItemsXsdFile());
 		return addCartItemsWsdl;
 	}
+	
+	/**
+	 * for adding the container details
+	 * 
+	 * @return DefaultWsdl11Definition addContainerDetailsWsdl
+	 */
+
+	@Bean(name = "addContainerDetails")
+	public DefaultWsdl11Definition addContainerDetails() throws Exception {
+		DefaultWsdl11Definition addContainerDetailsWsdl = new DefaultWsdl11Definition();
+		addContainerDetailsWsdl.setPortTypeName("addContainerDetailsPort");
+		addContainerDetailsWsdl.setLocationUri("/soapWs/addContainerDetails");
+		addContainerDetailsWsdl.setTargetNamespace("http://www.addcontainerdetails.com/addcontainerdetails");
+		addContainerDetailsWsdl.setSchemaCollection(addContainerDetailsXsdFile());
+		return addContainerDetailsWsdl;
+	}
 
 	@Bean
 	public XsdSchema cartDetailsXsdSchema() {
@@ -161,6 +177,14 @@ public class SoapWSConfiguration extends WsConfigurerAdapter {
 	@Bean
 	public XsdSchemaCollection addCartItemsXsdFile() throws Exception {
 		CommonsXsdSchemaCollection xsds = new CommonsXsdSchemaCollection(new ClassPathResource("addcartitems.xsd"));
+		xsds.setInline(true);
+		return xsds;
+	}
+
+	@Bean
+	public XsdSchemaCollection addContainerDetailsXsdFile() throws Exception {
+		CommonsXsdSchemaCollection xsds = new CommonsXsdSchemaCollection(
+				new ClassPathResource("createContainerDetails.xsd"));
 		xsds.setInline(true);
 		return xsds;
 	}

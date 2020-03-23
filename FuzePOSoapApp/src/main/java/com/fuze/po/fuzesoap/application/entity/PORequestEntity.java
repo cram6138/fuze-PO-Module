@@ -1,10 +1,16 @@
 package com.fuze.po.fuzesoap.application.entity;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -47,6 +53,36 @@ public class PORequestEntity {
 
 	@Column(name = "status")
 	private String status;
+
+	@Column(name = "po_name")
+	private String poName;
+
+	@Column(name = "po_status")
+	private String poStatus;
+
+	@Column(name = "teritory")
+	private String teritory;
+
+	@Column(name = "market")
+	private String market;
+	
+	@Column(name = "local_market")
+	private String localMarket;
+	
+	
+	
+
+	public String getLocalMarket() {
+		return localMarket;
+	}
+
+	public void setLocalMarket(String localMarket) {
+		this.localMarket = localMarket;
+	}
+
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "po_projects", joinColumns = @JoinColumn(name = "po_request_id"), inverseJoinColumns = @JoinColumn(name = "project_id"))
+	private Set<ProjectEntity> projects;
 
 	public int getId() {
 		return id;
@@ -144,20 +180,63 @@ public class PORequestEntity {
 		this.status = status;
 	}
 
+	public String getPoName() {
+		return poName;
+	}
+
+	public void setPoName(String poName) {
+		this.poName = poName;
+	}
+
+	public String getPoStatus() {
+		return poStatus;
+	}
+
+	public void setPoStatus(String poStatus) {
+		this.poStatus = poStatus;
+	}
+
+	public String getTeritory() {
+		return teritory;
+	}
+
+	public void setTeritory(String teritory) {
+		this.teritory = teritory;
+	}
+
+	public String getMarket() {
+		return market;
+	}
+
+	public void setMarket(String market) {
+		this.market = market;
+	}
+
+	public Set<ProjectEntity> getProjects() {
+		return projects;
+	}
+
+	public void setProjects(Set<ProjectEntity> projects) {
+		this.projects = projects;
+	}
+
 	@Override
 	public String toString() {
 		return "PORequestEntity [id=" + id + ", siteName=" + siteName + ", projectName=" + projectName + ", projectId="
 				+ projectId + ", pslc=" + pslc + ", psProject=" + psProject + ", projectStatus=" + projectStatus
 				+ ", type=" + type + ", projectType=" + projectType + ", customerProjectType=" + customerProjectType
-				+ ", siteTracker=" + siteTracker + ", status=" + status + ", getId()=" + getId() + ", getSiteName()="
-				+ getSiteName() + ", getProjectName()=" + getProjectName() + ", getProjectId()=" + getProjectId()
-				+ ", getPslc()=" + getPslc() + ", getPsProject()=" + getPsProject() + ", getProjectStatus()="
-				+ getProjectStatus() + ", getType()=" + getType() + ", getProjectType()=" + getProjectType()
-				+ ", getCustomerProjectType()=" + getCustomerProjectType() + ", getSiteTracker()=" + getSiteTracker()
-				+ ", getStatus()=" + getStatus() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
-				+ ", toString()=" + super.toString() + "]";
+				+ ", siteTracker=" + siteTracker + ", status=" + status + ", poName=" + poName + ", poStatus="
+				+ poStatus + ", teritory=" + teritory + ", market=" + market + ", localMarket=" + localMarket
+				+ ", projects=" + projects + ", getLocalMarket()=" + getLocalMarket() + ", getId()=" + getId()
+				+ ", getSiteName()=" + getSiteName() + ", getProjectName()=" + getProjectName() + ", getProjectId()="
+				+ getProjectId() + ", getPslc()=" + getPslc() + ", getPsProject()=" + getPsProject()
+				+ ", getProjectStatus()=" + getProjectStatus() + ", getType()=" + getType() + ", getProjectType()="
+				+ getProjectType() + ", getCustomerProjectType()=" + getCustomerProjectType() + ", getSiteTracker()="
+				+ getSiteTracker() + ", getStatus()=" + getStatus() + ", getPoName()=" + getPoName()
+				+ ", getPoStatus()=" + getPoStatus() + ", getTeritory()=" + getTeritory() + ", getMarket()="
+				+ getMarket() + ", getProjects()=" + getProjects() + ", getClass()=" + getClass() + ", hashCode()="
+				+ hashCode() + ", toString()=" + super.toString() + "]";
 	}
-	
-	
 
+	
 }

@@ -22,43 +22,78 @@ public class ContainerEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	
 	@Column(name = "territory")
 	private String territory;
+	
 	@Column(name = "market")
 	private String market;
+	
 	@Column(name = "sub_market")
 	private String subMarket;
+	
 	@Column(name = "local_market")
 	private String localMarket;
+
 	@Column(name = "container_code")
 	private String containerCode;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
 	private UserEntity buyer;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "project_id")
 	private ProjectEntity project;
+	
 	@Column(name = "is_reserved")
 	private boolean reserved;
+	
 	@Column(name = "mr_order_code")
 	private String mrOrderCode;
+	
 	@Column(name = "fue_reservation_id")
 	private String fuzeReservationId;
+	
 	@Column(name = "reserved_by")
 	private String reservedBy;
+	
 	@Column(name = "fuze_status")
 	private String fuzeStatus;
+	
 	@Column(name = "cats_status")
 	private String catsStatus;
+	
 	@Column(name = "use_by")
 	private Date useBy;
+	
 	@Column(name = "reservation_creation_date")
 	private Date reservationCreationDate;
-	@ManyToMany(fetch = FetchType.EAGER)
 	
+	
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "container_items", joinColumns = @JoinColumn(name = "container_id"), inverseJoinColumns = @JoinColumn(name = "item_id"))
 	private Set<ItemEntity> items;
 	
+	@Column(name = "ps_project")
+	private String PSProject;
+	
+	@Column(name = "pslc")
+	private String pslc;
+	
+
+	public String getPSProject() {
+		return PSProject;
+	}
+	public void setPSProject(String pSProject) {
+		PSProject = pSProject;
+	}
+	public String getPslc() {
+		return pslc;
+	}
+	public void setPslc(String pslc) {
+		this.pslc = pslc;
+	}
 	public int getId() {
 		return id;
 	}
@@ -160,6 +195,26 @@ public class ContainerEntity {
 	}
 	public void setItems(Set<ItemEntity> items) {
 		this.items = items;
+	}
+	
+	@Override
+	public String toString() {
+		return "ContainerEntity [id=" + id + ", territory=" + territory + ", market=" + market + ", subMarket="
+				+ subMarket + ", localMarket=" + localMarket + ", containerCode=" + containerCode + ", buyer=" + buyer
+				+ ", project=" + project + ", reserved=" + reserved + ", mrOrderCode=" + mrOrderCode
+				+ ", fuzeReservationId=" + fuzeReservationId + ", reservedBy=" + reservedBy + ", fuzeStatus="
+				+ fuzeStatus + ", catsStatus=" + catsStatus + ", useBy=" + useBy + ", reservationCreationDate="
+				+ reservationCreationDate + ", items=" + items + ", PSProject=" + PSProject + ", pslc=" + pslc
+				+ ", getPSProject()=" + getPSProject() + ", getPslc()=" + getPslc() + ", getId()=" + getId()
+				+ ", getTerritory()=" + getTerritory() + ", getMarket()=" + getMarket() + ", getSubMarket()="
+				+ getSubMarket() + ", getLocalMarket()=" + getLocalMarket() + ", getContainerCode()="
+				+ getContainerCode() + ", getBuyer()=" + getBuyer() + ", getProject()=" + getProject()
+				+ ", isReserved()=" + isReserved() + ", getMrOrderCode()=" + getMrOrderCode()
+				+ ", getFuzeReservationId()=" + getFuzeReservationId() + ", getReservedBy()=" + getReservedBy()
+				+ ", getFuzeStatus()=" + getFuzeStatus() + ", getCatsStatus()=" + getCatsStatus() + ", getUseBy()="
+				+ getUseBy() + ", getReservationCreationDate()=" + getReservationCreationDate() + ", getItems()="
+				+ getItems() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
+				+ super.toString() + "]";
 	}
 
 }
