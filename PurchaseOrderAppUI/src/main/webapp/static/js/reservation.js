@@ -278,33 +278,45 @@ $('#filter').on('input', function (e) {
     	              		}
     	            	}
     	          },
-    	        schema: {
-    	        	 model: {
-    	                 id: "id",
-    	                 fields: {
-    	                	
-    	                	 id:{type:"string"},
-    	                	 name:{type:"string"},
-    	                	 model:{type:"string"},
-    	                	 description:{type:"string"},
-    	                	 price:{type:"string"},
-    	                	 inStock:{type:"string"}
-    	                  }
-    	             }
-    	        },
+    	          schema: {
+    		        	 model: {
+    	                     id: "id",
+    	                     fields: {
+    	                    	
+    	                    	 id: {type:"string"},
+    	                    	 siteName: {type:"string"},
+    	                    	 projectName: {type:"string"},
+    	                    	 market: {type:"string"},
+    	                    	 subMarket: {type:"string"},
+    	                    	 projectType: {type:"string"},
+    	                    	 fuzeProject: {type:"string"},
+    	                    	 pslc: {type:"string"},
+    	                    	 projectStatus: {type:"string"},
+    	                    	 type: {type:"string"},
+    	                    	 customProjectType: {type:"string"},
+    	                    	 siteTracker: {type:"string"},
+    	                    	 teritory: {type:"string"},
+    	                     }
+    	                 }
+    		        },
     	         pageSize: 10
     	    },
     	    
     	    sortable: true,
     	   resizable:true,
-    	    columns: [
-    	    	{ field:"id",title: "Id", width: "140px" },
-    	    	{ field:"name",title: "name", width: "120px"},
-    	    	{ field:"description",title: "description", width: "120px"},
-    	    	{ field:"model",title: "model", width: "120px"},
-    	    	{ field:"price",title: "name", price: "120px"},
-    	    	{ field:"inStock",title: "inStock", width: "120px" }
-    	    	 ],
+    	   columns: [ { field:"siteName", title:"siteName", width: "180px" },
+               { field:" fuzeProject",title:"fuzeProject" , width: "120px" },
+               { field:"projectName", title:"projectName" ,width: "120px"},
+               { field:" market",title:"market" , width: "120px"},
+               { field:" subMarket", title:"subMarket" ,width: "120px"},
+               { field:" projectType",title:"projectType" , width: "120px"},
+               { field:" pslc", title:"pslc" ,width: "120px"},
+               { field:" projectStatus", title:"projectStatus" ,width: "120px"},
+               { field:" type",title:"type" , width: "120px"},
+               { field:" customProjectType", title:"customProjectType" ,width: "120px"},
+               { field:" siteTracker",title:"siteTracker" , width: "120px"},
+           
+                ],
     	editable: "popup"
     });
     
