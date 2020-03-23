@@ -255,5 +255,54 @@ public class PODetailsEndpoint {
 		}
 		return response;
 	}
+	
+	// save the container details in container table
+
+		@ResponsePayload
+		@PayloadRoot(namespace = NAMESPACE_URI_ADD_CONTAINER_DETAILS, localPart = "AddContainerDetailsRequest")
+		public AddContainerDetailsResponse addContainerDetails(@RequestPayload AddContainerDetailsRequest request) {
+
+			AddContainerDetailsResponse response = new AddContainerDetailsResponse();
+			try {
+
+				Optional<PORequestEntity> dbPORequest = poRequestEntityRepository.findById(request.getPoRequestId());
+				Optional<ProjectEntity> dbProject = projectEntityRepository
+						.findById(Integer.parseInt(dbPORequest.get().getProjectId()));
+				if (dbPORequest.isPresent()) {
+					ContainerEntity containerEntity = new ContainerEntity();
+					UserEntity userEntity = new UserEntity();
+					userEntity.setId(request.getUserId());
+
+					DateTimeFormatter dtf = DateTimeFormatter.ofPattern("ddMyyyyhhmmss");
+					LocalDateTime now = LocalDateTime.now();
+
+					String containercode = dbPORequest.get().getTeritory().substring(0, 2).toUpperCase()
+							+ dbProject.get().getMarket().substring(0, 2).toUpperCase()
+							+ dbProject.get().getSubMarket().substring(0, 2).toUpperCase()
+							+ dbProject.get().getLocalMarket().substring(0, 2).toUpperCase() + dtf.format(now);
+
+					containerEntity.setMarket(dbProject.get().getMarket());
+					containerEntity.setTerritory(dbPORequest.get().getTeritory());
+					containerEntity.setSubMarket(dbProject.get().getSubMarket());
+					containerEntity.setLocalMarket(dbProject.get().getLocalMarket());
+					containerEntity.setProject(dbProject.get());
+					containerEntity.setBuyer(userEntity);
+					containerEntity.setContainerCode(containercode);
+					containerEntity.setPslc(dbProject.get().getPslc());
+					containerEntity.setPSProject(dbPORequest.get().getPsProject());
+
+					containerEnityRepository.save(containerEntity);
+					response.setMessage("Successfully saved.");
+					response.setStatus(1);
+				} else {
+					response.setMessage("failed");
+					response.setStatus(0);
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return response;
+		}
 
 }

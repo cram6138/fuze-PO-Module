@@ -164,5 +164,11 @@ public class SoapWSConfiguration extends WsConfigurerAdapter {
 		xsds.setInline(true);
 		return xsds;
 	}
-
+	@Bean
+	public XsdSchemaCollection addContainerDetailsXsdFile() throws Exception {
+		CommonsXsdSchemaCollection xsds = new CommonsXsdSchemaCollection(
+				new ClassPathResource("createContainerDetails.xsd"));
+		xsds.setInline(true);
+		return xsds;
+	}
 }
