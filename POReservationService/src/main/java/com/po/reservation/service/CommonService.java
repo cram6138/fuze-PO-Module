@@ -71,7 +71,7 @@ public class CommonService {
 
 	private List<SubMarketInfo> getSubMarketInfoList(List<SubMarket> subMarkets) {
 		List<SubMarketInfo> subMarketInfoList = new ArrayList<SubMarketInfo>();
-		if (subMarkets != null && subMarkets.isEmpty()) {
+		if (subMarkets != null && !subMarkets.isEmpty()) {
 			for (SubMarket subMarket : subMarkets) {
 				subMarketInfoList.add(getSubMarketInfo(subMarket));
 			}
