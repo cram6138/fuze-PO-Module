@@ -46,7 +46,6 @@ import com.fuze.po.fuzesoap.application.repository.ItemEntityRepository;
 import com.fuze.po.fuzesoap.application.repository.POItemsEntityRepository;
 import com.fuze.po.fuzesoap.application.repository.PORequestEntityRepository;
 import com.fuze.po.fuzesoap.application.repository.ProjectEntityRepository;
-import com.fuze.po.fuzesoap.util.RandomNumberUtil;
 import com.poaddcartitemsproducer.addcartitems.AddCartItemsRequest;
 import com.poaddcartitemsproducer.addcartitems.AddCartItemsResponse;
 import com.poaddcartitemsproducer.addcartitems.ItemIdsPojo;
