@@ -84,6 +84,9 @@ public class Container {
 	@JsonIgnore
 	private Set<Item> items;
 	
+	@Column(name = "reservation_notes")
+	private String reservationNotes;
+
 	
 
 	public String getPSProject() {
@@ -237,6 +240,14 @@ public class Container {
 	public void setItems(Set<Item> items) {
 		this.items = items;
 	}
+	
+	public String getReservationNotes() {
+		return reservationNotes;
+	}
+
+	public void setReservationNotes(String reservationNotes) {
+		this.reservationNotes = reservationNotes;
+	}
 
 	@Override
 	public String toString() {
@@ -245,7 +256,7 @@ public class Container {
 				+ ", project=" + project + ", reserved=" + reserved + ", mrOrderCode=" + mrOrderCode
 				+ ", fuzeReservationId=" + fuzeReservationId + ", reservedBy=" + reservedBy + ", fuzeStatus="
 				+ fuzeStatus + ", catsStatus=" + catsStatus + ", useBy=" + useBy + ", reservationCreationDate="
-				+ reservationCreationDate + ", items=" + items + "]";
+				+ reservationCreationDate + ", items=" + items + ",reservationNotes="+reservationNotes+ "]";
 	}
 
 }

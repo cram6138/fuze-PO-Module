@@ -23,4 +23,6 @@ public interface ContainerRepository extends JpaRepository<Container, Integer> {
 			@Param("market") String market,
 			@Param("userId") int userId);
 
+	Container findByContainerCode(String containerCode);
+
 }

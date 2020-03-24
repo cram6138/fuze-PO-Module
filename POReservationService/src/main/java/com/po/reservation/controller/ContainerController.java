@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.po.reservation.exception.ContainerResourceNotFoundException;
 import com.po.reservation.form.ContainerForm;
+import com.po.reservation.form.ContainerReserveForm;
 import com.po.reservation.form.ContainerSearchForm;
 import com.po.reservation.info.ContainerInfo;
 import com.po.reservation.info.UserInfo;
@@ -107,5 +108,27 @@ public class ContainerController {
 			logger.error("Exception in getReservedContainerByUser method " + e.toString());
 		}
 		return new ResponseEntity<List<ContainerInfo>>(reservedContainerList, HttpStatus.OK);
+	}
+	
+	@PostMapping("/reserve/container")
+	public ResponseEntity<ContainerInfo> reserveContainer(@RequestBody final ContainerReserveForm containerReserveForm,final UserInfo userInfo) {
+		ContainerInfo containerInfo = new ContainerInfo();
+		try {
+		 containerInfo = containerService.reserveContainer(containerReserveForm,userInfo);
+		} catch (Exception e) {
+			logger.error("Exception in reserveContainer method" + e.getMessage());
+		}
+		return new ResponseEntity<ContainerInfo>(containerInfo, HttpStatus.OK);
+	}
+	
+	@PostMapping("/unreserve/container")
+	public ResponseEntity<ContainerInfo> unreserveContainer(@RequestBody final ContainerReserveForm containerReserveForm,final UserInfo userInfo) {
+		ContainerInfo containerInfo = null;
+		try {
+		 containerInfo = containerService.unReserveContainer(containerReserveForm,userInfo);
+		} catch (Exception e) {
+			logger.error("Exception in unReserveContainer method" + e.getMessage());
+		}
+		return new ResponseEntity<ContainerInfo>(containerInfo, HttpStatus.OK);
 	}
 }

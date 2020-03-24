@@ -1,14 +1,15 @@
 package com.po.reservation.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -20,9 +21,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import com.po.reservation.common.service.CatsStatus;
+import com.po.reservation.common.service.ProjectStatus;
 import com.po.reservation.entity.Container;
 import com.po.reservation.entity.Item;
 import com.po.reservation.form.ContainerForm;
+import com.po.reservation.form.ContainerReserveForm;
 import com.po.reservation.form.ContainerSearchForm;
 import com.po.reservation.info.ContainerInfo;
 import com.po.reservation.info.ItemInfo;
@@ -341,5 +344,83 @@ public class ContainerService {
 		container.setReserved(false);
 		container.setReservedBy(null);
 		return container;
+	}
+	
+	public ContainerInfo reserveContainer(ContainerReserveForm containerReserveForm,UserInfo userInfo) {
+		ContainerInfo containerInfo = new ContainerInfo();
+		Container container = containerRepository.findByContainerCode(containerReserveForm.getContainerCode());
+		if (container != null) {
+			if (containerReserveForm.getUseAtPslc() != null && container.getPslc().equals(containerReserveForm.getUseAtPslc())) {
+               if(containerReserveForm.getUsePsProject()!= null && 
+            		   container.getPSProject().equals(containerReserveForm.getUsePsProject())) {
+            	   if(containerReserveForm.getPsProjectStatus().equals(ProjectStatus.OPEN.getValue()) ||
+            			   containerReserveForm.getPsProjectStatus().equals(ProjectStatus.INSERVICE.getValue())){
+            		   containerInfo = updateContainerWithReservationDetails(containerReserveForm,container,userInfo);
+            	   }else {
+            		   containerInfo.setMessage("Project is not in open status in PeopleSoft.PeopleSoft Project is outside of your business unit"); 
+            	   }
+               }else {
+            	   containerInfo.setMessage("PS Project is not matched with PeopleSoft Project"); 
+               }
+			}else {
+				containerInfo.setMessage("Pslc is not matched with PeopleSoft location");
+			}
+		}
+		logger.error("Status" + containerInfo.getMessage());
+		return containerInfo;
+	}
+
+	private ContainerInfo updateContainerWithReservationDetails(ContainerReserveForm containerReserveForm,Container container,UserInfo userInfo) {
+		ContainerInfo containerInfo = new ContainerInfo();
+		Calendar cal = Calendar.getInstance();
+		container.setReservationCreationDate(cal.getTime());
+	    String date = new SimpleDateFormat("ddMMyyyy").format(cal.getTime());
+	    Date useByDate = null;
+	    try {
+			useByDate = new SimpleDateFormat("dd-MMM-yyyy").parse(containerReserveForm.getUseByDate());
+		} catch (ParseException e) {
+			logger.info("exception due to parsing date"+e);
+		}
+	    container.setFuzeReservationId(ProjectStatus.FUZE+date+String.valueOf(generatePin()));
+	    container.setReserved(true);
+	    container.setCatsStatus(CatsStatus.RESERVED_ACCESS.getValue());
+	    container.setUseBy(useByDate);
+	    container.setReservedBy(userInfo.getFirstName());
+	    container.setReservationNotes(containerReserveForm.getReservationNotes());
+	    containerRepository.save(container);
+	    logger.info("succesfully updated conatiner info in database");
+	    if(container!= null) {
+	    	containerInfo.setFuzeReservationId(container.getFuzeReservationId());
+	    	containerInfo.setReservationCreationDate(new SimpleDateFormat("yyyy-MM-dd").format(container.getReservationCreationDate()));
+	    	containerInfo.setReservationNotes(container.getReservationNotes());
+	    	containerInfo.setMessage("Reservation done succesfully");
+	    }	
+	
+		return containerInfo;	
+	}
+	  
+	public static int generatePin() {
+		Random generator = new Random();
+	    return 100000 + generator.nextInt(900000);
+	}
+
+	public ContainerInfo unReserveContainer(ContainerReserveForm containerReserveForm, UserInfo userInfo) {
+		ContainerInfo containerInfo = new ContainerInfo();
+		Container container = containerRepository.findByContainerCode(containerReserveForm.getContainerCode());
+		container.setFuzeReservationId(null);
+		container.setReservationCreationDate(null);
+		container.setReservedBy(null);
+		container.setReservationNotes(null);
+		container.setReserved(false);
+		container.setCatsStatus(CatsStatus.AVAILABLE_ACCESS.getValue());
+		containerRepository.save(container);
+		logger.info("succesfully updated conatiner info in database");
+		if(container!= null) {
+	    	containerInfo.setFuzeReservationId(container.getFuzeReservationId());
+	    	containerInfo.setReservationCreationDate(null);
+	    	containerInfo.setReservationNotes(container.getReservationNotes());
+	    	containerInfo.setMessage("UnReservation done succesfully");
+	    }	
+		return containerInfo;
 	}
 }

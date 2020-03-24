@@ -18,7 +18,7 @@ public class ContainerInfo {
 	private String pslc;
 	private String reservedUsername;
 	private Date useByDate;
-	private Date reservationCreationDate;
+	private String reservationCreationDate;
 	private String fuzeStatus;
 	private String catsStatus;
 	private String market;
@@ -27,6 +27,8 @@ public class ContainerInfo {
 	private int buyerId;
 	private String buyerName;
 	private List<ItemInfo> itemsInfo;
+	private String reservationNotes;
+	private String message;
 	
 	public List<ItemInfo> getItemsInfo() {
 		return itemsInfo;
@@ -175,11 +177,11 @@ public class ContainerInfo {
 		this.useByDate = useByDate;
 	}
 
-	public Date getReservationCreationDate() {
+	public String getReservationCreationDate() {
 		return reservationCreationDate;
 	}
 
-	public void setReservationCreationDate(Date reservationCreationDate) {
+	public void setReservationCreationDate(String reservationCreationDate) {
 		this.reservationCreationDate = reservationCreationDate;
 	}
 
@@ -199,5 +201,19 @@ public class ContainerInfo {
 		this.catsStatus = catsStatus;
 	}
 
+	public String getReservationNotes() {
+		return reservationNotes;
+	}
 
+	public void setReservationNotes(String reservationNotes) {
+		this.reservationNotes = reservationNotes;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
 }
