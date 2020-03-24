@@ -1,6 +1,7 @@
 package com.po.reservation.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,8 +52,8 @@ public class ContainerService {
 							.filter(container -> container.getTerritory().equals(containerForm.getTerritory()))
 							.collect(Collectors.toList());
 				} else {
-					containerList = containerList.stream()
-							.filter(container -> container.getCatsStatus().equals(CatsStatus.AVAILABLE_ACCESS.getValue())
+					containerList = containerList.stream().filter(
+							container -> container.getCatsStatus().equals(CatsStatus.AVAILABLE_ACCESS.getValue())
 									&& container.getTerritory().equals(containerForm.getTerritory()))
 							.collect(Collectors.toList());
 				}
@@ -63,8 +64,8 @@ public class ContainerService {
 							.filter(container -> container.getMarket().equals(containerForm.getMarket()))
 							.collect(Collectors.toList());
 				} else {
-					containerList = containerList.stream()
-							.filter(container -> container.getCatsStatus().equals(CatsStatus.AVAILABLE_ACCESS.getValue())
+					containerList = containerList.stream().filter(
+							container -> container.getCatsStatus().equals(CatsStatus.AVAILABLE_ACCESS.getValue())
 									&& container.getMarket().equals(containerForm.getMarket()))
 							.collect(Collectors.toList());
 				}
@@ -169,10 +170,12 @@ public class ContainerService {
 		List<Container> containerList = new ArrayList<>();
 		List<ContainerInfo> containerInfoList = new ArrayList<>();
 		if (containerSearchForm.getIsReserved() != null && "Y".equals(containerSearchForm.getIsReserved())) {
-			containerList = containerRepository.findByCatsStatusAndMrOrderCodeIsNull(CatsStatus.RESERVED_ACCESS.getValue());
+			containerList = containerRepository
+					.findByCatsStatusAndMrOrderCodeIsNull(CatsStatus.RESERVED_ACCESS.getValue());
 		} else if (containerSearchForm.getContainerOnMrOrder() != null
 				&& "Y".equals(containerSearchForm.getContainerOnMrOrder())) {
-			containerList = containerRepository.findByCatsStatusAndMrOrderCodeIsNotNull(CatsStatus.RESERVED_ACCESS.getValue());
+			containerList = containerRepository
+					.findByCatsStatusAndMrOrderCodeIsNotNull(CatsStatus.RESERVED_ACCESS.getValue());
 		} else if (containerSearchForm.getIncludeContainersOnReceived() != null
 				&& "Y".equals(containerSearchForm.getIncludeContainersOnReceived())) {
 			containerList = containerRepository.findByCatsStatus(CatsStatus.RECIEVED.getValue());
@@ -240,16 +243,20 @@ public class ContainerService {
 		List<Container> searchKeylist = new ArrayList<Container>();
 		for (Container c : containerList) {
 			if (c.getContainerCode().contains(searchKey)) {
-				searchKeylist = containerList.stream().filter(container -> container.getCatsStatus().equals(CatsStatus.AVAILABLE_ACCESS.getValue())
-						&& container.getContainerCode().equals(searchKey)).collect(Collectors.toList());
+				searchKeylist = containerList.stream()
+						.filter(container -> container.getCatsStatus().equals(CatsStatus.AVAILABLE_ACCESS.getValue())
+								&& container.getContainerCode().equals(searchKey))
+						.collect(Collectors.toList());
 			} else if (String.valueOf(c.getProject().getId()).equals(searchKey)) {
 				searchKeylist = containerList.stream()
 						.filter(container -> container.getCatsStatus().equals(CatsStatus.AVAILABLE_ACCESS.getValue())
 								&& container.getProject().getId() == (Integer.valueOf(searchKey)))
 						.collect(Collectors.toList());
 			} else if (c.getProject().getPslc().contains(searchKey)) {
-				searchKeylist = containerList.stream().filter(container -> container.getCatsStatus().equals(CatsStatus.AVAILABLE_ACCESS.getValue())
-						&& container.getProject().getPslc().equals(searchKey)).collect(Collectors.toList());
+				searchKeylist = containerList.stream()
+						.filter(container -> container.getCatsStatus().equals(CatsStatus.AVAILABLE_ACCESS.getValue())
+								&& container.getProject().getPslc().equals(searchKey))
+						.collect(Collectors.toList());
 			} else if (String.valueOf(c.getBuyer().getId()).equals(searchKey)) {
 				searchKeylist = containerList.stream()
 						.filter(container -> container.getCatsStatus().equals(CatsStatus.AVAILABLE_ACCESS.getValue())
@@ -281,7 +288,7 @@ public class ContainerService {
 		}
 		return ContainerInfoList;
 	}
-	
+
 	public Map<String, Object> containersByUserInfo(UserInfo request) {
 		Map<String, Object> response = new HashMap<>();
 		List<ContainerInfo> containerInfoList = new ArrayList<>();
@@ -313,4 +320,26 @@ public class ContainerService {
 		return response;
 	}
 
+	public void releaseReservedContainer() {
+		List<Container> containers = containerRepository.findAll();
+		containers = containers.stream().filter(container -> container.getCatsStatus().equals(CatsStatus.RESERVED_ACCESS.getValue()))
+				.collect(Collectors.toList());
+		List<Container> savingContainers = new ArrayList<Container>();
+		for (Container container : containers) {
+			if(container.getUseBy().getTime() < new Date().getTime()) {
+				savingContainers.add(getUpdatedContainer(container));
+			}
+		}
+		containerRepository.saveAll(savingContainers);
+	}
+
+	private Container getUpdatedContainer(Container container) {
+		container.setCatsStatus(CatsStatus.AVAILABLE_ACCESS.getValue());
+		container.setFuzeReservationId(null);
+		container.setUseBy(null);
+		container.setReservationCreationDate(null);
+		container.setReserved(false);
+		container.setReservedBy(null);
+		return container;
+	}
 }
