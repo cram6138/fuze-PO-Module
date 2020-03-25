@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fuze.po.PurchaseOrderAppServices.forms.ItemForm;
 import com.fuze.po.PurchaseOrderAppServices.info.ItemInfo;
 import com.fuze.po.PurchaseOrderAppServices.info.PORequestInfo;
+import com.fuze.po.PurchaseOrderAppServices.info.ResponseInfo;
 import com.fuze.po.PurchaseOrderAppServices.service.ItemService;
 
 @RestController
@@ -42,6 +44,18 @@ public class ItemController {
 	@PostMapping("/searchItems")
 	public ResponseEntity<List<ItemInfo>>searchItemsList(@RequestBody ItemInfo itemInfo) {
 		return new ResponseEntity<List<ItemInfo>>(itemService.searchItemsList(itemInfo), HttpStatus.OK);
+	}
+	
+	/**
+	 * For creating new createItem  
+	 * 
+	 * @Request  itemForm
+	 * @return ResponseInfo 
+	 */
+	@PostMapping("/createItem")
+	public ResponseEntity<ResponseInfo> createItem(@RequestBody ItemForm itemForm) {
+		ResponseInfo responseInfo = itemService.createItem(itemForm);
+		return new ResponseEntity<ResponseInfo>(responseInfo, HttpStatus.CREATED);
 	}
 
 }

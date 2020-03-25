@@ -9,11 +9,14 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fuze.po.PurchaseOrderAppServices.forms.TemplateForm;
 import com.fuze.po.PurchaseOrderAppServices.info.EQuoteInfo;
 import com.fuze.po.PurchaseOrderAppServices.info.EQuoteItemsInfo;
+import com.fuze.po.PurchaseOrderAppServices.info.ResponseInfo;
 import com.fuze.po.PurchaseOrderAppServices.info.TemplateInfo;
 import com.fuze.po.PurchaseOrderAppServices.info.TemplateItemInfo;
 import com.fuze.po.PurchaseOrderAppServices.service.TemplateService;
@@ -70,5 +73,16 @@ public class TemplateController {
 	@PostMapping("/eQuoteImport/{eQuoteId}")
 	public ResponseEntity<List<EQuoteItemsInfo>> importEQuoteItems(@PathVariable final int eQuoteId) {
 		return new ResponseEntity<List<EQuoteItemsInfo>>(templateService.geteQuoteItems(eQuoteId), HttpStatus.OK);
+	}
+	/**
+	 * For creating createTemplate templateForm 
+	 * 
+	 * @Request  templateForm
+	 * @return ResponseInfo 
+	 */
+	@PostMapping("/createTemplate")
+	public ResponseEntity<ResponseInfo> createTemplate(@RequestBody TemplateForm templateForm) {
+			ResponseInfo responseData = templateService.createTemplate(templateForm);
+			return new ResponseEntity<ResponseInfo>(responseData, HttpStatus.CREATED);
 	}
 }

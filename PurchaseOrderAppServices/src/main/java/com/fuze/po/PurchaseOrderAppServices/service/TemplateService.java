@@ -9,15 +9,16 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.fuze.po.PurchaseOrderAppServices.config.LoggingService;
 import com.fuze.po.PurchaseOrderAppServices.entity.EQuotes;
 import com.fuze.po.PurchaseOrderAppServices.entity.EquoteItems;
 import com.fuze.po.PurchaseOrderAppServices.entity.Item;
 import com.fuze.po.PurchaseOrderAppServices.entity.Template;
 import com.fuze.po.PurchaseOrderAppServices.entity.TemplateItem;
+import com.fuze.po.PurchaseOrderAppServices.forms.TemplateForm;
 import com.fuze.po.PurchaseOrderAppServices.info.EQuoteInfo;
 import com.fuze.po.PurchaseOrderAppServices.info.EQuoteItemsInfo;
 import com.fuze.po.PurchaseOrderAppServices.info.ItemInfo;
+import com.fuze.po.PurchaseOrderAppServices.info.ResponseInfo;
 import com.fuze.po.PurchaseOrderAppServices.info.TemplateInfo;
 import com.fuze.po.PurchaseOrderAppServices.info.TemplateItemInfo;
 import com.fuze.po.PurchaseOrderAppServices.repository.EQuoteItemsRepository;
@@ -134,5 +135,25 @@ public class TemplateService {
 			LOGGER.info("No Data found for eQuote");
 		}
 		return EQuoteItemsInfoList;
+	}
+	
+	public ResponseInfo createTemplate(TemplateForm templateForm) {
+		ResponseInfo responseInfo=new ResponseInfo();
+		try {
+			Template template=papulateTemplateEntity(templateForm);
+			template = templateRepository.save(template);
+		}catch (Exception e) {
+			responseInfo.setStatus(false);
+		}
+		responseInfo.setResponseType("Template has been created successfuly");
+		responseInfo.setStatus(true);
+		return responseInfo;
+	}
+	
+	
+	private Template papulateTemplateEntity(TemplateForm templateForm) {
+		Template template=new Template();
+		BeanUtils.copyProperties(templateForm, template);
+		return template;
 	}
 }

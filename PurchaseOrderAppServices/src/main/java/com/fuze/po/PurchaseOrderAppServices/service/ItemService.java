@@ -7,9 +7,11 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fuze.po.PurchaseOrderAppServices.entity.Item;
+import com.fuze.po.PurchaseOrderAppServices.forms.ItemForm;
 import com.fuze.po.PurchaseOrderAppServices.info.ItemInfo;
 import com.fuze.po.PurchaseOrderAppServices.info.PORequestInfo;
-import com.fuze.po.PurchaseOrderAppServices.entity.Item;
+import com.fuze.po.PurchaseOrderAppServices.info.ResponseInfo;
 import com.fuze.po.PurchaseOrderAppServices.repository.ItemRepository;
 
 @Service
@@ -39,5 +41,24 @@ public class ItemService {
 			}
 		 return itemInfoList;
 	}
+	public ResponseInfo createItem(ItemForm itemForm) {
+		ResponseInfo response = new ResponseInfo();
+		Item item = populateItemFormEntity(itemForm);
+		try {
+			item = itemRepository.save(item);
+		} catch (Exception e) {
+			response.setStatus(false);
+		}
+		response.setResponseType("Item has been created successfuly");
+		response.setStatus(true);
+		return response;
+	}
+	
+	private Item populateItemFormEntity(ItemForm itemForm) {
+		Item item = new Item();
+		BeanUtils.copyProperties(itemForm, item);
+		return item;
+	}
+
 
 }

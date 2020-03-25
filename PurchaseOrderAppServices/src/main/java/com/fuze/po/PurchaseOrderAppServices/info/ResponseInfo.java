@@ -2,6 +2,8 @@ package com.fuze.po.PurchaseOrderAppServices.info;
 
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * @author Bhajuram.c
  *
@@ -10,6 +12,7 @@ public class ResponseInfo {
 
 	private boolean status;
 	private String responseType;
+	@JsonIgnore
 	private Map<String, String> errorMsg;
 
 	public boolean isStatus() {
