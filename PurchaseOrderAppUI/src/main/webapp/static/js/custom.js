@@ -179,7 +179,7 @@
 											 	    resizable:true,
 											 	   columns: [
 											 	    	  { field:"siteName", title:"Site Name", width: "180px" },
-											             { field:" fuzeProject",title:"Fuze Project" , width: "120px",template:"<a href='javascript:openPODetail()' id='name-link1'>#=fuzeProject#</a>" },
+											             { field:" fuzeProject",title:"Fuze Project" , width: "120px",template:"<a href='javascript:openPO	()' id='name-link1'>#=fuzeProject#</a>" },
 											             { field:"projectName", title:"Project Name" ,width: "120px"},
 											             { field:" market",title:"Market" , width: "120px"},
 											             { field:" subMarket", title:"Sub Market" ,width: "120px"},
@@ -290,12 +290,11 @@
 									        	 model: {
 				                                     id: "id",
 				                                     fields: {
-				                                    	 id: {type:"string"},
-				                                    	 pslc: {type:"string"},
 				                                    	 poName: {type:"string"},
 				                                    	 teritory: {type:"string"},
 				                                    	 market: {type:"string"},
 				                                    	 poStatus: {type:"string"},
+				                                    	 pslc: {type:"string"},
 				                                     }
 				                                 }
 									        },
@@ -309,12 +308,11 @@
 									    
 									    detailInit: detailInit,
 				                       columns: [
-									    	
-						                    { field:"id", title:"Id",width:"80px"},
-						                    { field:"pslc", title:"pslc",width:"200px"},
-						                    { field:" poName",title:"Name"},
-						                    { field:" teritory", title:"Teritory" },
-						                    { field:" market",title:"Market" ,customBoolEditor1},
+									      
+						                    { field:"poName",title:"Name"},
+						                    { field:"teritory", title:"Teritory" },
+						                    { field:"market",title:"Market" },
+						                     { field:"pslc", title:"pslc",customBoolEditor1},
 						                    
 				                             ],
 				                   editable: "popup"
@@ -467,7 +465,7 @@ function detailInit(e) {
     	    	{ field:"description",title: "Description",width:"200px"},
     	    	{ field:"model",title: "Model"},
     	    	{ field:"price",title: "Price"},
-    	    	{ field:"inStock",title: "in-Stock"}
+    	    	{ field:"inStock",title: "In-Stock"}
     	    	 ],
     	editable: "popup"
     });

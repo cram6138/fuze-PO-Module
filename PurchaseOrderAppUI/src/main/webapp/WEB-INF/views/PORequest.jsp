@@ -213,11 +213,11 @@ padding: 10px;
         </div>
 		<div class="form-group">
 		<label>Enter Teritory:</label>
-            <input type="text" class="form-control"  id="teritory" placeholder="Enter Teritory">
+            <input type="text" class="form-control"  id="teritory1">
         </div>
         <div class="form-group">
         <label>Enter Market:</label>
-            <input type="text" class="form-control"  id="market_po" placeholder="Enter Market">
+            <input type="text" class="form-control"  id="market_po">
         </div>
         <div class="form-group">
         <label>Enter Pslc:</label>
@@ -431,6 +431,34 @@ var popupNotification = $("#popupNotification").kendoNotification({
          }).data("kendoNotification");
 		$(document).ready(
 					function() {
+						var Teritory1 = $("#teritory1").kendoDropDownList({
+							optionLabel : "Teritories...",
+							dataTextField : "name",
+							dataValueField : "id",
+							dataSource : {
+								transport : {
+									read : function(options) {
+										territories(options);
+									}
+								}
+							}
+						}).data("kendoDropDownList");
+
+						var Markets1 = $("#market_po").kendoDropDownList({
+							cascadeFrom : "Teritory1",
+							autoBind : false,
+							optionLabel : "Markets...",
+							dataTextField : "name",
+							dataValueField : "id",
+							dataSource : {
+
+								transport : {
+									read : function(options) {
+										market(options);
+									}
+								}
+							}
+						}).data("kendoDropDownList");
 	$("#nonCatalog").hide();
 						$("#addCart").hide();
 						$.getScript("static/js/config.js", function(){
@@ -482,8 +510,8 @@ var popupNotification = $("#popupNotification").kendoNotification({
 						
 						$("#addPO").on("click", function() {
 							var poName=$("#poName").val();
-							var teritory=$("#teritory").val();
-							var Market_po=$("#market_po").val();
+							var teritory1=Teritory1.text();
+							var Market_po=Markets1.text();
 							var pslc=$("#pslc").val();
 							var siteTracker=$("#siteTracker").val();
 							var baseURL = appConfig.service_application;
@@ -495,7 +523,7 @@ var popupNotification = $("#popupNotification").kendoNotification({
 								contentType : "application/json",
 
 								data : JSON.stringify({"poName": poName,
-									"teritory": teritory,
+									"teritory": teritory1,
 									"market": Market_po,
 									"pslc": pslc,
 									"siteTracker": siteTracker,
@@ -565,6 +593,7 @@ var popupNotification = $("#popupNotification").kendoNotification({
 	            },
 	            error: function(jqXHR, textStatus, errorThrown){
 	                console.log(errorThrown);  
+	                popupNotification.show("Something went wrong", "error");
 	            }
 	        });
 				
@@ -676,7 +705,8 @@ var popupNotification = $("#popupNotification").kendoNotification({
 									})               
 					            },
 					            error: function(jqXHR, textStatus, errorThrown){
-					                console.log(errorThrown);  
+					                console.log(errorThrown); 
+					                popupNotification.show("Something went wrong", "error");
 					            }
 					        });
 						}
@@ -706,6 +736,7 @@ var popupNotification = $("#popupNotification").kendoNotification({
 					            },
 					            error: function(jqXHR, textStatus, errorThrown){
 					                console.log(errorThrown);  
+					                popupNotification.show("Something went wrong", "error");
 					            }
 				        	});
 						}
@@ -771,6 +802,7 @@ var popupNotification = $("#popupNotification").kendoNotification({
 		            },
 		            error: function(jqXHR, textStatus, errorThrown){
 		                console.log(errorThrown);  
+		                popupNotification.show("Something went wrong", "error");
 		            }
 		        });
 				
@@ -827,6 +859,7 @@ var popupNotification = $("#popupNotification").kendoNotification({
 			            },
 			            error: function(jqXHR, textStatus, errorThrown){
 			                console.log(errorThrown);  
+			                popupNotification.show("Something went wrong", "error");
 			            }
 			        });
 					
