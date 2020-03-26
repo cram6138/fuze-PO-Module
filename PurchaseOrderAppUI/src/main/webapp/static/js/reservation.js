@@ -50,6 +50,7 @@ var LocalMarket=null;
 var containerCode=null;
 var buyer=null;
 var searchKeyId=null;
+var projectId=null;
 
 var wnd, detailsTemplate;
 $(document)
@@ -145,6 +146,9 @@ $(document)
 										if($("#buyer").val()!=""){
 											buyer=$("#buyer").val();
 										}
+										if($("#projectID").val()!=""){
+											projectId=$("#projectID").val();
+										}
 										if($("#searchKeyId").val()!=""){
 											searchKeyId=$("#searchKeyId").val();
 										}
@@ -170,15 +174,25 @@ $(document)
 															type : "POST",
 															contentType : "application/json; charset=utf-8",
 															data:JSON.stringify({
-															    "territory" : terirory,
-															    "market" : markts,
-															    "subMarket" : subMrks,
-															    "localMarket" : LocalMarket,
-															    "containerCode" : containerCode,
-															    "buyer" : buyer,
-															    "projectId" : 1,
-															    "searchKey" : searchKeyId,
-															    "id":user.id
+																"territory" : terirory,
+																 "market" : markts,
+																 "subMarket" : subMrks,
+																 "localMarket" : LocalMarket,
+																 "containerCode" : containerCode,
+																 "buyer" : buyer,
+																 "projectId" : projectId,
+																 "searchKey" : searchKeyId,
+																 "userInfo" :{
+																 "id" :user.id,
+																 "username" :user.username,
+																 "isActive" :1,
+																 "userRole" : [null,null],
+																 "firstName" : user.firstName,
+																 "lastName" : user.lastName,
+																 "createdOn" : null,
+																 "territory" :terirory,
+																 "market" :markts
+																 }
 															}),
 															
 															success : function(result) {
@@ -239,72 +253,90 @@ $(document)
 											},
 											pageSize : 10
 										},
-										sortable : true,
-										pageable : true,
+										groupable: true,
+				                        sortable: true,
+				                        resizable: true,
+				                        reorderable: true,
+				                        pageable: true,
+				                        columnMenu: true,
 										filterable : true,
-										resizable : true,
+										
 										columns : [
 											{
-												field : "id",
-												title : "id",
-												width : "80px"
+												field : " id",
+												title : "Action",
+												width : "120px",
+												template : "<a href='javascript:openPODetail()' id='name-link1'><i class='fa fa-lock'></i>unReserve</a>"
 											},
-												{
-													field : "containerCode",
-													title : "ContainerCode",
+											{
+												field : "projectName",
+												title : "View Details",
+												width : "120px",
+												template : "<a href='javascript:openPODetail()' id='name-link1'><i class='fa fa-eye' aria-hidden='true'></i>Details</a>"
+											},
+											{
+												field : "containerCode",
+												title : "ContainerCode",
+												width : "180px"
+											},
+											
+												{ title: "Reserving",
+												 columns: [{
+													field : "fuzeReservationId",
+													title : "fuzeReservationId",
 													width : "180px"
 												},
 												{
-													field : " projectName",
-													title : "Project Name",
-													width : "120px",
-													template : "<a href='javascript:openPODetail()' id='name-link1'>#=projectName#</a>"
-												},
-												
-												{
-													field : "territory",
-													title : "Territory",
-													width : "120px"
-												},
-												{
-													field : " market",
-													title : "Market",
-													width : "120px"
-												},
-												{
-													field : " subMarket",
-													title : "SubMarket",
-													width : "120px"
-												},
-												{
 													field : " fuzeProjectId",
-													title : "fuze Project",
+													title : "fuzeProjectId",
 													width : "120px"
+													
 												},
 												
 												{
-													field : " catsStatus",
-													title : "catsStatus",
+													field : "psproject",
+													title : "psproject",
 													width : "120px"
 												},
 												{
-													field : " localMarket",
-													title : "localMarket",
+													field : "pslc",
+													title : "pslc",
 													width : "120px"
 												},
 												{
-													field : " buyerId",
-													title : "buyerId",
+													field : " reservedUsername",
+													title : "reservedUsername",
 													width : "120px"
 												},
 												{
-													field : " buyerName",
-													title : "buyerName",
+													field : " fuzeStatus",
+													title : "fuzeStatus",
 													width : "120px"
-												}
-
-										],
-										editable : "popup"
+												}]
+												},
+													{
+														field : " catsStatus",
+														title : "catsStatus",
+														width : "120px"
+													},
+													{
+														field : " localMarket",
+														title : "localMarket",
+														width : "120px"
+													},
+													{
+														field : " buyerId",
+														title : "buyerId",
+														width : "120px"
+													},
+													{
+														field : " buyerName",
+														title : "buyerName",
+														width : "120px"
+													
+											
+												}]
+										
 
 									});
 
