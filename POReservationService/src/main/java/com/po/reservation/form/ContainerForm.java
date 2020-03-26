@@ -4,6 +4,8 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
+import com.po.reservation.info.UserInfo;
+
 public class ContainerForm {
 
 	private String territory;
@@ -14,11 +16,12 @@ public class ContainerForm {
 	private String buyer;
 	private int projectId;
 	private String searchKey;
+	private UserInfo userInfo;
 
 	public ContainerForm() {}
 	
 	public ContainerForm(String territory, String market, String subMarket, String localMarket, String containerCode,
-			String buyer, @Min(0) int projectId, String searchKey) {
+			String buyer, @Min(0) int projectId, String searchKey,UserInfo userInfo) {
 		super();
 		this.territory = territory;
 		this.market = market;
@@ -28,6 +31,7 @@ public class ContainerForm {
 		this.buyer = buyer;
 		this.projectId = projectId;
 		this.searchKey = searchKey;
+		this.userInfo = userInfo;
 	}
 
 	public String getTerritory() {
@@ -94,10 +98,18 @@ public class ContainerForm {
 		this.searchKey = searchKey;
 	}
 
+	public UserInfo getUserInfo() {
+		return userInfo;
+	}
+
+	public void setUserInfo(UserInfo userInfo) {
+		this.userInfo = userInfo;
+	}
+
 	@Override
 	public String toString() {
 		return "ContainerForm [territory=" + territory + ", market=" + market + ", subMarket=" + subMarket
 				+ ", localMarket=" + localMarket + ", containerCode=" + containerCode + ", buyer=" + buyer
-				+ ", projectId=" + projectId + ", searchKey=" + searchKey + "]";
+				+ ", projectId=" + projectId + ", searchKey=" + searchKey + ",userInfo= " + userInfo + "]";
 	}
 }

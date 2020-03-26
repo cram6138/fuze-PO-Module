@@ -44,13 +44,13 @@ public class ContainerService {
 	@Autowired
 	private ContainerRepository containerRepository;
 
-	public List<ContainerInfo> searchContainers(ContainerForm containerForm, UserInfo userInfo) {
+	public List<ContainerInfo> searchContainers(ContainerForm containerForm) {
 
 		List<Container> containerList = containerRepository.findAll();
 		List<ContainerInfo> ContainerInfoList = new ArrayList<>();
 		if (!containerList.isEmpty() && containerList != null) {
 			if (containerForm.getTerritory() != null) {
-				if (containerForm.getTerritory().equals(userInfo.getTerritory())) {
+				if (containerForm.getTerritory().equals(containerForm.getUserInfo().getTerritory())) {
 					containerList = containerList.stream()
 							.filter(container -> container.getTerritory().equals(containerForm.getTerritory()))
 							.collect(Collectors.toList());
@@ -62,7 +62,7 @@ public class ContainerService {
 				}
 			}
 			if (containerForm.getMarket() != null) {
-				if (containerForm.getMarket().equals(userInfo.getMarket())) {
+				if (containerForm.getMarket().equals(containerForm.getUserInfo().getMarket())) {
 					containerList = containerList.stream()
 							.filter(container -> container.getMarket().equals(containerForm.getMarket()))
 							.collect(Collectors.toList());
@@ -89,12 +89,6 @@ public class ContainerService {
 				containerList = containerList.stream()
 						.filter(container -> container.getCatsStatus().equals(CatsStatus.AVAILABLE_ACCESS.getValue())
 								&& container.getContainerCode().contains(containerForm.getContainerCode()))
-						.collect(Collectors.toList());
-			}
-			if (containerForm.getBuyer() != null) {
-				containerList = containerList.stream()
-						.filter(container -> container.getCatsStatus().equals(CatsStatus.AVAILABLE_ACCESS.getValue())
-								&& container.getBuyer().getUsername().equals(containerForm.getBuyer()))
 						.collect(Collectors.toList());
 			}
 			if (containerForm.getBuyer() != null) {
@@ -346,7 +340,7 @@ public class ContainerService {
 		return container;
 	}
 	
-	public ContainerInfo reserveContainer(ContainerReserveForm containerReserveForm,UserInfo userInfo) {
+	public ContainerInfo reserveContainer(ContainerReserveForm containerReserveForm) {
 		ContainerInfo containerInfo = new ContainerInfo();
 		Container container = containerRepository.findByContainerCode(containerReserveForm.getContainerCode());
 		if (container != null) {
@@ -355,7 +349,7 @@ public class ContainerService {
             		   container.getPSProject().equals(containerReserveForm.getUsePsProject())) {
             	   if(containerReserveForm.getPsProjectStatus().equals(ProjectStatus.OPEN.getValue()) ||
             			   containerReserveForm.getPsProjectStatus().equals(ProjectStatus.INSERVICE.getValue())){
-            		   containerInfo = updateContainerWithReservationDetails(containerReserveForm,container,userInfo);
+            		   containerInfo = updateContainerWithReservationDetails(containerReserveForm,container);
             	   }else {
             		   containerInfo.setMessage("Project is not in open status in PeopleSoft.PeopleSoft Project is outside of your business unit"); 
             	   }
@@ -370,7 +364,7 @@ public class ContainerService {
 		return containerInfo;
 	}
 
-	private ContainerInfo updateContainerWithReservationDetails(ContainerReserveForm containerReserveForm,Container container,UserInfo userInfo) {
+	private ContainerInfo updateContainerWithReservationDetails(ContainerReserveForm containerReserveForm,Container container) {
 		ContainerInfo containerInfo = new ContainerInfo();
 		Calendar cal = Calendar.getInstance();
 		container.setReservationCreationDate(cal.getTime());
@@ -385,7 +379,7 @@ public class ContainerService {
 	    container.setReserved(true);
 	    container.setCatsStatus(CatsStatus.RESERVED_ACCESS.getValue());
 	    container.setUseBy(useByDate);
-	    container.setReservedBy(userInfo.getFirstName());
+	    container.setReservedBy(containerReserveForm.getUserInfo().getFirstName());
 	    container.setReservationNotes(containerReserveForm.getReservationNotes());
 	    containerRepository.save(container);
 	    logger.info("succesfully updated conatiner info in database");
@@ -404,7 +398,7 @@ public class ContainerService {
 	    return 100000 + generator.nextInt(900000);
 	}
 
-	public ContainerInfo unReserveContainer(ContainerReserveForm containerReserveForm, UserInfo userInfo) {
+	public ContainerInfo unReserveContainer(ContainerReserveForm containerReserveForm) {
 		ContainerInfo containerInfo = new ContainerInfo();
 		Container container = containerRepository.findByContainerCode(containerReserveForm.getContainerCode());
 		container.setFuzeReservationId(null);

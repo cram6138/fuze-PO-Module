@@ -1,5 +1,7 @@
 package com.po.reservation.form;
 
+import com.po.reservation.info.UserInfo;
+
 public class ContainerReserveForm {
 
 	private String containerCode;
@@ -13,6 +15,7 @@ public class ContainerReserveForm {
 	private String psProjectStatus;
 	private String reservationNotes;
 	private String reservationComments;
+	private UserInfo userInfo;
 
 	public String getContainerCode() {
 		return containerCode;
@@ -100,6 +103,14 @@ public class ContainerReserveForm {
 
 	public void setReservationComments(String reservationComments) {
 		this.reservationComments = reservationComments;
+	}
+
+	public UserInfo getUserInfo() {
+		return userInfo;
+	}
+
+	public void setUserInfo(UserInfo userInfo) {
+		this.userInfo = userInfo;
 	}
 
 }
