@@ -90,7 +90,6 @@ $(document)
 
 					var Markets = $("#Markets").kendoDropDownList({
 						cascadeFrom : "Teritory",
-						autoBind : false,
 						optionLabel : "Markets...",
 						dataTextField : "name",
 						dataValueField : "id",
@@ -106,7 +105,6 @@ $(document)
 
 					var Submarkets = $("#SubMarket").kendoDropDownList({
 						cascadeFrom : "Markets",
-						autoBind : false,
 						optionLabel : "Select SubMarket...",
 						dataTextField : "name",
 						dataValueField : "id",
@@ -150,6 +148,15 @@ $(document)
 										if($("#searchKeyId").val()!=""){
 											searchKeyId=$("#searchKeyId").val();
 										}
+										if(terirory=="Teritories..."){
+											terirory = null;
+										}
+										if(markts=="Markets..."){
+											markts = null;
+										}
+										if(subMrks=="Select SubMarket..."){
+											subMrks = null;
+										}
 										var grid = $("#grid").kendoGrid({
 										dataSource : {
 											transport : {
@@ -159,7 +166,7 @@ $(document)
 													$.getScript("static/js/config.js", function() {
 														host_name = appConfig.reservation_application;
 														$.ajax({
-															url : host_name + "/reservation/container/reserved",
+															url : host_name + "/reservation/search/container",
 															type : "POST",
 															contentType : "application/json; charset=utf-8",
 															data:JSON.stringify({
