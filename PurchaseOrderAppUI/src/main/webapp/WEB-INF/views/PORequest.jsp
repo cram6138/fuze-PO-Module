@@ -23,8 +23,12 @@
     right: 30px;
     width: 200px;
   }
+  .form-control{
+     height: 2.2rem !important;
+    padding: 0px !important;
+  }
   .k-animation-container,.k-widget.k-popup.k-notification.k-notification-info.k-state-border-up{
-     width: 215px !important;
+padding: 10px;
     height: 50px !important;
   }
   
@@ -118,7 +122,7 @@
                 <div id="tabstrip">
                             <ul>
                              <li id="tab1" class="k-state-active"> Catalog</li>
-                             <li id="tab2"> Equipment Planning </li>
+                             <!-- <li id="tab2"> Equipment Planning </li> -->
                              <li id="tab3"> View Cart </li>
                             </ul>
                            <div>
@@ -192,13 +196,13 @@
 		        			</div>
 		        			
 		       
-                            <div>
+                           <!--  <div>
                                 <span class="sunny">&nbsp;</span>
                                 <div class="weather">
                                     <h2>21<span>&ordm;C</span></h2>
                                     <p>Sunny weather in London.</p>
                                 </div>
-                            </div>
+                            </div> -->
                            <div>
                              <div class="row">
 			  					<div class="col-sm-3">
@@ -344,7 +348,7 @@
 			</div>
 	 </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal1" onclick="closeModel()">Submit</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal1" onclick="closeModel()">OK</button>
       </div>
     </div>
 </div>
@@ -909,6 +913,7 @@ var popupNotification = $("#popupNotification").kendoNotification({
             <h3>#= message #</h3>
         </div>
     </script>
+
 </body>
 
 </html>

@@ -91,13 +91,13 @@ font-size:.9rem;
             </li>
 
             <!-- Nav Item - Alerts -->
-            <li class="nav-item dropdown no-arrow mx-1">
+           <!--  <li class="nav-item dropdown no-arrow mx-1">
               <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-bell fa-fw"></i>
-                <!-- Counter - Alerts -->
+                Counter - Alerts
                 <span class="badge badge-danger badge-counter">3+</span>
               </a>
-              <!-- Dropdown - Alerts -->
+              Dropdown - Alerts
               <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
                 <h6 class="dropdown-header">
                   Alerts Center
@@ -137,16 +137,16 @@ font-size:.9rem;
                 </a>
                 <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
               </div>
-            </li>
+            </li> -->
             
-            <li class="nav-item dropdown no-arrow mx-1">
+            <!-- <li class="nav-item dropdown no-arrow mx-1">
               <a class="nav-link dropdown-toggle" href="POViewCart">
                 <i class="fa fa-cart-plus"></i>
-                <!-- PO Cart -->
+                PO Cart
                 <span class="badge badge-danger badge-counter">2</span>
               </a>
             
-            </li>
+            </li> -->
 
             <!-- Nav Item - Messages -->
 
@@ -154,7 +154,7 @@ font-size:.9rem;
      <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">User Name</span>
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">${currentUserInfo.firstName}${currentUserInfo.lastName}</span>
                 <img class="img-profile rounded-circle" src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png">
               </a>
               <!-- Dropdown - User Information -->
@@ -227,7 +227,7 @@ font-size:.9rem;
                       
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                      <i class="fas fa-shopping-cart fa-2x text-gray-300"></i>
                     </div>
                   </div>
                 </div>
@@ -244,7 +244,7 @@ font-size:.9rem;
                       
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                      <i class="fas fa-registered fa-2x text-gray-300"></i>
                     </div>
                   </div>
                 </div>

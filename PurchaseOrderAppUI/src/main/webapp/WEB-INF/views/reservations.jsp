@@ -25,6 +25,10 @@
 	color: black;
 	background-color: #f4f4f4;
 }
+.form-control{
+     height: 2.2rem !important;
+    padding: 0px !important;
+  }
 </style>
 </head>
 
@@ -84,10 +88,10 @@
 							</div></li>
 
 
-						<li class="nav-item dropdown no-arrow mx-1"><a
+						<!-- <li class="nav-item dropdown no-arrow mx-1"><a
 							class="nav-link dropdown-toggle" href="#" id="alertsDropdown"
 							role="button" data-toggle="dropdown" aria-haspopup="true"
-							aria-expanded="false"> <i class="fas fa-bell fa-fw"></i> <!-- Counter - Alerts -->
+							aria-expanded="false"> <i class="fas fa-bell fa-fw"></i> Counter - Alerts
 								<span class="badge badge-danger badge-counter">3+</span>
 						</a>
 
@@ -120,20 +124,19 @@
 								</span>
 								</a> <a class="dropdown-item text-center small text-gray-500"
 									href="#">Show All Alerts</a>
-							</div></li>
+							</div></li> -->
 
-						<li class="nav-item dropdown no-arrow mx-1"><a
+						<!-- <li class="nav-item dropdown no-arrow mx-1"><a
 							class="nav-link dropdown-toggle" href="POViewCart"> <i
-								class="fa fa-cart-plus"></i> <!-- PO Cart --> <span
+								class="fa fa-cart-plus"></i> PO Cart <span
 								class="badge badge-danger badge-counter">2</span>
-						</a></li>
+						</a></li> -->
 
 						<li class="nav-item dropdown no-arrow"><a
 							class="nav-link dropdown-toggle" href="#" id="userDropdown"
 							role="button" data-toggle="dropdown" aria-haspopup="true"
-							aria-expanded="false"> <span
-								class="mr-2 d-none d-lg-inline text-gray-600 small">User
-									Name</span> <img class="img-profile rounded-circle"
+							aria-expanded="false"> <span class="mr-2 d-none d-lg-inline text-gray-600 small"><span id="username"></span></span>
+								 <img class="img-profile rounded-circle"
 								src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png">
 						</a>
 
@@ -263,45 +266,43 @@
 															</div>
 															<div class="col-sm-3">
 																<label style="color: #e74a3b;">Local Market</label> <input
-																	class="form-control" id="SubMarket">
+																	class="form-control" id="LocalMarket">
 															</div>
 															<div class="col-sm-3">
 																<label style="color: #e74a3b;">Container Code</label> <input
-																	class="form-control" id="SubMarket">
+																	class="form-control" id="containerCode">
 															</div>
 															<div class="col-sm-3">
 																<label style="color: #e74a3b;">Buyer</label> <input
-																	class="form-control" id="SubMarket">
+																	class="form-control" id="buyer">
 															</div>
 															<div class="col-sm-3">
 																<label style="color: #e74a3b;">Project ID</label> <input
-																	class="form-control" id="SubMarket">
+																	class="form-control" id="projectID">
 															</div>
 															<div class="col-sm-3">
 																<label style="color: #e74a3b;">Search Key</label> <input
-																	class="form-control" id="SubMarket">
+																	class="form-control" id="searchKeyId">
 															</div>
 
 															<div class="col-sm-3">
 																<label style="width: 100%;">&nbsp;</label> <a href="#"
 																	id="get"
 																	class="btn btn-danger btn-user btn-block d-lg-inline">
-																	Search </a> <a href="#"
-																	class="btn btn-primary btn-user btn-block d-lg-inline">
-																	Reset </a> <a href="#" class="d-lg-inline"
-																	data-toggle="modal" data-target="#advancedSearch">
-																	Advanced Search </a>
+																	Search </a> 
 
 															</div>
 
 														</div>
 													</form>
+													<div id="ReservDataList">
 													<div id="grid"></div>
+													</div>
 
 												</div>
 											</div>
 										</div>
-										<div class="table-responsive">Test</div>
+										
 									</li>
 									<li id="PORequestDetails">Container Details
 										<div>
@@ -390,7 +391,7 @@
 	<!-- Bootstrap core JavaScript-->
 	<!-- <script src="vendor/jquery/jquery.min.js"></script> -->
 	<script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<script	src="https://demos.telerik.com/kendo-ui/content/shared/js/console.js"></script>
+	<!-- <script	src="https://demos.telerik.com/kendo-ui/content/shared/js/console.js"></script> -->
 
 	<!-- Custom scripts for all pages-->
 	<script src="static/js/jquery.min.js"></script>
@@ -399,9 +400,13 @@
 	<script src="static/js/po-admin.min.js"></script>
 	<script src="static/js/config.js"></script>
 	<script type="text/javascript">
+	var user = ${currentUserInfo};
+ var currentUser=user.firstName+""+user.lastName;
+	document.getElementById("username").innerHTML=currentUser;
+	
   	$(document).ready(function() {
   		var baseUrl = appConfig.reservation_application;
-		var user = ${currentUserInfo};
+		
 		
 		$("#myReservation").click(function() {
 			myReservationDetails();

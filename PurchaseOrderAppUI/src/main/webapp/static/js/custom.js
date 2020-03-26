@@ -55,45 +55,49 @@
 											 server_name = appConfig.service_application;
 										 })
 										 
-										 var Teritory =$("#Teritory").kendoDropDownList({
-									          optionLabel: "Teritories...",
-									          dataTextField: "teritory",
-									          dataValueField: "id",
-									          dataSource: {
-									              transport: {
-									                  read: function (options) {
-												             readData(options);
-											             }
-									              }
-									          }
-									      }).data("kendoDropDownList");
+										var Teritory = $("#Teritory").kendoDropDownList({
+						optionLabel : "Teritories...",
+						dataTextField : "name",
+						dataValueField : "id",
+						dataSource : {
+							transport : {
+								read : function(options) {
+									territories(options);
+								}
+							}
+						}
+					}).data("kendoDropDownList");
 
-									       var Markets =$("#Markets").kendoDropDownList({
-									    	  optionLabel: "Markets...",
-									          dataTextField: "market",
-									          dataValueField: "id",
-									          dataSource: {
-									              
-									              transport: {
-									                  read: function (options) {
-												             readData(options);
-											             }
-									              }
-									          }
-									      }).data("kendoDropDownList");
+					var Markets = $("#Markets").kendoDropDownList({
+						cascadeFrom : "Teritory",
+						autoBind : false,
+						optionLabel : "Markets...",
+						dataTextField : "name",
+						dataValueField : "id",
+						dataSource : {
 
-									      var Submarkets =$("#SubMarket").kendoDropDownList({
-									          optionLabel: "Select SubMarket...",
-									          dataTextField: "subMarket",
-									          dataValueField: "id",
-									          dataSource: {
-									              transport: {
-									                  read: function (options) {
-												             readData(options);
-											             }
-									              }
-									          }
-									      }).data("kendoDropDownList");
+							transport : {
+								read : function(options) {
+									market(options);
+								}
+							}
+						}
+					}).data("kendoDropDownList");
+
+					var Submarkets = $("#SubMarket").kendoDropDownList({
+						cascadeFrom : "Markets",
+						autoBind : false,
+						optionLabel : "Select SubMarket...",
+						dataTextField : "name",
+						dataValueField : "id",
+						dataSource : {
+							transport : {
+								read : function(options) {
+									submarket(options);
+								}
+							}
+						}
+					}).data("kendoDropDownList");
 									      var setSearchData =[];
 									      var terirory =  Teritory.text(),
 							              markts =  Markets.text(),
@@ -107,6 +111,90 @@
 									    	 var terirory =  Teritory.text(),
 								              markts =  Markets.text(),
 								              subMrks =Submarkets.text();
+									    	 var grid=$("#grid").kendoGrid({
+											 		dataSource: {
+											 	      transport: {
+											 	         read: function (options) {
+											 	        	var host_name;
+											 	      	 $.getScript("static/js/config.js", function(){
+											 	      		 host_name = appConfig.service_application;
+											 	      		 $.ajax({
+											 	      			 url: host_name + "/RePO/search/project",
+											 	      	        contentType: "application/json",
+											 	      	        type:"POST",
+											 	      	     contentType : "application/json; charset=utf-8",
+											 	      	        data:JSON.stringify({
+											 	      	         "projectName":null,
+											 	      	      "teritory":terirory,
+											 	      	      "market": markts,
+											 	      	      "subMarket": subMrks,
+											 	      	      "siteName": null,
+											 	      	      "projectType": null
+											 	      	  }),
+											 	      	        success: function (result) {
+											 	      	        	// $.each(result, function(index, value) {
+											 	      	        		 options.success(result);
+											 	      	 	        	//console.log(result[[index]].projects);
+											 	      					//}) 
+											 	      	        	
+											 	      	        },
+											 	      	        error: function (result) {
+											 	      	        	options.error(result);
+											 	      	         }
+											 	      	       });
+											 	      	 })
+											 	             },
+											 	        parameterMap: function (options, operation) {
+											 	        		if (operation !== "read" && options.models) {
+											 	              		return { models: kendo.stringify(options.models) };
+											 	              		}
+											 	            	}
+											 	          },
+											 	        schema: {
+											 	        	 model: {
+											                      id: "id",
+											                      fields: {
+											                     	 id: {type:"string"},
+											                     	 siteNamee: {type:"string"},
+											                     	 projectNamee: {type:"string"},
+											                     	 markete: {type:"string"},
+											                     	 subMarkete: {type:"string"},
+											                     	 projectTypee: {type:"string"},
+											                     	 fuzeProject: {type:"string"},
+											                     	 pslc: {type:"string"},
+											                     	 projectStatuse: {type:"string"},
+											                     	 typee: {type:"string"},
+											                     	 customProjectTypee: {type:"string"},
+											                     	 siteTrackere: {type:"string"},
+											                     	 teritorye: {type:"string"},
+											                      }
+											                  }
+											 	        },
+											 	         pageSize: 10
+											 	    },
+											 	  sortable: true,
+											         change: onChange,
+											 	    pageable: true,
+											         filterable: true,
+											 	    resizable:true,
+											 	   columns: [
+											 	    	  { field:"siteName", title:"Site Name", width: "180px" },
+											             { field:" fuzeProject",title:"Fuze Project" , width: "120px",template:"<a href='javascript:openPODetail()' id='name-link1'>#=fuzeProject#</a>" },
+											             { field:"projectName", title:"Project Name" ,width: "120px"},
+											             { field:" market",title:"Market" , width: "120px"},
+											             { field:" subMarket", title:"Sub Market" ,width: "120px"},
+											             { field:" projectType",title:"Project Type" , width: "120px"},
+											             { field:" pslc", title:"pslc" ,width: "120px"},
+											             { field:" projectStatus", title:"Project Status" ,width: "120px"},
+											             { field:" type",title:"Type" , width: "120px"},
+											             { field:" customProjectType", title:"Custom ProjectType" ,width: "120px"},
+											             { field:" siteTracker",title:"Site Tracker" , width: "120px"},
+											         
+											              ],
+											    editable: "popup"
+											 	   
+											 	   
+											 });
 									          //alert("Order details:\n" + terirory +":"+Teritory.value() +"\n"+ markts+":"+Markets.value()  +"\n"+ subMrks +":"+Submarkets.value()+"");
 									      }); 
 
@@ -226,8 +314,7 @@
 						                    { field:"pslc", title:"pslc",width:"200px"},
 						                    { field:" poName",title:"Name"},
 						                    { field:" teritory", title:"Teritory" },
-						                    { field:" market",title:"Market" },
-						                    { field:" poStatus", title:"Po Status",customBoolEditor1},
+						                    { field:" market",title:"Market" ,customBoolEditor1},
 						                    
 				                             ],
 				                   editable: "popup"
@@ -596,3 +683,65 @@ function clearCart(){
 	
 }
 
+function territories(options) {
+	var host_name;
+	$.getScript("static/js/config.js", function() {
+		host_name = appConfig.reservation_application;
+		$.ajax({
+			url : host_name + "/territories",
+			contentType : "application/json",
+			type : "GET",
+			success : function(result) {
+				options.success(result);
+				console.log(result);
+
+			},
+			error : function(result) {
+				options.error(result);
+			}
+		});
+	})
+
+}
+
+function market(options) {
+	var host_name;
+	$.getScript("static/js/config.js", function() {
+		host_name = appConfig.reservation_application;
+		$.ajax({
+			url : host_name + "/markets",
+			contentType : "application/json",
+			type : "GET",
+			success : function(result) {
+				options.success(result);
+				console.log(result);
+
+			},
+			error : function(result) {
+				options.error(result);
+			}
+		});
+	})
+
+}
+
+function submarket(options) {
+	var host_name;
+	$.getScript("static/js/config.js", function() {
+		host_name = appConfig.reservation_application;
+		$.ajax({
+			url : host_name + "/subMarkets",
+			contentType : "application/json",
+			type : "GET",
+			success : function(result) {
+				options.success(result);
+				console.log(result);
+
+			},
+			error : function(result) {
+				options.error(result);
+			}
+		});
+	})
+
+}
