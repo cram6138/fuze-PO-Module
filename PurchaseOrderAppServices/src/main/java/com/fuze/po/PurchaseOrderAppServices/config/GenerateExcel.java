@@ -37,7 +37,7 @@ import com.fuze.po.PurchaseOrderAppServices.info.PORequestInfo;
 								Row row = sheet.createRow(rowIndex++);
 								CellStyle style = workbook.createCellStyle();
 								style.setFillBackgroundColor(IndexedColors.LIGHT_GREEN.getIndex());
-							    style.setFillPattern(FillPatternType.LEAST_DOTS);
+							   // style.setFillPattern(FillPatternType.LEAST_DOTS);
 								row.setRowStyle(style);
 								
 								Cell cell0 = row.createCell(0);
@@ -81,7 +81,7 @@ import com.fuze.po.PurchaseOrderAppServices.info.PORequestInfo;
 							  	
 		     					style = workbook.createCellStyle();
 								style.setFillBackgroundColor(IndexedColors.LIGHT_YELLOW.getIndex());
-							    style.setFillPattern(FillPatternType.LESS_DOTS);
+							   // style.setFillPattern(FillPatternType.LESS_DOTS);
 							    row.setRowStyle(style);
 							    
 							    cell0 = row.createCell(0);
