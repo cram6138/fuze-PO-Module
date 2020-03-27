@@ -14,7 +14,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>FuzePOSoapApp</name>
 	<packaging>war</packaging>
-	<description>FUZE PO Soap project for Spring Boot</description>
+	<description>FUZE PO Soap project for Spring Boot Demo.</description>
 
 	<properties>
 		<java.version>1.8</java.version>
