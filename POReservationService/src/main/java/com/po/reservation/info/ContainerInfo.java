@@ -3,7 +3,6 @@ package com.po.reservation.info;
 import java.util.Date;
 import java.util.List;
 
-
 public class ContainerInfo {
 
 	private int id;
@@ -29,7 +28,8 @@ public class ContainerInfo {
 	private List<ItemInfo> itemsInfo;
 	private String reservationNotes;
 	private String message;
-	
+	private boolean reserved;
+
 	public List<ItemInfo> getItemsInfo() {
 		return itemsInfo;
 	}
@@ -129,7 +129,6 @@ public class ContainerInfo {
 	public String getReservedUsername() {
 		return reservedUsername;
 	}
-	
 
 	public int getFuzeProjectId() {
 		return fuzeProjectId;
@@ -166,8 +165,6 @@ public class ContainerInfo {
 	public void setReservedUsername(String reservedUsername) {
 		this.reservedUsername = reservedUsername;
 	}
-
-	
 
 	public Date getUseByDate() {
 		return useByDate;
@@ -216,4 +213,13 @@ public class ContainerInfo {
 	public void setMessage(String message) {
 		this.message = message;
 	}
+
+	public boolean isReserved() {
+		return reserved;
+	}
+
+	public void setReserved(boolean reserved) {
+		this.reserved = reserved;
+	}
+
 }

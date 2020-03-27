@@ -398,17 +398,23 @@ public class ContainerService {
 	    return 100000 + generator.nextInt(900000);
 	}
 
-	public ContainerInfo unReserveContainer(ContainerReserveForm containerReserveForm) {
+	public ContainerInfo unReserveContainer(String containerCode) {
 		ContainerInfo containerInfo = new ContainerInfo();
-		Container container = containerRepository.findByContainerCode(containerReserveForm.getContainerCode());
+		Container container = containerRepository.findByContainerCode(containerCode);
+		if(container!=null) {
 		container.setFuzeReservationId(null);
 		container.setReservationCreationDate(null);
 		container.setReservedBy(null);
 		container.setReservationNotes(null);
+		container.setUseBy(null);
 		container.setReserved(false);
 		container.setCatsStatus(CatsStatus.AVAILABLE_ACCESS.getValue());
 		containerRepository.save(container);
 		logger.info("succesfully updated conatiner info in database");
+		}else {
+			logger.info("There is no record exist");
+			containerInfo.setMessage("UnReservation  not done succesfully");
+		}
 		if(container!= null) {
 	    	containerInfo.setFuzeReservationId(container.getFuzeReservationId());
 	    	containerInfo.setReservationCreationDate(null);

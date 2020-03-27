@@ -121,11 +121,11 @@ public class ContainerController {
 		return new ResponseEntity<ContainerInfo>(containerInfo, HttpStatus.OK);
 	}
 	
-	@PostMapping("/unreserve/container")
-	public ResponseEntity<ContainerInfo> unreserveContainer(@RequestBody final ContainerReserveForm containerReserveForm) {
+	@PostMapping("/unreserve/container/{containerCode}")
+	public ResponseEntity<ContainerInfo> unreserveContainer(@PathVariable String containerCode) {
 		ContainerInfo containerInfo = null;
 		try {
-		 containerInfo = containerService.unReserveContainer(containerReserveForm);
+		 containerInfo = containerService.unReserveContainer(containerCode);
 		} catch (Exception e) {
 			logger.error("Exception in unReserveContainer method" + e.getMessage());
 		}
