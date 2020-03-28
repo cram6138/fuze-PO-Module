@@ -35,7 +35,7 @@
 									 var wnd,detailsTemplate;
 									 $(document).ready(function(){
 										 
-
+										// intialPODetail();
 										 
 										
 										// openPODetail();
@@ -179,7 +179,7 @@
 											 	    resizable:true,
 											 	   columns: [
 											 	    	  { field:"siteName", title:"Site Name", width: "180px" },
-											             { field:" fuzeProject",title:"Fuze Project" , width: "120px",template:"<a href='javascript:openPO	()' id='name-link1'>#=fuzeProject#</a>" },
+											             { field:" fuzeProject",title:"Fuze Project" , width: "120px",template:"<a href='javascript:openPODetail()' id='name-link1'>#=fuzeProject#</a>" },
 											             { field:"projectName", title:"Project Name" ,width: "120px"},
 											             { field:" market",title:"Market" , width: "120px"},
 											             { field:" subMarket", title:"Sub Market" ,width: "120px"},
@@ -255,7 +255,7 @@
 									 	   
 									 	   
 									 });
-									     openPODetail();
+									     intitalPODetail();
 										
 										//var element = $("#gridPOData").data("kendoGrid");
 										// element.thead.on("click", ".k-checkbox", onClick);
@@ -298,7 +298,7 @@
 				                                     }
 				                                 }
 									        },
-									         pageSize: 10
+									         pageSize: 5
 									    },
 									   sortable: true,
 						                change: onChange,
@@ -309,7 +309,7 @@
 									    detailInit: detailInit,
 				                       columns: [
 									      
-						                    { field:"poName",title:"Name"},
+						                    { field:"poName",title:"PO Name"},
 						                    { field:"teritory", title:"Teritory" },
 						                    { field:"market",title:"Market" },
 						                     { field:"pslc", title:"pslc",customBoolEditor1},
@@ -363,11 +363,11 @@ function generateExcel(){
 	        contentType: "application/json",
 	        type:"GET",
 	        success: function (result) {
-	        
-	        
+	         popupNotification.show("PORequest Excel Downloaded Successfully", "info");
 	        },
 	        error: function (result) {
 	        	options.error(result);
+	        	 popupNotification.show("somthing Went Wrong", "error");
 	         }
 	       });
 	 })
@@ -460,9 +460,9 @@ function detailInit(e) {
     	   resizable:true,
     	   filter: { field: "id", operator: "eq", value: e.data.id },
     	    columns: [
-    	    	{ field:"id",title: "Id"},
-    	    	{ field:"name",title: "Name"},
-    	    	{ field:"description",title: "Description",width:"200px"},
+    	    	{ field:"id",title: "Item Id"},
+    	    	{ field:"name",title: "Item Name"},
+    	    	{ field:"description",title: "Item Description",width:"200px"},
     	    	{ field:"model",title: "Model"},
     	    	{ field:"price",title: "Price"},
     	    	{ field:"inStock",title: "In-Stock"}
@@ -656,6 +656,13 @@ function listofItem(){
 });
 	
 }
+function intitalPODetail(){
+	var panelBar = $("#panelbar").data("kendoPanelBar");
+	    panelBar.collapse($("#SiteProjectDetails"));
+	    panelBar.collapse($("#PORequestDetails"));
+	    panelBar.collapse($("#ProjectSearch"));
+	    
+}
 function openPODetail(){
 	var panelBar = $("#panelbar").data("kendoPanelBar");
 	    panelBar.expand($("#SiteProjectDetails"));
@@ -663,6 +670,13 @@ function openPODetail(){
 	    panelBar.collapse($("#ProjectSearch"));
 	    
 }
+/*function intialPODetail(){
+	var panelBar = $("#panelbar").data("kendoPanelBar");
+	   panelBar.collapse($("#SiteProjectDetails"));
+	    panelBar.collapse($("#PORequestDetails"));
+	    panelBar.collapse($("#ProjectSearch"));
+	    
+}*/
 
 function getRequestData(){
 	var panelBar = $("#panelbar").data("kendoPanelBar");

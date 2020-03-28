@@ -16,6 +16,7 @@
   <!-- Custom styles for this template-->
   <link href="static/css/po-admin.min.css" rel="stylesheet">
   <style>
+  body
     .red-square {
   position: fixed;
   left: 30%;
@@ -64,7 +65,7 @@ font-size:.9rem;
             <span class="sidebar-brand-icon rotate-n-15">
               <i class="fas fa-laugh-wink"></i>
             </span>
-            <span class="sidebar-brand-text mx-3">FUZE <sup>Ginger</sup></span>
+            <span class="sidebar-brand-text mx-3">FUZE Ginger</span>
           </a>
 
           <!-- Topbar Navbar -->
@@ -382,7 +383,7 @@ font-size:.9rem;
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="logout">Logout</a>
+          <a class="btn btn-primary" href="http://localhost:8080/PurchaseOrderAppUI-0.0.1-SNAPSHOT">Logout</a>
         </div>
       </div>
     </div>

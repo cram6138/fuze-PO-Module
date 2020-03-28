@@ -44,7 +44,7 @@
             <span class="sidebar-brand-icon rotate-n-15">
               <i class="fas fa-laugh-wink"></i>
             </span>
-            <span class="sidebar-brand-text mx-3">FUZE <sup>Ginger</sup></span>
+            <span class="sidebar-brand-text mx-3">FUZE Ginger</span>
           </a>
 
           <!-- Topbar Navbar -->

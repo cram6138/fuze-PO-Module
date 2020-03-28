@@ -29,6 +29,14 @@
      height: 2.2rem !important;
     padding: 0px !important;
   }
+  /* tr.reserved,tr.k-alt.reserved {
+        background-color: #f0fff0;
+    } */
+    tr.Unreserved,tr.k-alt.Unreserved{
+    background-color: #f0fff0;
+   /* background-color: #fff0f0 ; */
+    }
+    
 </style>
 </head>
 
@@ -56,7 +64,7 @@
 						class="sidebar-brand d-flex align-items-center justify-content-center"
 						href="index"> <span class="sidebar-brand-icon rotate-n-15">
 							<i class="fas fa-laugh-wink"></i>
-					</span> <span class="sidebar-brand-text mx-3">FUZE <sup>Ginger</sup></span>
+					</span> <span class="sidebar-brand-text mx-3">FUZE Ginger</span>
 					</a>
 
 
@@ -233,6 +241,7 @@
 				</nav>
 				<!-- End of Topbar -->
 				<div class="container-fluid">
+				<span id="popupNotification" style="display:none;"></span>  
 					<div class="row">
 						<div class="card shadow mb-4" id="example">
 							<div class="card-body demo-section k-content">
@@ -306,15 +315,13 @@
 									</li>
 									<li id="PORequestDetails">Container Details
 										<div>
-											<div id="childPart"></div>
+										<div id="grid1"></div>
+											
 										</div>
 									</li>
 									<li id="containerReserve">Container Reserve/ Un Reserve
 										<div>
-											<div>
-												<div id="grid1"></div>
-
-											</div>
+											<div id="childPart"></div>
 										</div>
 
 									</li>
@@ -403,7 +410,14 @@
 	var user = ${currentUserInfo};
  var currentUser=user.firstName+""+user.lastName;
 	document.getElementById("username").innerHTML=currentUser;
-	
+	var popupNotification = $("#popupNotification").kendoNotification({
+		 position: {
+            pinned: true,
+            top: 30,
+            right: 30,
+            appendTo: "#appendto"
+        }
+        }).data("kendoNotification");
   	$(document).ready(function() {
   		var baseUrl = appConfig.reservation_application;
 		

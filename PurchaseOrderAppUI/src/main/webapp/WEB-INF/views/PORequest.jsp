@@ -70,12 +70,12 @@ padding: 10px;
             <a href="#"  id="get" class="btn btn-danger btn-user btn-block d-lg-inline">
                 Search
               </a>
-              <a href="#" class="btn btn-primary btn-user btn-block d-lg-inline">
+             <!--  <a href="#" class="btn btn-primary btn-user btn-block d-lg-inline">
                 Reset
               </a>
               <a href="#"  class="d-lg-inline" data-toggle="modal" data-target="#advancedSearch">
                 Advanced Search
-              </a>
+              </a> -->
               
           </div>
           
@@ -131,7 +131,7 @@ padding: 10px;
 								<div class="dropdown">
 								<div class="form-group">
 								    <select class="form-control" id="selectType">
-								   	  <option value="">--Select Template--</option>
+								   	  <option value="">--Select --</option>
 								      <option value="template">Import Template</option>
 								      <option value="eQuote">Import eQuote</option>
 								      <option value="catalog">Import Catalog</option>
@@ -170,7 +170,7 @@ padding: 10px;
 							    </div>
 							    
 							  </div>
-							  <div class="col-padding-margin-5">
+							  <div class="col-padding-margin-5 table-responsive">
 							  <table  class="table table-bordered table-sm">
 						<tr>
 							<th>Id</th>
@@ -236,8 +236,8 @@ padding: 10px;
         </form>
         </div>	
 			  				<div class="col-sm-9">
-          
-							<table  class="table-responsive table table-bordered table-sm">
+          <div class="table-responsive">
+							<table  class="table table-bordered table-sm">
 								<tr>
 								<th>Id</th>
 								<th>Name</th>
@@ -255,6 +255,7 @@ padding: 10px;
 								</tr>
 							<tbody id="records_table"></tbody>
 							</table>
+							</div>
 									    
 							  </div>
 				    	</div>

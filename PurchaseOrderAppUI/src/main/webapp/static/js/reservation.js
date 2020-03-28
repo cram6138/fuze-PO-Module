@@ -12,6 +12,7 @@ var popupNotification = $("#popupNotification").kendoNotification({
 
 var oldPageSize = 0;
 var checkedProjectList = [];
+var reservationStatusGrid = [];
 function onChange(e) {
 	var arryList = [];
 	checkedProjectList = this.selectedKeyNames().join(", ");
@@ -197,6 +198,7 @@ $(document)
 															
 															success : function(result) {
 																options.success(result);
+																reservationStatusGrid = result;
 //																$.each(result, function(index, value) {
 //																	options.success(result[index].projects);
 //																	console.log(result[[ index ]].projects);
@@ -239,6 +241,7 @@ $(document)
 												        "catsStatus": {type : "string"},
 												        "market":{type : "string"},
 												        "localMarket":{type : "string"},
+												        "reserved":{type:"boolean"},
 												        "subMarket":{type : "string"},
 												        "buyerId":{type : "string"},
 												        "buyerName": {type : "string"},
@@ -263,16 +266,17 @@ $(document)
 										
 										columns : [
 											{
-												field : " id",
+												field : "reserved",
 												title : "Action",
-												width : "120px",
-												template : "<a href='javascript:openPODetail()' id='name-link1'><i class='fa fa-lock'></i>unReserve</a>"
+												width : "160px",
+												//template : "<a href='javascript:openPODetail()' id='name-link1'><i class='fa fa-lock'></i>&nbsp;Reserve</a>"
+												template :"#if(reserved==false){#<a href='javascript:reservedStage(#=id#,#=reserved#)' id='name-link1'><i class='fa fa-lock'></i>&nbsp;Reserve</a>#}else{#<a href='javascript:reservedStage(#=id#,#=reserved#)' id='name-link1'><i class='fa fa-lock'></i>&nbsp;UnReserve</a>#}#"
 											},
 											{
 												field : "projectName",
 												title : "View Details",
 												width : "120px",
-												template : "<a href='javascript:openPODetail()' id='name-link1'><i class='fa fa-eye' aria-hidden='true'></i>Details</a>"
+												template : "<a href='javascript:openPODetail()' id='name-link1'><i class='fa fa-eye' aria-hidden='true'></i>&nbsp;Details</a>"
 											},
 											{
 												field : "containerCode",
@@ -335,7 +339,35 @@ $(document)
 														width : "120px"
 													
 											
-												}]
+												}],
+										
+										
+										 dataBound: function(e) {
+//											 var grid = $("#grid").data("kendoGrid");
+//											    var gridData = grid.dataSource.view();
+//
+//											    for (var i = 0; i < gridData.length; i++) {
+//											        if (gridData[i].SomeProperty == SomeValue) {
+//											            grid.table.find("tr[data-uid='" + gridData[i].uid + "']").addClass("highlighted-row");
+//											        }
+//											    }
+									            // get the index of the UnitsInStock cell
+									            var columns = e.sender.columns;
+									            var columnIndex = this.wrapper.find(".k-grid-header [data-field=" + "reserved" + "]").index();
+
+									            // iterate the data items and apply row styles where necessary
+									            var dataItems = e.sender.dataSource.view();
+									            for (var j = 0; j < dataItems.length; j++) {
+									              var reserved = dataItems[j].get("reserved");
+
+									             var row = e.sender.tbody.find("[data-uid='" + dataItems[j].uid + "']");
+									              if (reserved==true) {
+									                row.addClass("Unreserved");
+									              }else{
+									            	  row.addClass("reserved");
+									              }
+									            }
+									          }
 										
 
 									});
@@ -390,6 +422,53 @@ function readData(options){
 	       });
 	 })
 	
+}
+function getContainerDetails(options){
+    //alert("ContainerDetails");
+  var host_name;
+    $.getScript("static/js/config.js", function() {
+        host_name = appConfig.reservation_application;
+ var baseURL = host_name+"/reservation/containersByUserInfo";
+  $.ajax({
+      type: "POST",
+      dataType:"json",
+      cache: false,
+      contentType : "application/json; charset=utf-8",
+      url: baseURL ,
+      data:JSON.stringify({
+         
+                "id":user.id,
+                "username":user.username,
+                "isActive":user.isActive,
+                "firstName":user.firstName,
+                "userRole": [
+                    "",""
+                    ],
+                "lastName":user.lastName,
+                "territory":user.territory,
+                "Market":user.Market
+            
+         
+      }),
+      success : function(result) {
+            options.success(result.containerInfoDetails);
+//            $.each(result, function(index, value) {
+//                options.success(result[index].projects);
+//                console.log(result[[ index ]].projects);
+//            })
+
+ 
+
+        },
+        error : function(result) {
+            options.error(result.containerInfoDetails);
+            //popupNotification.show(result.statusText, "error");
+        }
+  });
+
+ 
+
+  });
 }
 
 function territories(options) {
@@ -698,6 +777,85 @@ function poreadData(options) {
 
 }
 
+function reservedStage(selectedRow,ReservationStatus){
+	var currentDatalist = reservationStatusGrid[selectedRow-1];
+	var host_name;
+	var currentURL;
+	$.getScript("static/js/config.js", function() {
+		host_name = appConfig.reservation_application;
+		if(ReservationStatus == false){
+			currentURL=	host_name + "/reservation/reserve/container"
+			$.ajax({
+				url : currentURL,
+				type : "POST",
+				contentType : "application/json; charset=utf-8",
+				data:JSON.stringify({
+					"containerCode" :currentDatalist.containerCode,
+					"businessUnit":currentDatalist.businessUnit,
+					"locationDetailCode" :currentDatalist.locationDetailCode,
+					"locationName": currentDatalist.locationName,
+					"useAtPslc" :currentDatalist.useAtPslc,
+					"usePsProject": currentDatalist.usePsProject,
+					"useByDate" : currentDatalist.useByDate,
+					"fuzeProjectId" : currentDatalist.fuzeProjectId,
+				    "psProjectStatus" : currentDatalist.psProjectStatus,
+					"reservationNotes" : currentDatalist.reservationNotes,
+					"reservationComments" : currentDatalist.reservationComments,
+					 "userInfo" :{
+						 "id" :user.id,
+						 "username" :user.username,
+						 "isActive" :1,
+						 "userRole" : [null,null],
+						 "firstName" : user.firstName,
+						 "lastName" : user.lastName,
+						 "createdOn" : null,
+						 "territory" :user.territory,
+						 "market" :user.market
+						 }
+				}),
+				
+				success : function(result) {
+					//options.success(result);
+					popupNotification.show("reserved Successfully", "info");
+//					$.each(result, function(index, value) {
+//						options.success(result[index].projects);
+//						console.log(result[[ index ]].projects);
+//					})
+
+				},
+				error : function(result) {
+					//options.error(result);
+					popupNotification.show("reserved Something went wrong", "error");
+					//popupNotification.show(result.statusText, "error");
+				}
+			});
+		}else{
+			currentURL=host_name + "/reservation/unreserve/container/"+currentDatalist.containerCode
+			$.ajax({
+				url : currentURL,
+				type : "GET",
+				contentType : "application/json; charset=utf-8",
+				success : function(result) {
+					//options.success(result);
+					popupNotification.show("Unreserved Successfully", "info");
+//					$.each(result, function(index, value) {
+//						options.success(result[index].projects);
+//						console.log(result[[ index ]].projects);
+//					})
+
+				},
+				error : function(result) {
+				//	options.error(result);
+					popupNotification.show("Unreserved Something went wrong", "error");
+					//popupNotification.show(result.statusText, "error");
+				}
+			});
+			
+		}
+		
+	})
+}
+
 function toolbar_click() {
 	console.log("Toolbar command is clicked!");
 	return false;
@@ -708,7 +866,7 @@ function listofItem() {
 		dataSource : {
 			transport : {
 				read : function(options) {
-					readData(options);
+					getContainerDetails(options);
 				},
 				parameterMap : function(options, operation) {
 					if (operation !== "read" && options.models) {
