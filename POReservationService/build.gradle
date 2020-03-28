@@ -33,9 +33,12 @@ dependencies {
 	runtimeOnly 'mysql:mysql-connector-java'
 	annotationProcessor 'org.projectlombok:lombok'
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	compile group: 'org.springframework', name: 'spring-oxm', version: '5.2.3.RELEASE'
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-web-services', version: '1.4.0.RELEASE'
-	
-	
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+}
+}
+test {
+	useJUnitPlatform()
 }
