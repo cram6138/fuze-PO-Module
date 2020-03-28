@@ -36,6 +36,42 @@
     background-color: #f0fff0;
    /* background-color: #fff0f0 ; */
     }
+    .box-styles{
+    background:#f8f9fc;
+    display:inline-block;
+    padding-top:5px;
+    padding-bottom:5px;
+    margin:2px;
+    }
+    .card-header{
+        padding: .2rem .25rem;
+    margin-bottom: 0;
+    background-color: #f8f9fc;
+    border-bottom:#e3e6f0;
+    }
+    .list-group-item{
+     padding: .2rem .25rem;
+    }
+    .no-padding{
+        padding-right:0rem !important ;
+    padding-left: 0rem !important;
+    }
+    .Header-content{
+    padding: .2rem .25rem;
+    background-color:#f8f9fc;
+    border:2px solid #f8f9fc;
+    color:#e74a3b;
+    position:relative;
+    }
+   .field-height {
+    height: 100px !important;
+    }
+    .rightButton{
+    position: absolute;
+    right: 0px;
+    top: 0px;
+}
+    }
     
 </style>
 </head>
@@ -321,7 +357,133 @@
 									</li>
 									<li id="containerReserve">Container Reserve/ Un Reserve
 										<div>
-											<div id="childPart"></div>
+										
+										<div class ="container-fluid">
+										<div class="row">
+										<div class="col-sm-12">
+										 <div class="Header-content">
+										<div class="d-inline">Reservation Details</div>
+										<div class="d-inline text-right rightButton"><button class="btn btn-danger btn-user btn-block">Search</button></div>
+										 
+										 </div>
+										 </div>
+										</div>
+										 <div class="row">
+										
+    <div class="col-sm box-styles">
+     Container Code:<b id="containerCode"></b>
+    </div>
+    <div class="col-sm box-styles">
+      Business Unit:
+    </div>
+    <div class="col-sm box-styles">
+      Location Detail Code:
+    </div>
+     <div class="col-sm box-styles">
+      Location Name:
+    </div>
+  </div>
+  
+  <div class="row">
+  
+ 
+  <div class="col-sm-4 no-padding">
+  <div class="Header-content">Fuze Details</div>	
+  <div class="card">
+  										
+									  <ul class="list-group list-group-flush">
+									    <li class="list-group-item">Fuze Reservation id:<span class="bold" id="fuzeReservationId"></span></li>
+									    <li class="list-group-item">Reservation Creation Date:<span  class="bold" id="reservationCreationDate"></span></li>
+									   
+									  </ul>
+											</div>
+											 <div class="Header-content">Reserve for:</div>
+											 <div class="card">
+  										
+									  <ul class="list-group list-group-flush">
+									    <li class="list-group-item">Reserve for:<span class="bold" id="reservedUsername"></span></li>
+									    </ul>
+									    </div>	
+  </div>
+    <div class="col-sm-8 no-padding">
+    <div class="Header-content">Reuse Project Details</div>
+    <div class="row">
+    <div class="col-sm no-padding">
+     <div class="card">
+  											
+									  <ul class="list-group list-group-flush">
+									    <li class="list-group-item">Use At PS Location:</li>
+									    <li class="list-group-item">USe At PS Project:<span class="bold" id="psproject"></span></li>
+									    <li class="list-group-item">Use By Date:<span class="bold" id="useByDate"></span></li>
+									    <li class="list-group-item">Fuze Project ID:<span id="fuzeProjectId" class="bold"></span></li>
+									  </ul>
+											</div>
+    </div>
+    <div class="col-sm no-padding">
+    <div class="card">
+  		<ul class="list-group list-group-flush">
+									    <li class="list-group-item">PS Project Status: <span class="bold" id="fuzeStatus"></span></li>
+									    <li class="list-group-item">PS Project effective Date:</li>
+									    <li class="list-group-item">PS Project Description:</li>
+									    <li class="list-group-item">PSLC Description:</li>
+									  </ul>
+	</div>
+    </div>
+    </div>
+    <div class="Header-content">Reservation Bypass Details</div>
+    <div class="row">
+    <div class="col-sm no-padding">
+    <div class="card">
+  		<ul class="list-group list-group-flush">
+									    <li class="list-group-item">Pass By Reason :</li>
+									    </ul>
+									    </div>
+									    </div>
+									    <div class="col-sm no-padding">
+    <div class="card">
+  		<ul class="list-group list-group-flush">
+									    <li class="list-group-item">TUI Code:</li>
+									    </ul>
+									    </div>
+									    </div>
+    </div>
+     </div>
+ 
+  </div>
+  
+  <div class="row">
+  <div class="col-sm-12">
+  <div class="Header-content">ReservationNotes:</div>
+  <div class="form-group">
+  <textarea rows="2" cols="2" class="form-control" id="reservationNotes"></textarea>
+  </div>
+  </div>
+  
+  
+  </div>
+  
+  
+   <div class="row">
+  <div class="col-sm-12">
+  <div class="Header-content">Reservation Comments</div>
+  <div class="form-group">
+  <textarea rows="6" cols="2" class="form-control field-height" id="message"></textarea>
+  </div>
+  </div>
+  
+  
+  </div>
+   <div class="row">
+  <div class="col-sm-12">
+  <div class="text-right"><button class="btn btn-danger btn-user btn-block">Reserve</button></div>
+  </div>
+  
+  
+  </div>
+  
+		</div>	
+			 
+											
 										</div>
 
 									</li>

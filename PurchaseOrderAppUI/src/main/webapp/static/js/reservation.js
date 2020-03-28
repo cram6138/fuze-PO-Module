@@ -13,6 +13,7 @@ var popupNotification = $("#popupNotification").kendoNotification({
 var oldPageSize = 0;
 var checkedProjectList = [];
 var reservationStatusGrid = [];
+var currentReserveData =[];
 function onChange(e) {
 	var arryList = [];
 	checkedProjectList = this.selectedKeyNames().join(", ");
@@ -58,7 +59,7 @@ $(document)
 		.ready(
 				function() {
 					$("#ReservDataList").hide();
-					detailInit();
+					//detailInit();
 					// selectedPODetail();
 					listofItem();
 
@@ -594,7 +595,7 @@ $('#filter')
 							});
 					grid.dataSource.filter(filter);
 				});
-function detailInit() {
+/*function detailInit() {
 	$("#childPart").kendoGrid({
 		dataSource : {
 			transport : {
@@ -723,7 +724,7 @@ function detailInit() {
 		$('<label class="k-checkbox-label" for="' + guid + '">​</label>')
 				.appendTo(container);
 	}
-}
+}*/
 
 var checkedIds = {};
 
@@ -816,7 +817,36 @@ function reservedStage(selectedRow,ReservationStatus){
 				
 				success : function(result) {
 					//options.success(result);
+					currentReserveData=result;
+					if(result.messege == "Pslc is not matched with PeopleSoft location"){
+					document.getElementById("containerCode").innerHTML="fz-'"+result.containerCode+"'";
+						document.getElementById("territory").innerHTML="fz-'"+result.territory+"'";
+							document.getElementById("fuzeReservationId").innerHTML="fz-'"+result.fuzeReservationId+"'";
+								document.getElementById("fuzeProjectId").innerHTML="fz-'"+result.fuzeProjectId+"'";
+									document.getElementById("projectName").innerHTML="fz-'"+result.projectName+"'";
+										document.getElementById("pslc").innerHTML="fz-'"+result.pslc+"'";
+											document.getElementById("reservedUsername").innerHTML="fz-"+result.reservedUsername+"'";
+												document.getElementById("useByDate").innerHTML="fz-"+result.useByDate+"'";
+													document.getElementById("reservationCreationDate").innerHTML="fz-"+result.reservationCreationDate+"'";
+														document.getElementById("fuzeStatus").innerHTML="fz-"+result.fuzeStatus+"'";
+															document.getElementById("catsStatus").innerHTML="fz-"+result.catsStatus+"'";
+																document.getElementById("market").innerHTML="fz-"+result.market+"'";
+																	document.getElementById("subMarket").innerHTML="fz-"+result.subMarket+"'";
+																		document.getElementById("buyerId").innerHTML="fz-"+result.buyerId+"'";
+																			document.getElementById("buyerName").innerHTML="fz-"+result.buyerName+"'";
+																				document.getElementById("itemsInfo").innerHTML="fz-"+result.itemsInfo+"'";
+																					document.getElementById("reservationNotes").innerHTML="fz-"+result.reservationNotes+"'";
+																						document.getElementById("message").innerHTML="fz-"+result.message+"'";
+																							document.getElementById("reserved").innerHTML="fz-"+result.reserved+"'";
+																								document.getElementById("mrorderCode").innerHTML="fz-"+result.mrorderCode+"'";
+																									document.getElementById("psproject").innerHTML="fz-"+result.psproject+"'";
+																										document.getElementById("mrsource").innerHTML="fz-"+result.mrsource+"'";
+																						
+					
 					popupNotification.show("reserved Successfully", "info");
+					}else{
+						popupNotification.show(""+result.message+"", "error");
+					}
 //					$.each(result, function(index, value) {
 //						options.success(result[index].projects);
 //						console.log(result[[ index ]].projects);
