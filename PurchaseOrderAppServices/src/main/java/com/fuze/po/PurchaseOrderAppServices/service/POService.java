@@ -1,8 +1,5 @@
 package com.fuze.po.PurchaseOrderAppServices.service;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -10,21 +7,17 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.fuze.po.PurchaseOrderAppServices.exception.PurchaseOrderResourceNotFoundException;
 import com.fuze.po.PurchaseOrderAppServices.config.GenerateExcel;
 import com.fuze.po.PurchaseOrderAppServices.entity.POItems;
 import com.fuze.po.PurchaseOrderAppServices.entity.PORequest;
 import com.fuze.po.PurchaseOrderAppServices.entity.Project;
+import com.fuze.po.PurchaseOrderAppServices.exception.PurchaseOrderResourceNotFoundException;
 import com.fuze.po.PurchaseOrderAppServices.forms.PORequestForm;
+import com.fuze.po.PurchaseOrderAppServices.forms.ProjectForm;
 import com.fuze.po.PurchaseOrderAppServices.forms.ProjectSearchForm;
 import com.fuze.po.PurchaseOrderAppServices.info.ItemInfo;
 import com.fuze.po.PurchaseOrderAppServices.info.PORequestInfo;
@@ -214,6 +207,25 @@ public class POService {
 		return projectInfoList;
 	}
 	
+	public ResponseInfo createProject(ProjectForm projectForm) {
+		ResponseInfo responseInfo = new ResponseInfo();
+		try {
+			Project project = papulateProjectFormEntity(projectForm);
+			project = projectRepository.save(project);
+		} catch (Exception e) {
+			responseInfo.setStatus(false);
+		}
+		responseInfo.setResponseType("Project has been created successfuly");
+		responseInfo.setStatus(true);
+		return responseInfo;
+	}
 	
+	
+	private Project papulateProjectFormEntity(ProjectForm projectForm) {
+		Project project = new Project();
+		BeanUtils.copyProperties(projectForm, project);
+		return project;
+	}
+
 
 }

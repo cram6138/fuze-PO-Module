@@ -32,6 +32,9 @@ color:#1cc88a;
 .text-xs{
 font-size:.9rem;
 }
+div#content {
+height: 304px;
+}
   </style>
   
 

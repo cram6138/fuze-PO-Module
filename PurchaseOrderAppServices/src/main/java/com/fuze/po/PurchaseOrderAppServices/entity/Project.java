@@ -1,5 +1,6 @@
 package com.fuze.po.PurchaseOrderAppServices.entity;
 
+import java.sql.Date;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -45,7 +46,16 @@ public class Project {
 	private String siteTracker;
 	@Column(name = "teritory")
 	private String teritory;
-
+	@Column(name = "usebydate")
+	private Date useByDate;
+	@Column(name = "effective_date")
+	private Date effectiveDate;
+	@Column(name = "project_description")
+	private String project_description;
+	@Column(name = "pslc_description")
+	private String pslc_description;
+	@Column(name = "local_market")
+	private String localMarket;
 	@ManyToMany(mappedBy = "projects")
 	private Set<PORequest> porequests;
 
@@ -153,12 +163,65 @@ public class Project {
 		this.teritory = teritory;
 	}
 
+	
+	public Date getUseByDate() {
+		return useByDate;
+	}
+
+	public void setUseByDate(Date useByDate) {
+		this.useByDate = useByDate;
+	}
+
+	public Date getEffectiveDate() {
+		return effectiveDate;
+	}
+
+	public void setEffectiveDate(Date effectiveDate) {
+		this.effectiveDate = effectiveDate;
+	}
+
+	public String getProject_description() {
+		return project_description;
+	}
+
+	public void setProject_description(String project_description) {
+		this.project_description = project_description;
+	}
+
+	public String getPslc_description() {
+		return pslc_description;
+	}
+
+	public void setPslc_description(String pslc_description) {
+		this.pslc_description = pslc_description;
+	}
+
+	public String getLocalMarket() {
+		return localMarket;
+	}
+
+	public void setLocalMarket(String localMarket) {
+		this.localMarket = localMarket;
+	}
+
+	public Set<PORequest> getPorequests() {
+		return porequests;
+	}
+
+	public void setPorequests(Set<PORequest> porequests) {
+		this.porequests = porequests;
+	}
+
 	@Override
 	public String toString() {
 		return "Project [id=" + id + ", siteName=" + siteName + ", projectName=" + projectName + ", market=" + market
 				+ ", subMarket=" + subMarket + ", projectType=" + projectType + ", fuzeProject=" + fuzeProject
 				+ ", pslc=" + pslc + ", projectStatus=" + projectStatus + ", type=" + type + ", customProjectType="
-				+ customProjectType + ", siteTracker=" + siteTracker + ", teritory=" + teritory + "]";
+				+ customProjectType + ", siteTracker=" + siteTracker + ", teritory=" + teritory + ", useByDate="
+				+ useByDate + ", effectiveDate=" + effectiveDate + ", project_description=" + project_description
+				+ ", pslc_description=" + pslc_description + ", localMarket=" + localMarket + ", porequests="
+				+ porequests + "]";
 	}
+
 
 }

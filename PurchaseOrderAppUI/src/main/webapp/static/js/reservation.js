@@ -863,8 +863,8 @@ function reservedStage(selectedRow,ReservationStatus){
 			currentURL=host_name + "/reservation/unreserve/container/"+currentDatalist.containerCode
 			$.ajax({
 				url : currentURL,
-				type : "GET",
-				contentType : "application/json; charset=utf-8",
+				 contentType: "application/json",
+			        type:"GET",
 				success : function(result) {
 					//options.success(result);
 					popupNotification.show("Unreserved Successfully", "info");
