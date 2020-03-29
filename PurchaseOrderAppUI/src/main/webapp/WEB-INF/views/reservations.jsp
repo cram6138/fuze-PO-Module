@@ -26,9 +26,20 @@
 	background-color: #f4f4f4;
 }
 .form-control{
-     height: 2.2rem !important;
+     height: 2.25rem !important;
+    padding: 0px !important;
+    border-radius:none !important;
+  }
+
+.form-control{
+        height: 2.25rem !important;
     padding: 0px !important;
   }
+  
+  form#formData input.form-control {
+    height: 1.5rem !important;
+    border-radius: 0px !important;
+}
   /* tr.reserved,tr.k-alt.reserved {
         background-color: #f0fff0;
     } */
@@ -71,6 +82,10 @@
     right: 0px;
     top: 0px;
 }
+    
+    .custombuttonRefresh{
+        height: 26px;
+    padding: 1px;
     }
     
 </style>
@@ -176,33 +191,32 @@
 								class="badge badge-danger badge-counter">2</span>
 						</a></li> -->
 
-						<li class="nav-item dropdown no-arrow"><a
-							class="nav-link dropdown-toggle" href="#" id="userDropdown"
-							role="button" data-toggle="dropdown" aria-haspopup="true"
-							aria-expanded="false"> <span class="mr-2 d-none d-lg-inline text-gray-600 small"><span id="username"></span></span>
-								 <img class="img-profile rounded-circle"
-								src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png">
+						<li class="nav-item dropdown no-arrow">
+						<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						 <span class="mr-2 d-none d-lg-inline text-gray-600 small"><span id="username"></span></span>
+					    <img class="img-profile rounded-circle" src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png">
 						</a>
 
-							<div
-								class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-								aria-labelledby="userDropdown">
-								<a class="dropdown-item" href="#"> <i
-									class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Profile
-								</a> <a class="dropdown-item" href="#"> <i
-									class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-									Settings
-								</a> <a class="dropdown-item" href="#"> <i
-									class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-									Activity Log
-								</a>
-								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="logout" data-toggle="modal"
-									data-target="#logoutModal"> <i
-									class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-									Logout
-								</a>
-							</div></li>
+							<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Profile
+                </a>
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Settings
+                </a>
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Activity Log
+                </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Logout
+                </a>
+              </div>
+              </li>
 
 					</ul>
 				</nav>
@@ -363,7 +377,7 @@
 										<div class="col-sm-12">
 										 <div class="Header-content">
 										<div class="d-inline">Reservation Details</div>
-										<div class="d-inline text-right rightButton"><button class="btn btn-danger btn-user btn-block">Search</button></div>
+										<div class="d-inline text-right rightButton"><button class="btn btn-danger btn-user btn-block custombuttonRefresh">Refresh &nbsp;<i class="fa fa-arrow-right"></i></button></div>
 										 
 										 </div>
 										 </div>
@@ -401,7 +415,19 @@
 											 <div class="card">
   										
 									  <ul class="list-group list-group-flush">
-									    <li class="list-group-item">Reserve for:<span class="bold" id="reservedUsername"></span></li>
+									    <li class="list-group-item">
+									    <form id="formData">
+  <div class="form-row">
+    <div class="col">
+  Reserve for:
+    </div>
+    <div class="col">
+      <input type="text" class="form-control"  id="reservedUsername">
+    </div>
+  </div>
+</form>
+									    
+									   </li>
 									    </ul>
 									    </div>	
   </div>
@@ -412,10 +438,56 @@
      <div class="card">
   											
 									  <ul class="list-group list-group-flush">
-									    <li class="list-group-item">Use At PS Location:</li>
-									    <li class="list-group-item">USe At PS Project:<span class="bold" id="psproject"></span></li>
-									    <li class="list-group-item">Use By Date:<span class="bold" id="useByDate"></span></li>
-									    <li class="list-group-item">Fuze Project ID:<span id="fuzeProjectId" class="bold"></span></li>
+									    <li class="list-group-item"><form id="formData">
+  <div class="form-row">
+    <div class="col">
+     Use At PS Location:
+    </div>
+    <div class="col">
+      <input type="text" class="form-control">
+    </div>
+  </div>
+</form></li>
+									    <li class="list-group-item">
+									    
+									    <form id="formData">
+  <div class="form-row">
+    <div class="col">
+     USe At PS Project:
+    </div>
+    <div class="col">
+      <input type="text" class="form-control" id="psproject">
+    </div>
+  </div>
+</form>
+									    
+									   </li>
+									    <li class="list-group-item">
+									    <form id="formData">
+  <div class="form-row">
+    <div class="col">
+    Use By Date:
+    </div>
+    <div class="col">
+      <input type="text" class="form-control"  id="useByDate">
+    </div>
+  </div>
+</form>
+									    
+									   </li>
+									    <li class="list-group-item">
+									    
+									  		    <form id="formData">
+  <div class="form-row">
+    <div class="col">
+    Fuze Project ID:
+    </div>
+    <div class="col">
+      <input type="text" class="form-control"  id="fuzeProjectId">
+    </div>
+  </div>
+</form>
+									  </li>
 									  </ul>
 											</div>
     </div>
@@ -435,14 +507,38 @@
     <div class="col-sm no-padding">
     <div class="card">
   		<ul class="list-group list-group-flush">
-									    <li class="list-group-item">Pass By Reason :</li>
+									    <li class="list-group-item">
+									     <form id="formData">
+  <div class="form-row">
+    <div class="col">
+    Pass By Reason :
+    </div>
+    <div class="col">
+      <input type="text" class="form-control"  id="fuzeProjectId">
+    </div>
+  </div>
+</form>
+									    
+									   </li>
 									    </ul>
 									    </div>
 									    </div>
 									    <div class="col-sm no-padding">
     <div class="card">
   		<ul class="list-group list-group-flush">
-									    <li class="list-group-item">TUI Code:</li>
+									    <li class="list-group-item">
+									    <form id="formData">
+  <div class="form-row">
+    <div class="col">
+   TUI Code:
+    </div>
+    <div class="col">
+      <input type="text" class="form-control"  id="fuzeProjectId">
+    </div>
+  </div>
+</form>
+									    
+									    </li>
 									    </ul>
 									    </div>
 									    </div>
@@ -474,8 +570,10 @@
   
   </div>
    <div class="row">
-  <div class="col-sm-12">
-  <div class="text-right"><button class="btn btn-danger btn-user btn-block">Reserve</button></div>
+  <div class="col-sm-11">
+  </div>
+  <div class="col-sm-1">
+  <div class="text-right"><button class="btn btn-danger btn-user btn-block custombuttonRefresh">Reserve &nbsp; <i class="fa fa-arrow-right"></i></button></div>
   </div>
   
   
@@ -629,32 +727,36 @@
 			        },
 			         pageSize: 10
 			    },
-			   sortable: true,
-	            change: onChange,
-			    pageable: true,
+			    groupable: true,
+                sortable: true,
+                resizable: true,
+                reorderable: true,
+                pageable: true,
+                change: onChange,
+			    
 	            filterable: true,
-			    resizable:true,
+			    
 			   columns: [
 			    	
-	                { field:"containerCode", title:"Container Code", width: "100px"},
-	                { field:"MROrderCode", title:"MR Order Code", width: "100px"},
-	                { field:" MRSource",title:"MR Source", width: "100px"},
+	                { field:"containerCode", title:"Container Code", width: "150px"},
+	                { field:"MROrderCode", title:"MR Order Code", width: "150px"},
+	                { field:" MRSource",title:"MR Source", width: "150px"},
 	                { field:" fuzeReservationId", title:"Fuze Reservation Id" , width: "150px"},
-	                { field:" fuzeProjectId",title:"Fuze Project Id", width: "100px"},
-	                { field:"projectName", title:"Project Name", width: "100px"},
-	                { field:"PSProject", title:"PS Project", width: "100px"},
-	                { field:" pslc",title:"PSLC", width: "100px"},
-	                { field:" reservedUsername", title:"Reserved By", width: "100px"},
-	                { field:" useByDate",title:"Use By Date", width: "100px"},						                
+	                { field:" fuzeProjectId",title:"Fuze Project Id", width: "150px"},
+	                { field:"projectName", title:"Project Name", width: "150px"},
+	                { field:"PSProject", title:"PS Project", width: "150px"},
+	                { field:" pslc",title:"PSLC", width: "150px"},
+	                { field:" reservedUsername", title:"Reserved By", width: "150px"},
+	                { field:" useByDate",title:"Use By Date", width: "150px"},						                
 	                { field:"reservationCreationDate", title:"Reservation Creation Date", width: "150px"},
-	                { field:"fuzeStatus", title:"Fuze Status", width: "100px"},
-	                { field:" catsStatus",title:"Cats Status", width: "100px"},
-	                { field:" territory", title:"Territory", width: "100px"},
-	                { field:" market",title:"Market", width: "100px"},						                    
-	                { field:"subMarket", title:"Sub Market", width: "100px"},
+	                { field:"fuzeStatus", title:"Fuze Status", width: "150px"},
+	                { field:" catsStatus",title:"Cats Status", width: "150px"},
+	                { field:" territory", title:"Territory", width: "150px"},
+	                { field:" market",title:"Market", width: "150px"},						                    
+	                { field:"subMarket", title:"Sub Market", width: "150px"},
 	                { field:"localMarket", title:"Local Market", width: "100px"},
-	                { field:" buyerId",title:"Buyer Id", width: "100px"},
-	                { field:" buyerName", title:"Buyer Name", width: "100px"},
+	                { field:" buyerId",title:"Buyer Id", width: "150px"},
+	                { field:" buyerName", title:"Buyer Name", width: "150px"},
 	                
 	                ]
 	       
