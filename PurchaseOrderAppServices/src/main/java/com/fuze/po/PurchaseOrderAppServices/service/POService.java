@@ -11,7 +11,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fuze.po.PurchaseOrderAppServices.bean.AddContainerDetailsRequest;
 import com.fuze.po.PurchaseOrderAppServices.config.GenerateExcel;
+import com.fuze.po.PurchaseOrderAppServices.consumer.SoapConsumer;
 import com.fuze.po.PurchaseOrderAppServices.entity.POItems;
 import com.fuze.po.PurchaseOrderAppServices.entity.PORequest;
 import com.fuze.po.PurchaseOrderAppServices.entity.Project;
@@ -50,6 +52,9 @@ public class POService {
 	
 	@Autowired
     private CartItemRepository cartItemRepository;
+	
+	@Autowired
+    private SoapConsumer soapConsumer;
 
 	public ResponseInfo createPoRequest(PORequestForm requestForm) {
 		ResponseInfo response = new ResponseInfo();
@@ -70,6 +75,12 @@ public class POService {
 				poItemRepository.save(poItems);
 			}
 			cartItemRepository.deleteAllItemsByCartId();
+			
+			AddContainerDetailsRequest containerReq = new AddContainerDetailsRequest();
+			containerReq.setPoRequestId(poRequest.getId());
+			containerReq.setUserId(requestForm.getUserId());
+			soapConsumer.addContainerDetails(containerReq);
+			
 		} catch (Exception e) {
 			response.setStatus(false);
 		}

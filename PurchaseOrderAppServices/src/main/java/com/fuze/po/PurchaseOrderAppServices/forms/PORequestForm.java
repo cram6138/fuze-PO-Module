@@ -12,6 +12,7 @@ public class PORequestForm {
 	private String poStatus;
 	private Set<Integer> poitems;
 	private Set<Integer> projectIds;
+	private Integer userId;
 
 	public String getPoName() {
 		return poName;
@@ -28,6 +29,7 @@ public class PORequestForm {
 	public void setTeritory(String teritory) {
 		this.teritory = teritory;
 	}
+
 	public String getMarket() {
 		return market;
 	}
@@ -74,6 +76,14 @@ public class PORequestForm {
 
 	public void setPoStatus(String poStatus) {
 		this.poStatus = poStatus;
+	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 
 }
