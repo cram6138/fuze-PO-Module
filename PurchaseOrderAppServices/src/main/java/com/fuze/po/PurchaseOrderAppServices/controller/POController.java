@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fuze.po.PurchaseOrderAppServices.forms.PORequestForm;
+import com.fuze.po.PurchaseOrderAppServices.forms.ProjectForm;
 import com.fuze.po.PurchaseOrderAppServices.forms.ProjectSearchForm;
 import com.fuze.po.PurchaseOrderAppServices.info.PORequestInfo;
 import com.fuze.po.PurchaseOrderAppServices.info.ProjectInfo;
@@ -56,7 +57,11 @@ public class POController {
 		return new ResponseEntity<List<ProjectInfo>>(poRequestService.searchProjects(projectSearchForm), HttpStatus.OK);
 	}
 	
-	
+	@PostMapping("/createProject")
+	public ResponseEntity<ResponseInfo> createProject(@RequestBody ProjectForm projectForm) {
+		ResponseInfo responseData = poRequestService.createProject(projectForm);
+		return new ResponseEntity<ResponseInfo>(responseData, HttpStatus.CREATED);
+	}
 	
 
 }

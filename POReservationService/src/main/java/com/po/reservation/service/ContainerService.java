@@ -24,6 +24,7 @@ import com.po.reservation.common.service.CatsStatus;
 import com.po.reservation.common.service.ProjectStatus;
 import com.po.reservation.entity.Container;
 import com.po.reservation.entity.Item;
+import com.po.reservation.entity.User;
 import com.po.reservation.form.ContainerForm;
 import com.po.reservation.form.ContainerReserveForm;
 import com.po.reservation.form.ContainerSearchForm;
@@ -31,6 +32,7 @@ import com.po.reservation.info.ContainerInfo;
 import com.po.reservation.info.ItemInfo;
 import com.po.reservation.info.UserInfo;
 import com.po.reservation.repository.ContainerRepository;
+import com.po.reservation.repository.UserRepository;
 
 /**
  * @author Bhajuram.c
@@ -43,6 +45,9 @@ public class ContainerService {
 
 	@Autowired
 	private ContainerRepository containerRepository;
+	
+	@Autowired
+	private UserRepository userRepository;
 
 	public List<ContainerInfo> searchContainers(ContainerForm containerForm) {
 
@@ -200,7 +205,7 @@ public class ContainerService {
 				.filter(container -> container.getCatsStatus().equals(CatsStatus.AVAILABLE_ACCESS.getValue())
 						|| (container.getTerritory().equals(userInfo.getTerritory())
 								&& container.getMarket().equals(userInfo.getMarket())
-								&& container.getBuyer().getId() == userInfo.getId()))
+								&& container.getReservedByUser().getId() == userInfo.getId()))
 				.collect(Collectors.toList());
 
 		if (containers != null && !containers.isEmpty()) {
@@ -295,7 +300,7 @@ public class ContainerService {
 					.filter(container -> container.getCatsStatus().equals(CatsStatus.AVAILABLE_ACCESS.getValue())
 							|| (container.getTerritory().equals(request.getTerritory())
 									&& container.getMarket().equals(request.getMarket())
-									&& container.getBuyer().getId() == request.getId()))
+									&& container.getReservedByUser().getId() == request.getId()))
 					.collect(Collectors.toList());
 			if (!CollectionUtils.isEmpty(dbContainersList) && dbContainersList != null) {
 				for (Container row : dbContainersList) {
@@ -337,6 +342,7 @@ public class ContainerService {
 		container.setReservationCreationDate(null);
 		container.setReserved(false);
 		container.setReservedBy(null);
+		container.setReservedByUser(null);
 		return container;
 	}
 	
@@ -380,6 +386,8 @@ public class ContainerService {
 	    container.setCatsStatus(CatsStatus.RESERVED_ACCESS.getValue());
 	    container.setUseBy(useByDate);
 	    container.setReservedBy(containerReserveForm.getUserInfo().getFirstName());
+	    User user = userRepository.findById(containerReserveForm.getUserInfo().getId());
+	    container.setReservedByUser(user);
 	    container.setReservationNotes(containerReserveForm.getReservationNotes());
 	    containerRepository.save(container);
 	    logger.info("succesfully updated conatiner info in database");
@@ -405,6 +413,7 @@ public class ContainerService {
 		container.setFuzeReservationId(null);
 		container.setReservationCreationDate(null);
 		container.setReservedBy(null);
+		container.setReservedByUser(null);
 		container.setReservationNotes(null);
 		container.setUseBy(null);
 		container.setReserved(false);
