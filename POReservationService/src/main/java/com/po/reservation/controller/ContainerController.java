@@ -121,7 +121,7 @@ public class ContainerController {
 		return new ResponseEntity<ContainerInfo>(containerInfo, HttpStatus.OK);
 	}
 	
-	@PostMapping("/unreserve/container/{containerCode}")
+	@GetMapping("/unreserve/container/{containerCode}")
 	public ResponseEntity<ContainerInfo> unreserveContainer(@PathVariable String containerCode) {
 		ContainerInfo containerInfo = null;
 		try {

@@ -86,8 +86,11 @@ public class Container {
 	
 	@Column(name = "reservation_notes")
 	private String reservationNotes;
-
 	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "reserved_by_user_id")
+	@JsonIgnore
+	private User reservedByUser;
 
 	public String getPSProject() {
 		return PSProject;
@@ -249,6 +252,14 @@ public class Container {
 		this.reservationNotes = reservationNotes;
 	}
 
+	public User getReservedByUser() {
+		return reservedByUser;
+	}
+
+	public void setReservedByUser(User reservedByUser) {
+		this.reservedByUser = reservedByUser;
+	}
+
 	@Override
 	public String toString() {
 		return "Container [id=" + id + ", territory=" + territory + ", market=" + market + ", subMarket=" + subMarket
@@ -256,7 +267,7 @@ public class Container {
 				+ ", project=" + project + ", reserved=" + reserved + ", mrOrderCode=" + mrOrderCode
 				+ ", fuzeReservationId=" + fuzeReservationId + ", reservedBy=" + reservedBy + ", fuzeStatus="
 				+ fuzeStatus + ", catsStatus=" + catsStatus + ", useBy=" + useBy + ", reservationCreationDate="
-				+ reservationCreationDate + ", items=" + items + ",reservationNotes="+reservationNotes+ "]";
+				+ reservationCreationDate + ", items=" + items + ",reservationNotes="+reservationNotes+ ",reservedByUser="+reservedByUser+"]";
 	}
 
 }
