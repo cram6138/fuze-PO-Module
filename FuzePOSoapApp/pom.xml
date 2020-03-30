@@ -122,6 +122,8 @@
 					<schemaFiles>poreqstatus.xsd</schemaFiles>
 					<schemaFiles>poreqedit.xsd</schemaFiles>
 					<schemaFiles>addcartitems.xsd</schemaFiles>
+					<schemaFiles>addcartitems.xsd</schemaFiles>
+					<schemaFiles>reuseprojectdetails.xsd</schemaFiles>
 					<clearOutputDir>false</clearOutputDir>
 				</configuration>
 			</plugin>

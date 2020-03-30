@@ -124,7 +124,7 @@ public class SoapWSConfiguration extends WsConfigurerAdapter {
 		addCartItemsWsdl.setSchemaCollection(addCartItemsXsdFile());
 		return addCartItemsWsdl;
 	}
-	
+
 	/**
 	 * for adding the container details
 	 * 
@@ -139,6 +139,22 @@ public class SoapWSConfiguration extends WsConfigurerAdapter {
 		addContainerDetailsWsdl.setTargetNamespace("http://www.addcontainerdetails.com/addcontainerdetails");
 		addContainerDetailsWsdl.setSchemaCollection(addContainerDetailsXsdFile());
 		return addContainerDetailsWsdl;
+	}
+
+	/**
+	 * for searching the project details
+	 * 
+	 * @return DefaultWsdl11Definition reuseProjectDetailsWsdl
+	 */
+
+	@Bean(name = "reuseProjectDetails")
+	public DefaultWsdl11Definition reuseProjectDetails() throws Exception {
+		DefaultWsdl11Definition reuseProjectDetailsWsdl = new DefaultWsdl11Definition();
+		reuseProjectDetailsWsdl.setPortTypeName("reuseProjectDetailsPort");
+		reuseProjectDetailsWsdl.setLocationUri("/soapWs/reuseProjectDetails");
+		reuseProjectDetailsWsdl.setTargetNamespace("http://www.fuze.reservation.application.com/reuseprojectdetails");
+		reuseProjectDetailsWsdl.setSchemaCollection(reuseProjectDetailsXsdFile());
+		return reuseProjectDetailsWsdl;
 	}
 
 	@Bean
@@ -185,6 +201,14 @@ public class SoapWSConfiguration extends WsConfigurerAdapter {
 	public XsdSchemaCollection addContainerDetailsXsdFile() throws Exception {
 		CommonsXsdSchemaCollection xsds = new CommonsXsdSchemaCollection(
 				new ClassPathResource("createContainerDetails.xsd"));
+		xsds.setInline(true);
+		return xsds;
+	}
+
+	@Bean
+	public XsdSchemaCollection reuseProjectDetailsXsdFile() throws Exception {
+		CommonsXsdSchemaCollection xsds = new CommonsXsdSchemaCollection(
+				new ClassPathResource("reuseprojectdetails.xsd"));
 		xsds.setInline(true);
 		return xsds;
 	}

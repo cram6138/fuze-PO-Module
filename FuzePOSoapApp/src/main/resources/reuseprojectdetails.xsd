@@ -8,12 +8,15 @@
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="pslcLocationCode" type="xs:string" />
+				<xs:element name="psProject" type="xs:string" />
+
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="ReuseProjectDetailsResponse">
 		<xs:complexType>
 			<xs:sequence>
+				<xs:element name="pslcLocationCode" type="xs:string" />
 				<xs:element name="psProject" type="xs:string" />
 				<xs:element name="fuzeProjectId" type="xs:string" />
 				<xs:element name="psProjectStatus" type="xs:string" />

@@ -23,6 +23,8 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 import com.addcontainerdetails.addcontainerdetails.AddContainerDetailsRequest;
 import com.addcontainerdetails.addcontainerdetails.AddContainerDetailsResponse;
+import com.application.reservation.fuze.reuseprojectdetails.ReuseProjectDetailsRequest;
+import com.application.reservation.fuze.reuseprojectdetails.ReuseProjectDetailsResponse;
 import com.cartproduceritem.cartdetails.CartDetailsRequest;
 import com.cartproduceritem.cartdetails.CartItemsDetailsResponse;
 import com.cartproduceritem.cartdetails.Cartitems;
@@ -46,6 +48,7 @@ import com.fuze.po.fuzesoap.application.repository.ItemEntityRepository;
 import com.fuze.po.fuzesoap.application.repository.POItemsEntityRepository;
 import com.fuze.po.fuzesoap.application.repository.PORequestEntityRepository;
 import com.fuze.po.fuzesoap.application.repository.ProjectEntityRepository;
+import com.fuze.po.fuzesoap.application.repository.UserEntityRepository;
 import com.poaddcartitemsproducer.addcartitems.AddCartItemsRequest;
 import com.poaddcartitemsproducer.addcartitems.AddCartItemsResponse;
 import com.poaddcartitemsproducer.addcartitems.ItemIdsPojo;
@@ -76,6 +79,8 @@ public class PODetailsEndpoint {
 
 	private static final String NAMESPACE_URI_ADD_CONTAINER_DETAILS = "http://www.addcontainerdetails.com/addcontainerdetails";
 
+	private static final String NAMESPACE_URI_REUSE_PROJECT_DETAILS = "http://www.fuze.reservation.application.com/reuseprojectdetails";
+
 	@Autowired
 	private CartItemRepository cartItemRepository;
 
@@ -96,6 +101,9 @@ public class PODetailsEndpoint {
 
 	@Autowired
 	private ContainerEntityRepository containerEnityRepository;
+	
+	@Autowired
+	private UserEntityRepository userEntityRepository;
 
 	@ResponsePayload
 	@PayloadRoot(namespace = NAMESPACE_URI_CART_DETAILS, localPart = "CartDetailsRequest")
@@ -275,8 +283,6 @@ public class PODetailsEndpoint {
 		return response;
 	}
 
-	
-	
 	// save the container details in container table
 
 	@ResponsePayload
@@ -289,39 +295,77 @@ public class PODetailsEndpoint {
 			Optional<PORequestEntity> dbPORequest = poRequestEntityRepository.findById(request.getPoRequestId());
 			Optional<ProjectEntity> dbProject = projectEntityRepository
 					.findById(Integer.parseInt(dbPORequest.get().getProjectId()));
+			Optional<UserEntity> dbUserEntity = userEntityRepository.findById(request.getUserId());
+
 			if (dbPORequest.isPresent()) {
-				ContainerEntity containerEntity = new ContainerEntity();
-				UserEntity userEntity = new UserEntity();
-				userEntity.setId(request.getUserId());
+				if (dbUserEntity.isPresent()) {
+					ContainerEntity containerEntity = new ContainerEntity();
 
-				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("ddMyyyyhhmmss");
-				LocalDateTime now = LocalDateTime.now();
+					DateTimeFormatter dtf = DateTimeFormatter.ofPattern("ddMyyyyhhmmss");
+					LocalDateTime now = LocalDateTime.now();
 
-				String containercode = dbPORequest.get().getTeritory().substring(0, 2).toUpperCase()
-						+ dbProject.get().getMarket().substring(0, 2).toUpperCase()
-						+ dbProject.get().getSubMarket().substring(0, 2).toUpperCase()
-						+ dbProject.get().getLocalMarket().substring(0, 2).toUpperCase() + dtf.format(now);
+					String containercode = dbPORequest.get().getTeritory().substring(0, 2).toUpperCase()
+							+ dbProject.get().getMarket().substring(0, 2).toUpperCase()
+							+ dbProject.get().getSubMarket().substring(0, 2).toUpperCase()
+							+ dbProject.get().getLocalMarket().substring(0, 2).toUpperCase() + dtf.format(now);
 
-				containerEntity.setMarket(dbProject.get().getMarket());
-				containerEntity.setTerritory(dbPORequest.get().getTeritory());
-				containerEntity.setSubMarket(dbProject.get().getSubMarket());
-				containerEntity.setLocalMarket(dbProject.get().getLocalMarket());
-				containerEntity.setProject(dbProject.get());
-				containerEntity.setBuyer(userEntity);
-				containerEntity.setContainerCode(containercode);
-				containerEntity.setPslc(dbProject.get().getPslc());
-				containerEntity.setPSProject(dbPORequest.get().getPsProject());
+					containerEntity.setMarket(dbProject.get().getMarket());
+					containerEntity.setTerritory(dbPORequest.get().getTeritory());
+					containerEntity.setSubMarket(dbProject.get().getSubMarket());
+					containerEntity.setLocalMarket(dbProject.get().getLocalMarket());
+					containerEntity.setProject(dbProject.get());
+					containerEntity.setBuyer(dbUserEntity.get());
+					containerEntity.setContainerCode(containercode);
+					containerEntity.setPslc(dbProject.get().getPslc());
+					containerEntity.setPSProject(dbPORequest.get().getPsProject());
 
-				containerEnityRepository.save(containerEntity);
-				response.setMessage("Successfully saved.");
-				response.setStatus(1);
+					containerEnityRepository.save(containerEntity);
+					response.setMessage("Successfully saved.");
+					response.setStatus(1);
+				} else {
+					response.setMessage("User not exists");
+					response.setStatus(0);
+				}
 			} else {
-				response.setMessage("failed");
+				response.setMessage("Purchase Order not exists");
 				response.setStatus(0);
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+		return response;
+	}
+
+	// Getting the project details
+
+	@ResponsePayload
+	@PayloadRoot(namespace = NAMESPACE_URI_REUSE_PROJECT_DETAILS, localPart = "ReuseProjectDetailsRequest")
+	public ReuseProjectDetailsResponse getReuseProjectDetails(@RequestPayload ReuseProjectDetailsRequest request)
+			throws DatatypeConfigurationException {
+		ReuseProjectDetailsResponse response = new ReuseProjectDetailsResponse();
+
+		Optional<ProjectEntity> dbProject = projectEntityRepository.findByPslcOrProjectName(
+				request.getPslcLocationCode() != null ? request.getPslcLocationCode() : request.getPsProject());
+
+		XMLGregorianCalendar xmlDate = null;
+		GregorianCalendar gc = new GregorianCalendar();
+		gc.setTime(dbProject.get().getEffectiveDate());
+		xmlDate = DatatypeFactory.newInstance().newXMLGregorianCalendar(gc);
+
+		XMLGregorianCalendar xmlDate1 = null;
+		GregorianCalendar gc1 = new GregorianCalendar();
+		xmlDate1 = DatatypeFactory.newInstance().newXMLGregorianCalendar(gc1);
+
+		if (dbProject.isPresent()) {
+			response.setPslcLocationCode(dbProject.get().getPslc());
+			response.setFuzeProjectId(dbProject.get().getFuzeProject());
+			response.setPslcDescription(dbProject.get().getPslc_description());
+			response.setPsProject(dbProject.get().getProjectName());
+			response.setPsProjectDescription(dbProject.get().getProject_description());
+			response.setPsProjectEffectiveDate(xmlDate);
+			response.setUseByDate(xmlDate1);
+			response.setPsProjectStatus(dbProject.get().getProjectStatus());
 		}
 		return response;
 	}

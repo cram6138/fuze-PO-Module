@@ -78,5 +78,13 @@ public class CartRestConsumer {
 		return client.addCartItems(addCartItemsRequest);
 	}
 
+	// for adding container details
+
+	@PostMapping("/addContainerDetails")
+	public AddContainerDetailsResponse addContainerDetails(@RequestBody AddContainerDetailsRequest request) {
+		return client.addContainerDetails(request);
+	}
+	
+	
 
 }

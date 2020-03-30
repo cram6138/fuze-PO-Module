@@ -1,0 +1,9 @@
+<soapenv:Envelope
+	xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+	xmlns:us="http://www.fuze.reservation.application.com/reuseprojectdetails">
+    <soapenv:Body>
+        <us:ReuseProjectDetailsRequest>
+            <us:pslcLocationCode>pslc2</us:pslcLocationCode>
+        </us:ReuseProjectDetailsRequest>
+    </soapenv:Body>
+</soapenv:Envelope>
