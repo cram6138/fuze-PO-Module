@@ -293,7 +293,7 @@ padding: 10px;
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="/">Logout</a>
+          <a class="btn btn-primary" href="logout">Logout</a>
         </div>
       </div>
     </div>
@@ -463,9 +463,9 @@ var popupNotification = $("#popupNotification").kendoNotification({
 	$("#nonCatalog").hide();
 						$("#addCart").hide();
 						$.getScript("static/js/config.js", function(){
-						var baseURL = appConfig.service_application;
+						var baseURL = appConfig.zuul_service;
 			        	$.ajax({
-							url : baseURL+'/getCartItemsDetails',
+							url : baseURL+'/pos/getCartItemsDetails',
 							type : 'POST',
 							dataType : "json",
 							data : JSON.stringify({
@@ -515,10 +515,10 @@ var popupNotification = $("#popupNotification").kendoNotification({
 							var Market_po=Markets1.text();
 							var pslc=$("#pslc").val();
 							var siteTracker=$("#siteTracker").val();
-							var baseURL = appConfig.service_application;
+							var baseURL = appConfig.zuul_service;
 							$.ajax({
 								//http://localhost:8080/RePO/getPoRequest   this is API and above one is response right?
-								url : baseURL+'/RePO/createPORequest',
+								url : baseURL+'/pos/RePO/createPORequest',
 								type : 'POST',
 								dataType : "json",
 								contentType : "application/json",
@@ -571,13 +571,13 @@ var popupNotification = $("#popupNotification").kendoNotification({
 						})
 						
 	function getTemplateDropdown(baseURL) {
-		var baseURL = appConfig.service_application;
+		var baseURL = appConfig.zuul_service;
 		$("#isListItems").hide();
 			$.ajax({
 	            type: "POST",
 	            dataType:"json",
 	            cache: false,
-	            url: baseURL + '/template/tempList',
+	            url: baseURL + '/pos/template/tempList',
 	            success: function(data, textStatus, jqXHR){
 	            	// $('#etd').children().prop('disabled',false);
 	            	$('#etd').show();
@@ -678,7 +678,7 @@ var popupNotification = $("#popupNotification").kendoNotification({
 						
 						function getCatalogDropdown(){
 							$("#isListItems").hide();
-							var baseURL = appConfig.service_application;
+							var baseURL = appConfig.zuul_service;
 							 $("#nonCatalog").show();
 				                $('#selected').hide();
 				                $("#addCart").show();
@@ -690,7 +690,7 @@ var popupNotification = $("#popupNotification").kendoNotification({
 					            type: "GET",
 					            dataType:"json",
 					            cache: false,
-					            url: baseURL + '/template/eQuotes',
+					            url: baseURL + '/pos/template/eQuotes',
 					            success: function(data, textStatus, jqXHR){
 					            	// $('#etd').children().prop('disabled',false);
 					            	$('#etd').show();
@@ -714,14 +714,14 @@ var popupNotification = $("#popupNotification").kendoNotification({
 						
 						
 						function loadTemplateItems(options, objId, selectedType) {
-							var baseURL = appConfig.service_application;
+							var baseURL = appConfig.zuul_service;
 							var callUrl;
 							if (selectedType == 'eQuote') {
-								callUrl = baseURL + '/template/eQuoteImport/' + objId;
+								callUrl = baseURL + '/pos/template/eQuoteImport/' + objId;
 							} else if (selectedType == 'template') {
-								callUrl = baseURL + '/template/tempImport/' + objId;
+								callUrl = baseURL + '/pos/template/tempImport/' + objId;
 							}else if (selectedType == 'catalog') {
-								callUrl = baseURL + '/template/tempImport/' + objId;
+								callUrl = baseURL + '/pos/template/tempImport/' + objId;
 								
 								
 							}
@@ -748,7 +748,7 @@ var popupNotification = $("#popupNotification").kendoNotification({
 			
 			function getCatalogSearch(){
 				$.getScript("static/js/config.js", function(){
-				var baseURL = appConfig.service_application;
+				var baseURL = appConfig.zuul_service;
 				var ItemId=$("#ItemId").val();
 				var Itemname=$("#Itemname").val();
 				var ItemDescription=$("#ItemDescription").val();
@@ -759,7 +759,7 @@ var popupNotification = $("#popupNotification").kendoNotification({
 		            dataType:"json",
 		            cache: false,
 		            contentType : "application/json; charset=utf-8",
-		            url: baseURL + '/searchItems',
+		            url: baseURL + '/pos/searchItems',
 		            data:JSON.stringify({
 		            	"id":ItemId,
 		            	"name": Itemname,
@@ -833,12 +833,12 @@ var popupNotification = $("#popupNotification").kendoNotification({
 				
 			//	alert(cart);
 				$.getScript("static/js/config.js", function(){
-					var baseURL = appConfig.service_application;
+					var baseURL = appConfig.zuul_service;
 						$.ajax({
 			            type: "POST",
 			            dataType:"json",
 			            cache: false,
-			            url: baseURL + '/addCartItems',
+			            url: baseURL + '/pos/addCartItems',
 			            contentType : "application/json; charset=utf-8",
 			            data:obj,
 			            textStatus:"Success",
@@ -877,9 +877,9 @@ var popupNotification = $("#popupNotification").kendoNotification({
 		        function getCartItemList1(){
 		        	var tempObj;
 					$.getScript("static/js/config.js", function(){
-						var baseURL = appConfig.service_application;
+						var baseURL = appConfig.zuul_service;
 			        	$.ajax({
-							url : baseURL+'/getCartItemsDetails',
+							url : baseURL+'/pos/getCartItemsDetails',
 							type : 'POST',
 							dataType : "json",
 							data : JSON.stringify({

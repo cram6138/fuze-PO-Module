@@ -9,61 +9,87 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 @Controller
 @CrossOrigin
-@RequestMapping(produces = {"application/json"})
+@RequestMapping(produces = { "application/json" })
 public class AuthenticationController {
 
 	@Autowired
 	private UserRepository userRepository;
 	@Autowired
 	private MessageSource messageSource;
-	
+	@Autowired
+	private Environment env;
+
+	private String exitUri = "/";
+
 	@PostMapping("/login")
-	public String getToken(@ModelAttribute("loginForm") UserCredential login, 
-			HttpServletRequest request, HttpServletResponse response) {
-		
+	public String getToken(@ModelAttribute("loginForm") UserCredential login, HttpServletRequest request,
+			HttpSession session) throws JsonProcessingException {
+
+		if (env.getProperty("mode").equals("prod")) {
+			this.exitUri = "/PurchaseOrderAppServices-0.0.1-SNAPSHOT";
+		}
+
+		// ServletContext context
 		final AuthenticationToken authenticationToken = new AuthenticationToken();
 		User user = null;
-		if(login.getUsername() == null || login.getPassword() == null) {
-			return "redirect:/";
-			//throw new InvalidRequestException();
+		if (login.getUsername() == null || login.getPassword() == null) {
+			// return "redirect:"+this.exitUri;
+			return this.exitUri;
+			// throw new InvalidRequestException();
 		} else if ((user = authenticated(login)) == null) {
-			return "redirect:/";
-			//throw new AuthenticationException();
+			// return "redirect:"+this.exitUri;
+			return this.exitUri;
+			// throw new AuthenticationException();
 		}
-		
-		if(!user.isActive()) {
+
+		if (!user.isActive()) {
 			authenticationToken.setMessage("User is inactive");
-			//return authenticationToken;
-			return "redirect:/";
+			// return authenticationToken;
+			// return "redirect:"+this.exitUri;
+			return this.exitUri;
 		}
-		
-		if(user.getUserRoles() == null) {
+
+		if (user.getUserRoles() == null) {
 			throw new ForbiddenException();
 		}
-		
+
+		ObjectMapper mapper = new ObjectMapper();
 		this.populateAuthentionToken(authenticationToken, user);
-		request.getSession(true).setAttribute("currentUserInfo", populateUserInfo(user));
-		//return authenticationToken;
-		response.setHeader("token", authenticationToken.getAccessToken());
-		request.getSession().setAttribute("token", authenticationToken.getAccessToken());
-		request.getSession().setAttribute("username", user.getUsername());
-		return "redirect:/index";
+		UserInfo userInfo = populateUserInfo(user);
+		// request.set
+		// return authenticationToken;
+		/*
+		 * response.setHeader("token", authenticationToken.getAccessToken());
+		 * request.getSession().setAttribute("token",
+		 * authenticationToken.getAccessToken());
+		 * request.getSession().setAttribute("username", user.getUsername());
+		 */
+		session.setAttribute("currentUserInfo", userInfo);
+		System.out.println(session.getAttribute("currentUserInfo"));
+		return "/index";
 	}
 
 	private void populateAuthentionToken(final AuthenticationToken authenticationToken, final User user) {
@@ -75,12 +101,13 @@ public class AuthenticationController {
 		authenticationToken.setAccessToken("Bearer " + accessToken);
 		authenticationToken.setUserInfo(userInfo);
 	}
-	
+
 	private Date getExpirationDate() {
 		String lifeTime = String.valueOf(messageSource.getMessage("token.expire.time", null, null));
-		return Date.from(LocalDateTime.now().plusSeconds(Integer.valueOf(lifeTime)).atZone(ZoneId.systemDefault()).toInstant());
+		return Date.from(
+				LocalDateTime.now().plusSeconds(Integer.valueOf(lifeTime)).atZone(ZoneId.systemDefault()).toInstant());
 	}
-	
+
 	private List<String> getUserRoles(Set<UserRole> userRoles) {
 		final List<String> roles = new ArrayList<String>();
 		Iterator<UserRole> it = userRoles.iterator();

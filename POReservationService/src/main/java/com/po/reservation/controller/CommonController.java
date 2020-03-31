@@ -19,7 +19,7 @@ import com.po.reservation.info.TerritoryInfo;
 import com.po.reservation.service.CommonService;
 
 @RestController
-@CrossOrigin("*")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class CommonController {
 
 	private static Logger logger = LoggerFactory.getLogger(CommonController.class);

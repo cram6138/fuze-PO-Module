@@ -6,8 +6,6 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 /**
@@ -25,8 +23,10 @@ public class LoggingService {
 	 * @throws Throwable
 	 */
 	@Around("execution(* com.fuze.po.PurchaseOrderAppUI..*(..)))")
-	public Object aroundLoggingService(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-		MethodSignature methodSignature = (MethodSignature) proceedingJoinPoint.getSignature();
+	public Object aroundLoggingService(ProceedingJoinPoint proceedingJoinPoint)
+			throws Throwable {
+		MethodSignature methodSignature = (MethodSignature) proceedingJoinPoint
+				.getSignature();
 		// Get intercepted method details
 		String className = methodSignature.getDeclaringType().getSimpleName();
 		String methodName = methodSignature.getName();
@@ -35,5 +35,4 @@ public class LoggingService {
 		LOGGER.info("Execution of " + className + "." + methodName + " ended");
 		return results;
 	}
-
 }

@@ -1,9 +1,12 @@
 package com.fuze.po.PurchaseOrderAppUI.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -18,8 +21,13 @@ import com.fuze.po.PurchaseOrderAppUI.auth.UserInfo;
 @Controller
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class PurchaseOrderController {
-	
+
 	private static Logger logger = LoggerFactory.getLogger(PurchaseOrderController.class);
+
+	@Autowired
+	private Environment env;
+
+	private String exitUri = "/";
 
 	@GetMapping("/welcome")
 	public String welcomePage(Model model) {
@@ -73,19 +81,22 @@ public class PurchaseOrderController {
 	}
 
 	@RequestMapping("/reservations")
-	public String viewReservations(Model model, HttpServletRequest request) throws JsonProcessingException {
+	public String viewReservations(Model model, HttpSession session) throws JsonProcessingException {
 		ObjectMapper mapper = new ObjectMapper();
 		model.addAttribute("container", "active");
 		model.addAttribute("currentUserInfo",
-				mapper.writeValueAsString((UserInfo) request.getSession().getAttribute("currentUserInfo")));
+				mapper.writeValueAsString((UserInfo) session.getAttribute("currentUserInfo")));
 		return "reservations";
 	}
 
 	@GetMapping("/logout")
 	public String logout(HttpServletRequest request) {
+		if (env.getProperty("mode").equals("prod")) {
+			this.exitUri = "/PurchaseOrderAppServices-0.0.1-SNAPSHOT";
+		}
+
 		request.getSession().invalidate();
-		System.out.println(request.getSession());
-		return "redirect:/";
+		return "redirect:"+this.exitUri;
 	}
 
 	@GetMapping("/container")

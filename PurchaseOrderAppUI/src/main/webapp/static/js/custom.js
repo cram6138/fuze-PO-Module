@@ -52,7 +52,7 @@
 						                        }
 						                    });
 										 $.getScript("static/js/config.js", function(){
-											 server_name = appConfig.service_application;
+											 server_name = appConfig.zuul_service;
 										 })
 										 
 										var Teritory = $("#Teritory").kendoDropDownList({
@@ -117,9 +117,9 @@
 											 	         read: function (options) {
 											 	        	var host_name;
 											 	      	 $.getScript("static/js/config.js", function(){
-											 	      		 host_name = appConfig.service_application;
+											 	      		 host_name = appConfig.zuul_service;
 											 	      		 $.ajax({
-											 	      			 url: host_name + "/RePO/search/project",
+											 	      			 url: host_name + "/pos/RePO/search/project",
 											 	      	        contentType: "application/json",
 											 	      	        type:"POST",
 											 	      	     contentType : "application/json; charset=utf-8",
@@ -335,9 +335,9 @@
 function readData(options){
 	var host_name;
 	 $.getScript("static/js/config.js", function(){
-		 host_name = appConfig.service_application;
+		 host_name = appConfig.zuul_service;
 		 $.ajax({
-			 url: host_name + "/RePO/getPoRequest",
+			 url: host_name + "/pos/RePO/getPoRequest",
 	        contentType: "application/json",
 	        type:"GET",
 	        success: function (result) {
@@ -357,9 +357,9 @@ function readData(options){
 function generateExcel(){
 	var host_name;
 	 $.getScript("static/js/config.js", function(){
-		 host_name = appConfig.service_application;
+		 host_name = appConfig.zuul_service;
 		 $.ajax({
-			 url: host_name + "/RePO/generatePORequestExcel",
+			 url: host_name + "/pos/RePO/generatePORequestExcel",
 	        contentType: "application/json",
 	        type:"GET",
 	        success: function (result) {
@@ -524,9 +524,9 @@ function onDataBound(e) {
 function readDataChild(options,e){
 	var host_name;
 	 $.getScript("static/js/config.js", function(){
-		 host_name = appConfig.service_application;
+		 host_name = appConfig.zuul_service;
 		 $.ajax({
-			 url: host_name + "/RePO/getPoRequest",
+			 url: host_name + "/pos/RePO/getPoRequest",
 	        dataType: "json",
 	        cache: false,
 	        success: function (result) {
@@ -547,9 +547,9 @@ function readDataChild(options,e){
 function poreadData(options){
 	var host_name;
 	 $.getScript("static/js/config.js", function(){
-		 host_name = appConfig.service_application;
+		 host_name = appConfig.zuul_service;
 		 $.ajax({
-			 url: host_name + "/RePO/getPoRequest",
+			 url: host_name + "/pos/RePO/getPoRequest",
 	        dataType: "json",
 	        cache: false,
 	        success: function (result) {
@@ -698,9 +698,9 @@ function clearCart(){
 function territories(options) {
 	var host_name;
 	$.getScript("static/js/config.js", function() {
-		host_name = appConfig.reservation_application;
+		host_name = appConfig.zuul_service;
 		$.ajax({
-			url : host_name + "/territories",
+			url : host_name + "/por/territories",
 			contentType : "application/json",
 			type : "GET",
 			success : function(result) {
@@ -719,9 +719,9 @@ function territories(options) {
 function market(options) {
 	var host_name;
 	$.getScript("static/js/config.js", function() {
-		host_name = appConfig.reservation_application;
+		host_name = appConfig.zuul_service;
 		$.ajax({
-			url : host_name + "/markets",
+			url : host_name + "/por/markets",
 			contentType : "application/json",
 			type : "GET",
 			success : function(result) {
@@ -740,9 +740,9 @@ function market(options) {
 function submarket(options) {
 	var host_name;
 	$.getScript("static/js/config.js", function() {
-		host_name = appConfig.reservation_application;
+		host_name = appConfig.zuul_service;
 		$.ajax({
-			url : host_name + "/subMarkets",
+			url : host_name + "/por/subMarkets",
 			contentType : "application/json",
 			type : "GET",
 			success : function(result) {

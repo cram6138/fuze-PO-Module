@@ -75,7 +75,7 @@ $(document)
 					});
 					var server_name;
 					$.getScript("static/js/config.js", function() {
-						server_name = appConfig.service_application;
+						server_name = appConfig.zuul_service;
 					})
 
 					var Teritory = $("#Teritory").kendoDropDownList({
@@ -170,9 +170,9 @@ $(document)
 													
 													var host_name;
 													$.getScript("static/js/config.js", function() {
-														host_name = appConfig.reservation_application;
+														host_name = appConfig.zuul_service;
 														$.ajax({
-															url : host_name + "/reservation/search/container",
+															url : host_name + "/por/reservation/search/container",
 															type : "POST",
 															contentType : "application/json; charset=utf-8",
 															data:JSON.stringify({
@@ -409,9 +409,9 @@ function showDetail(e) {
 function readData(options){
 	var host_name;
 	 $.getScript("static/js/config.js", function(){
-		 host_name = appConfig.reservation_application;
+		 host_name = appConfig.zuul_service;
 		 $.ajax({
-			 url: host_name + "reservation/container/reserved",
+			 url: host_name + "/por/reservation/container/reserved",
 	        contentType: "application/json",
 	        type:"GET",
 	        success: function (result) {
@@ -428,8 +428,8 @@ function getContainerDetails(options){
     //alert("ContainerDetails");
   var host_name;
     $.getScript("static/js/config.js", function() {
-        host_name = appConfig.reservation_application;
- var baseURL = host_name+"/reservation/containersByUserInfo";
+        host_name = appConfig.zuul_service;
+ var baseURL = host_name+"/por/reservation/containersByUserInfo";
   $.ajax({
       type: "POST",
       dataType:"json",
@@ -475,9 +475,9 @@ function getContainerDetails(options){
 function territories(options) {
 	var host_name;
 	$.getScript("static/js/config.js", function() {
-		host_name = appConfig.reservation_application;
+		host_name = appConfig.zuul_service;
 		$.ajax({
-			url : host_name + "/territories",
+			url : host_name + "/por/territories",
 			contentType : "application/json",
 			type : "GET",
 			success : function(result) {
@@ -496,9 +496,9 @@ function territories(options) {
 function market(options) {
 	var host_name;
 	$.getScript("static/js/config.js", function() {
-		host_name = appConfig.reservation_application;
+		host_name = appConfig.zuul_service;
 		$.ajax({
-			url : host_name + "/markets",
+			url : host_name + "/por/markets",
 			contentType : "application/json",
 			type : "GET",
 			success : function(result) {
@@ -517,9 +517,9 @@ function market(options) {
 function submarket(options) {
 	var host_name;
 	$.getScript("static/js/config.js", function() {
-		host_name = appConfig.reservation_application;
+		host_name = appConfig.zuul_service;
 		$.ajax({
-			url : host_name + "/subMarkets",
+			url : host_name + "/por/subMarkets",
 			contentType : "application/json",
 			type : "GET",
 			success : function(result) {
@@ -742,9 +742,9 @@ function onDataBound(e) {
 function readDataChild(options) {
 	var host_name;
 	$.getScript("static/js/config.js", function() {
-		host_name = appConfig.service_application;
+		host_name = appConfig.zuul_service;
 		$.ajax({
-			url : host_name + "/RePO/getPoRequest",
+			url : host_name + "/pos/RePO/getPoRequest",
 			dataType : "json",
 			cache : false,
 			success : function(result) {
@@ -762,9 +762,9 @@ function readDataChild(options) {
 function poreadData(options) {
 	var host_name;
 	$.getScript("static/js/config.js", function() {
-		host_name = appConfig.service_application;
+		host_name = appConfig.zuul_service;
 		$.ajax({
-			url : host_name + "/RePO/getPoRequest",
+			url : host_name + "/pos/RePO/getPoRequest",
 			dataType : "json",
 			cache : false,
 			success : function(result) {
@@ -783,9 +783,9 @@ function reservedStage(selectedRow,ReservationStatus){
 	var host_name;
 	var currentURL;
 	$.getScript("static/js/config.js", function() {
-		host_name = appConfig.reservation_application;
+		host_name = appConfig.zuul_service;
 		if(ReservationStatus == false){
-			currentURL=	host_name + "/reservation/reserve/container"
+			currentURL=	host_name + "/por/reservation/reserve/container"
 			$.ajax({
 				url : currentURL,
 				type : "POST",
@@ -863,8 +863,8 @@ function reservedStage(selectedRow,ReservationStatus){
 			currentURL=host_name + "/reservation/unreserve/container/"+currentDatalist.containerCode
 			$.ajax({
 				url : currentURL,
-				 contentType: "application/json",
-			        type:"GET",
+				type : "GET",
+				contentType : "application/json; charset=utf-8",
 				success : function(result) {
 					//options.success(result);
 					popupNotification.show("Unreserved Successfully", "info");

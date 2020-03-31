@@ -197,26 +197,25 @@
 					    <img class="img-profile rounded-circle" src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png">
 						</a>
 
-							<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Profile
-                </a>
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Settings
-                </a>
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Activity Log
-                </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Logout
-                </a>
-              </div>
-              </li>
+							<div
+								class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+								aria-labelledby="userDropdown">
+								<a class="dropdown-item" href="#"> <i
+									class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Profile
+								</a> <a class="dropdown-item" href="#"> <i
+									class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+									Settings
+								</a> <a class="dropdown-item" href="#"> <i
+									class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+									Activity Log
+								</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="logout" data-toggle="modal"
+									data-target="#logoutModal"> <i
+									class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+									Logout
+								</a>
+							</div></li>
 
 					</ul>
 				</nav>
@@ -668,7 +667,7 @@
 	<script src="static/js/config.js"></script>
 	<script type="text/javascript">
 	var user = ${currentUserInfo};
- var currentUser=user.firstName+""+user.lastName;
+    var currentUser=user? user.firstName+""+user.lastName : "";
 	document.getElementById("username").innerHTML=currentUser;
 	var popupNotification = $("#popupNotification").kendoNotification({
 		 position: {
@@ -679,7 +678,7 @@
         }
         }).data("kendoNotification");
   	$(document).ready(function() {
-  		var baseUrl = appConfig.reservation_application;
+  		var baseUrl = appConfig.zuul_service;
 		
 		
 		$("#myReservation").click(function() {
@@ -766,14 +765,14 @@
 		}
   		
   		function myReservationReadData(options){
-  			var host_name = appConfig.reservation_application;
-			console.log(host_name + '/reservation/container/reserved');
+  			var host_name = appConfig.zuul_service;
+			console.log(host_name + '/por/reservation/container/reserved');
   			$.ajax({
 	            type: "POST",
 	            data: JSON.stringify(user),
 	            contentType: "application/json; charset=utf-8",
 	            cache: false,
-	            url: host_name + '/reservation/container/reserved',
+	            url: host_name + '/por/reservation/container/reserved',
 	            success: function(data){
 	            	console.log(data);
 	            	options.success(data);

@@ -73,5 +73,13 @@ public class UserInfo {
 	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
 	}
+	
+	@Override
+	public String toString() {
+		return "UserInfo [id=" + id + ", username=" + username + ", isActive=" + isActive + ", userRole=" + userRole
+				+ ", firstName=" + firstName + ", lastName=" + lastName + ", createdOn=" + createdOn + ", territory="
+				+ territory + ", Market=" + Market + "]";
+	}
 
+	 
 }
