@@ -1,14 +1,16 @@
 appConfig = {
 	enabled : true,
 	// for prod
-	service_application:'http://localhost:8080/PurchaseOrderAppServices-0.0.1-SNAPSHOT',
-	ui_application:'http://localhost:8080/PurchaseOrderAppUI-0.0.1-SNAPSHOT',
-	reservation_application:'http://localhost:8080/POReservationService-0.0.1-SNAPSHOT',
+	//service_application:'http://localhost:8080/PurchaseOrderAppServices-0.0.1-SNAPSHOT',
+	//ui_application:'http://localhost:8080/PurchaseOrderAppUI-0.0.1-SNAPSHOT',
+	//reservation_application:'http://localhost:8080/POReservationService-0.0.1-SNAPSHOT',
 
 	// for dev
-	//service_application : 'http://localhost:8080',
-	//ui_application : 'http://localhost:8090',
-	//reservation_application : 'http://localhost:8088',
+	service_application : 'http://localhost:8080',
+	ui_application : 'http://localhost:8090',
+	reservation_application : 'http://localhost:8088',
+	
+	zuul_service : 'http://localhost:8888',
 	
 	/* Common for all environment */
 	tableau_data_backend_url : 'http://localhost:4040/api/tableauData',
