@@ -914,37 +914,37 @@ function listofItem() {
 						id : {
 							type : "string"
 						},
-						siteName : {
+						containerCode : {
+							type : "string"
+						},
+						territory : {
 							type : "string"
 						},
 						projectName : {
 							type : "string"
 						},
+						pslc : {
+							type : "string"
+						},
+						useByDate : {
+							type : "string"
+						},
+						fuzeStatus : {
+							type : "string"
+						},
+						catsStatus : {
+							type : "string"
+						},
 						market : {
+							type : "string"
+						},
+						localMarket : {
 							type : "string"
 						},
 						subMarket : {
 							type : "string"
 						},
-						projectType : {
-							type : "string"
-						},
-						fuzeProject : {
-							type : "string"
-						},
-						pslc : {
-							type : "string"
-						},
-						projectStatus : {
-							type : "string"
-						},
-						type : {
-							type : "string"
-						},
-						customProjectType : {
-							type : "string"
-						},
-						siteTracker : {
+						buyerName : {
 							type : "string"
 						},
 						teritory : {
@@ -961,48 +961,48 @@ function listofItem() {
 		filterable : true,
 		resizable : true,
 		columns : [ {
-			field : "siteName",
-			title : "siteName",
+			field : "containerCode",
+			title : "containerCode",
 			width : "180px"
 		}, {
-			field : " fuzeProject",
-			title : "fuzeProject",
+			field : " territory",
+			title : "territory",
 			width : "120px"
 		}, {
 			field : "projectName",
 			title : "projectName",
 			width : "120px"
 		}, {
+			field : " pslc",
+			title : "pslc",
+			width : "120px"
+		}, {
+			field : " useByDate",
+			title : "useByDate",
+			width : "120px"
+		}, {
+			field : " fuzeStatus",
+			title : "fuzeStatus",
+			width : "120px"
+		}, {
+			field : " catsStatus",
+			title : "catsStatus",
+			width : "120px"
+		}, {
 			field : " market",
 			title : "market",
+			width : "120px"
+		}, {
+			field : " localMarket",
+			title : "localMarket",
 			width : "120px"
 		}, {
 			field : " subMarket",
 			title : "subMarket",
 			width : "120px"
 		}, {
-			field : " projectType",
-			title : "projectType",
-			width : "120px"
-		}, {
-			field : " pslc",
-			title : "pslc",
-			width : "120px"
-		}, {
-			field : " projectStatus",
-			title : "projectStatus",
-			width : "120px"
-		}, {
-			field : " type",
-			title : "type",
-			width : "120px"
-		}, {
-			field : " customProjectType",
-			title : "customProjectType",
-			width : "120px"
-		}, {
-			field : " siteTracker",
-			title : "siteTracker",
+			field : " buyerName",
+			title : "buyerName",
 			width : "120px"
 		},
 
