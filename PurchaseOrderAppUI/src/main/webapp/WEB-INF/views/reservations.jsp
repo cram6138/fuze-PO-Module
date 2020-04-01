@@ -25,26 +25,24 @@
 	color: black;
 	background-color: #f4f4f4;
 }
-.form-control{
-     height: 2.25rem !important;
-    padding: 0px !important;
-    border-radius:none !important;
-  }
 
 .form-control{
-        height: 2.25rem !important;
+        height: 1.8rem !important;
     padding: 0px !important;
   }
-  
+  .paddinglt-5{
+  padding-left:10px;
+  font-weight:700;
+  }
   form#formData input.form-control {
     height: 1.5rem !important;
-    border-radius: 0px !important;
+    border-radius: 5px !important;
 }
   /* tr.reserved,tr.k-alt.reserved {
         background-color: #f0fff0;
     } */
     tr.Unreserved,tr.k-alt.Unreserved{
-    background-color: #f0fff0;
+    background-color: #cef7ce;
    /* background-color: #fff0f0 ; */
     }
     .box-styles{
@@ -64,8 +62,8 @@
      padding: .2rem .25rem;
     }
     .no-padding{
-        padding-right:0rem !important ;
-    padding-left: 0rem !important;
+        padding-right:0.4rem !important ;
+    padding-left: 0.4rem !important;
     }
     .Header-content{
     padding: .2rem .25rem;
@@ -197,25 +195,26 @@
 					    <img class="img-profile rounded-circle" src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png">
 						</a>
 
-							<div
-								class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-								aria-labelledby="userDropdown">
-								<a class="dropdown-item" href="#"> <i
-									class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Profile
-								</a> <a class="dropdown-item" href="#"> <i
-									class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-									Settings
-								</a> <a class="dropdown-item" href="#"> <i
-									class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-									Activity Log
-								</a>
-								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="logout" data-toggle="modal"
-									data-target="#logoutModal"> <i
-									class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-									Logout
-								</a>
-							</div></li>
+							<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Profile
+                </a>
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Settings
+                </a>
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Activity Log
+                </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Logout
+                </a>
+              </div>
+              </li>
 
 					</ul>
 				</nav>
@@ -303,7 +302,7 @@
 
 										</div>
 									</li>
-									<li id="SiteProjectDetails">Container Search / Reserve
+									<li id="ContainerSearch">Container Search / Reserve
 										<div class="padding-10">
 											<div class="row">
 												<div class="col-sm-12">
@@ -362,7 +361,7 @@
 										</div>
 										
 									</li>
-									<li id="PORequestDetails">Container Details
+									<li id="ContainerDetails">Container Details
 										<div>
 										<div id="grid1"></div>
 											
@@ -384,16 +383,16 @@
 										 <div class="row">
 										
     <div class="col-sm box-styles">
-     Container Code:<b id="containerCode"></b>
+     Container Code:<span class="paddinglt-5" id="containerCode_1"></span>
     </div>
     <div class="col-sm box-styles">
-      Business Unit:
+      Business Unit:   <span class="paddinglt-5" id="BusinessUnit"></span>
     </div>
     <div class="col-sm box-styles">
-      Location Detail Code:
+      Location Detail Code: <span class="paddinglt-5" id="LocationDetailCode"></span>
     </div>
      <div class="col-sm box-styles">
-      Location Name:
+      Location Name: <span class="paddinglt-5" id="LocationName"></span>
     </div>
   </div>
   
@@ -405,8 +404,8 @@
   <div class="card">
   										
 									  <ul class="list-group list-group-flush">
-									    <li class="list-group-item">Fuze Reservation id:<span class="bold" id="fuzeReservationId"></span></li>
-									    <li class="list-group-item">Reservation Creation Date:<span  class="bold" id="reservationCreationDate"></span></li>
+									    <li class="list-group-item">Fuze Reservation id:<span class="paddinglt-5" id="fuzeReservationId"></span></li>
+									    <li class="list-group-item">Reservation Creation Date:<span  class="paddinglt-5" id="reservationCreationDate"></span></li>
 									   
 									  </ul>
 											</div>
@@ -421,7 +420,7 @@
   Reserve for:
     </div>
     <div class="col">
-      <input type="text" class="form-control"  id="reservedUsername">
+      <input type="text" class="form-control paddinglt-5"  id="reservedUsername">
     </div>
   </div>
 </form>
@@ -443,7 +442,7 @@
      Use At PS Location:
     </div>
     <div class="col">
-      <input type="text" class="form-control">
+      <input type="text" class="form-control"   id="useAtPslc">
     </div>
   </div>
 </form></li>
@@ -455,7 +454,7 @@
      USe At PS Project:
     </div>
     <div class="col">
-      <input type="text" class="form-control" id="psproject">
+      <input type="text" class="form-control paddinglt-5" id="usePsProject">
     </div>
   </div>
 </form>
@@ -468,7 +467,7 @@
     Use By Date:
     </div>
     <div class="col">
-      <input type="text" class="form-control"  id="useByDate">
+      <input type="text" class="form-control paddinglt-5"  id="useByDate">
     </div>
   </div>
 </form>
@@ -482,7 +481,7 @@
     Fuze Project ID:
     </div>
     <div class="col">
-      <input type="text" class="form-control"  id="fuzeProjectId">
+      <input type="text" class="form-control paddinglt-5"  id="fuzeProjectId">
     </div>
   </div>
 </form>
@@ -493,10 +492,62 @@
     <div class="col-sm no-padding">
     <div class="card">
   		<ul class="list-group list-group-flush">
-									    <li class="list-group-item">PS Project Status: <span class="bold" id="fuzeStatus"></span></li>
-									    <li class="list-group-item">PS Project effective Date:</li>
-									    <li class="list-group-item">PS Project Description:</li>
-									    <li class="list-group-item">PSLC Description:</li>
+									    <li class="list-group-item">
+									    <form id="formData">
+  <div class="form-row">
+    <div class="col">
+   PS Project Status:
+    </div>
+    <div class="col">
+      <input type="text" class="form-control paddinglt-5"  id="psProjectStatus">
+    </div>
+  </div>
+</form>
+									    
+									    
+									    </li>
+									    <li class="list-group-item">
+									     <form id="formData">
+  <div class="form-row">
+    <div class="col">
+   PS Project effective Date:
+    </div>
+    <div class="col">
+      <span  class="paddinglt-5" id="psProjectDate"></span>
+    </div>
+  </div>
+</form>
+									    
+									    
+									   </li>
+									    <li class="list-group-item">
+									    
+									    <form id="formData">
+  <div class="form-row">
+    <div class="col">
+  PS Project Description:
+    </div>
+    <div class="col">
+      <span class="paddinglt-5"  id="psDescription"></span>
+    </div>
+  </div>
+</form>
+									    
+									   </li>
+									    <li class="list-group-item">
+									    
+									    <form id="formData">
+  <div class="form-row">
+    <div class="col">
+  PSLC Description:
+    </div>
+    <div class="col">
+      <span class="paddinglt-5"  id="pslc"></span>
+    </div>
+  </div>
+</form>
+									    
+									   </li>
 									  </ul>
 	</div>
     </div>
@@ -513,7 +564,7 @@
     Pass By Reason :
     </div>
     <div class="col">
-      <input type="text" class="form-control"  id="fuzeProjectId">
+      <input type="text" class="form-control paddinglt-5"  id="fuzeProjectId">
     </div>
   </div>
 </form>
@@ -532,7 +583,7 @@
    TUI Code:
     </div>
     <div class="col">
-      <input type="text" class="form-control"  id="fuzeProjectId">
+      <input type="text" class="form-control"  id="TUICode">
     </div>
   </div>
 </form>
@@ -562,7 +613,7 @@
   <div class="col-sm-12">
   <div class="Header-content">Reservation Comments</div>
   <div class="form-group">
-  <textarea rows="6" cols="2" class="form-control field-height" id="message"></textarea>
+  <textarea rows="6" cols="2" class="form-control field-height" id="reservationComments"></textarea>
   </div>
   </div>
   
@@ -572,7 +623,7 @@
   <div class="col-sm-11">
   </div>
   <div class="col-sm-1">
-  <div class="text-right"><button class="btn btn-danger btn-user btn-block custombuttonRefresh">Reserve &nbsp; <i class="fa fa-arrow-right"></i></button></div>
+  <div class="text-right"><button class="btn btn-danger btn-user btn-block custombuttonRefresh"  onclick="isReserve()" id="isReserve"> &nbsp; <i class="fa fa-arrow-right"></i></button></div>
   </div>
   
   
@@ -615,7 +666,7 @@
 					<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
 					<button class="close" type="button" data-dismiss="modal"
 						aria-label="Close">
-						<span aria-hidden="true">Ã—</span>
+						<span aria-hidden="true">×</span>
 					</button>
 				</div>
 				<div class="modal-body">Select "Logout" below if you are ready
@@ -667,7 +718,7 @@
 	<script src="static/js/config.js"></script>
 	<script type="text/javascript">
 	var user = ${currentUserInfo};
-    var currentUser=user? user.firstName+""+user.lastName : "";
+ var currentUser=user.firstName+""+user.lastName;
 	document.getElementById("username").innerHTML=currentUser;
 	var popupNotification = $("#popupNotification").kendoNotification({
 		 position: {
@@ -678,7 +729,7 @@
         }
         }).data("kendoNotification");
   	$(document).ready(function() {
-  		var baseUrl = appConfig.zuul_service;
+  		var baseUrl = appConfig.reservation_application;
 		
 		
 		$("#myReservation").click(function() {
@@ -765,14 +816,14 @@
 		}
   		
   		function myReservationReadData(options){
-  			var host_name = appConfig.zuul_service;
-			console.log(host_name + '/por/reservation/container/reserved');
+  			var host_name = appConfig.reservation_application;
+			console.log(host_name + '/reservation/container/reserved');
   			$.ajax({
 	            type: "POST",
 	            data: JSON.stringify(user),
 	            contentType: "application/json; charset=utf-8",
 	            cache: false,
-	            url: host_name + '/por/reservation/container/reserved',
+	            url: host_name + '/reservation/container/reserved',
 	            success: function(data){
 	            	console.log(data);
 	            	options.success(data);
