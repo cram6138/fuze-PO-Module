@@ -411,6 +411,7 @@ padding: 10px;
   <!-- <script src="js/demo/chart-pie-demo.js"></script> -->
 
 <script>
+var user = ${currentUserInfo};
 var tabToActivate1 = $("#tab1");
 var tabToActivate2 = $("#tab2");
 var tabToActivate3 = $("#tab3");
@@ -530,7 +531,8 @@ var popupNotification = $("#popupNotification").kendoNotification({
 									"siteTracker": siteTracker,
 									"poStatus": "poStatus",
 									"poitems" : oldValue,
-									"projectIds" :[2]
+									"projectIds" :[2],
+									"userId":user.id
 									//"projectIds" :[checkedProjectList.toString()]
 							
 						}),

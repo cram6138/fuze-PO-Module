@@ -1,6 +1,7 @@
 //var userData =localStorage.setItem('UserData', user);
 //var cat = localStorage.getItem(userData);
-
+var currentDatalist = [];
+ var ReservationStatus1 = false;
 var popupNotification = $("#popupNotification").kendoNotification({
 		 position: {
              pinned: true,
@@ -595,136 +596,7 @@ $('#filter')
 							});
 					grid.dataSource.filter(filter);
 				});
-/*function detailInit() {
-	$("#childPart").kendoGrid({
-		dataSource : {
-			transport : {
-				read : function(options) {
-					readDataChild(options);
-					// console.log(options);
-				},
 
-				parameterMap : function(options, operation) {
-					if (operation !== "read" && options.models) {
-						return {
-							models : kendo.stringify(options.models)
-						};
-					}
-				}
-			},
-			schema : {
-				model : {
-					id : "id",
-					fields : {
-
-						id : {
-							type : "string"
-						},
-						siteName : {
-							type : "string"
-						},
-						projectName : {
-							type : "string"
-						},
-						market : {
-							type : "string"
-						},
-						subMarket : {
-							type : "string"
-						},
-						projectType : {
-							type : "string"
-						},
-						fuzeProject : {
-							type : "string"
-						},
-						pslc : {
-							type : "string"
-						},
-						projectStatus : {
-							type : "string"
-						},
-						type : {
-							type : "string"
-						},
-						customProjectType : {
-							type : "string"
-						},
-						siteTracker : {
-							type : "string"
-						},
-						teritory : {
-							type : "string"
-						},
-					}
-				}
-			},
-			pageSize : 10
-		},
-
-		sortable : true,
-		resizable : true,
-		columns : [ {
-			field : "siteName",
-			title : "siteName",
-			width : "180px"
-		}, {
-			field : " fuzeProject",
-			title : "fuzeProject",
-			width : "120px"
-		}, {
-			field : "projectName",
-			title : "projectName",
-			width : "120px"
-		}, {
-			field : " market",
-			title : "market",
-			width : "120px"
-		}, {
-			field : " subMarket",
-			title : "subMarket",
-			width : "120px"
-		}, {
-			field : " projectType",
-			title : "projectType",
-			width : "120px"
-		}, {
-			field : " pslc",
-			title : "pslc",
-			width : "120px"
-		}, {
-			field : " projectStatus",
-			title : "projectStatus",
-			width : "120px"
-		}, {
-			field : " type",
-			title : "type",
-			width : "120px"
-		}, {
-			field : " customProjectType",
-			title : "customProjectType",
-			width : "120px"
-		}, {
-			field : " siteTracker",
-			title : "siteTracker",
-			width : "120px"
-		},
-
-		],
-		editable : "popup"
-	});
-
-	function customBoolEditor1(container, options) {
-		var guid = kendo.guid();
-		$(
-				'<input class="k-checkbox" id="'
-						+ guid
-						+ '" type="checkbox" name="Discontinued" data-type="boolean" data-bind="checked:Discontinued">')
-				.appendTo(container);
-		$('<label class="k-checkbox-label" for="' + guid + '">​</label>')
-				.appendTo(container);
-	}
-}*/
 
 var checkedIds = {};
 
@@ -779,12 +651,49 @@ function poreadData(options) {
 }
 
 function reservedStage(selectedRow,ReservationStatus){
-	var currentDatalist = reservationStatusGrid[selectedRow-1];
+	$.each(reservationStatusGrid, function(index, value) {
+		if(reservationStatusGrid[index].id ==selectedRow){
+			currentDatalist =reservationStatusGrid[index];
+		}
+		console.log(currentDatalist);
+	});
+	openRUnR();
+	if(ReservationStatus == false){
+		document.getElementById("isReserve").innerHTML ="Reserve";
+		ReservationStatus1 = ReservationStatus;
+	}else{
+		document.getElementById("isReserve").innerHTML ="UnReserve"
+			ReservationStatus1 = ReservationStatus;
+	}
+	
+	document.getElementById("containerCode_1").innerHTML=currentDatalist.containerCode;
+	document.getElementById("fuzeReservationId").innerHTML=currentDatalist.fuzeReservationId;
+		document.getElementById("reservationCreationDate").innerHTML=currentDatalist.reservationCreationDate;
+			//document.getElementById("reservationComments").innerHTML=currentDatalist.reserved;
+				document.getElementById("reservationNotes").innerHTML=currentDatalist.reservationNotes;
+					document.getElementById("psProjectStatus").innerHTML=currentDatalist.psproject;
+						document.getElementById("useByDate").innerHTML=currentDatalist.useByDate;
+						document.getElementById("usePsProject").innerHTML=currentDatalist.psproject;
+					document.getElementById("fuzeProjectId").innerHTML=currentDatalist.fuzeProjectId;
+						document.getElementById("pslc").innerHTML=currentDatalist.pslc;
+		
+	}
+	
+function isReserve(){
 	var host_name;
 	var currentURL;
+	var reservationComments =$("#reservationComments").val();
+	var reservationNotes =$("#reservationNotes").val();
+	var psProjectStatus =$("#psProjectStatus").val();
+	var useByDate =$("#useByDate").val();
+	var usePsProject =$("#usePsProject").val();
+	var useAtPslc =$("#useAtPslc").val();
+	
+	
+	
 	$.getScript("static/js/config.js", function() {
 		host_name = appConfig.reservation_application;
-		if(ReservationStatus == false){
+		if(ReservationStatus1 == false){
 			currentURL=	host_name + "/reservation/reserve/container"
 			$.ajax({
 				url : currentURL,
@@ -795,13 +704,13 @@ function reservedStage(selectedRow,ReservationStatus){
 					"businessUnit":currentDatalist.businessUnit,
 					"locationDetailCode" :currentDatalist.locationDetailCode,
 					"locationName": currentDatalist.locationName,
-					"useAtPslc" :currentDatalist.useAtPslc,
-					"usePsProject": currentDatalist.usePsProject,
-					"useByDate" : currentDatalist.useByDate,
+					"useAtPslc" :useAtPslc,
+					"usePsProject": usePsProject,
+					"useByDate" : useByDate,
 					"fuzeProjectId" : currentDatalist.fuzeProjectId,
-				    "psProjectStatus" : currentDatalist.psProjectStatus,
-					"reservationNotes" : currentDatalist.reservationNotes,
-					"reservationComments" : currentDatalist.reservationComments,
+				    "psProjectStatus" : psProjectStatus,
+					"reservationNotes" : reservationNotes,
+					"reservationComments" : reservationComments,
 					 "userInfo" :{
 						 "id" :user.id,
 						 "username" :user.username,
@@ -817,35 +726,16 @@ function reservedStage(selectedRow,ReservationStatus){
 				
 				success : function(result) {
 					//options.success(result);
-					currentReserveData=result;
-					if(result.messege == "Pslc is not matched with PeopleSoft location"){
-					document.getElementById("containerCode").innerHTML="fz-'"+result.containerCode+"'";
-						document.getElementById("territory").innerHTML="fz-'"+result.territory+"'";
-							document.getElementById("fuzeReservationId").innerHTML="fz-'"+result.fuzeReservationId+"'";
-								document.getElementById("fuzeProjectId").innerHTML="fz-'"+result.fuzeProjectId+"'";
-									document.getElementById("projectName").innerHTML="fz-'"+result.projectName+"'";
-										document.getElementById("pslc").innerHTML="fz-'"+result.pslc+"'";
-											document.getElementById("reservedUsername").innerHTML="fz-"+result.reservedUsername+"'";
-												document.getElementById("useByDate").innerHTML="fz-"+result.useByDate+"'";
-													document.getElementById("reservationCreationDate").innerHTML="fz-"+result.reservationCreationDate+"'";
-														document.getElementById("fuzeStatus").innerHTML="fz-"+result.fuzeStatus+"'";
-															document.getElementById("catsStatus").innerHTML="fz-"+result.catsStatus+"'";
-																document.getElementById("market").innerHTML="fz-"+result.market+"'";
-																	document.getElementById("subMarket").innerHTML="fz-"+result.subMarket+"'";
-																		document.getElementById("buyerId").innerHTML="fz-"+result.buyerId+"'";
-																			document.getElementById("buyerName").innerHTML="fz-"+result.buyerName+"'";
-																				document.getElementById("itemsInfo").innerHTML="fz-"+result.itemsInfo+"'";
-																					document.getElementById("reservationNotes").innerHTML="fz-"+result.reservationNotes+"'";
-																						document.getElementById("message").innerHTML="fz-"+result.message+"'";
-																							document.getElementById("reserved").innerHTML="fz-"+result.reserved+"'";
-																								document.getElementById("mrorderCode").innerHTML="fz-"+result.mrorderCode+"'";
-																									document.getElementById("psproject").innerHTML="fz-"+result.psproject+"'";
-																										document.getElementById("mrsource").innerHTML="fz-"+result.mrsource+"'";
-																						
-					
-					popupNotification.show("reserved Successfully", "info");
+					//currentReserveData=result;
+					if(result.fuzeReservationId==null){
+						popupNotification.show(result.message, "error");
 					}else{
-						popupNotification.show(""+result.message+"", "error");
+						popupNotification.show(result.message, "info");
+						showContainerSearch();
+						$("#ReservDataList").hide();
+						
+						
+						
 					}
 //					$.each(result, function(index, value) {
 //						options.success(result[index].projects);
@@ -867,7 +757,9 @@ function reservedStage(selectedRow,ReservationStatus){
 			        type:"GET",
 				success : function(result) {
 					//options.success(result);
-					popupNotification.show("Unreserved Successfully", "info");
+					popupNotification.show(result.message, "info");
+					showContainerSearch();
+					$("#ReservDataList").hide();
 //					$.each(result, function(index, value) {
 //						options.success(result[index].projects);
 //						console.log(result[[ index ]].projects);
@@ -1012,17 +904,19 @@ function listofItem() {
 	});
 
 }
-function openPODetail() {
+function openRUnR() {
 	var panelBar = $("#panelbar").data("kendoPanelBar");
-	panelBar.expand($("#SiteProjectDetails"));
-	panelBar.collapse($("#PORequestDetails"));
-	panelBar.collapse($("#ProjectSearch"));
+	panelBar.expand($("#containerReserve"));
+	panelBar.collapse($("#ContainerDetails"));
+	panelBar.collapse($("#ContainerSearch"));
+	panelBar.collapse($("#myReservation"));
 
 }
 
-function getRequestData() {
+function showContainerSearch() {
 	var panelBar = $("#panelbar").data("kendoPanelBar");
-	panelBar.expand($("#PORequestDetails"));
-	panelBar.collapse($("#SiteProjectDetails"));
-	panelBar.collapse($("#ProjectSearch"));
+	panelBar.expand($("#ContainerSearch"));
+	panelBar.collapse($("#containerReserve"));
+	panelBar.collapse($("#ContainerDetails"));
+	panelBar.collapse($("#myReservation"));
 }

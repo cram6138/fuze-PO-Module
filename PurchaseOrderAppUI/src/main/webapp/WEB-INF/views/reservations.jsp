@@ -25,26 +25,24 @@
 	color: black;
 	background-color: #f4f4f4;
 }
-.form-control{
-     height: 2.25rem !important;
-    padding: 0px !important;
-    border-radius:none !important;
-  }
 
 .form-control{
-        height: 2.25rem !important;
+        height: 1.8rem !important;
     padding: 0px !important;
   }
-  
+  .paddinglt-5{
+  padding-left:10px;
+  font-weight:700;
+  }
   form#formData input.form-control {
     height: 1.5rem !important;
-    border-radius: 0px !important;
+    border-radius: 5px !important;
 }
   /* tr.reserved,tr.k-alt.reserved {
         background-color: #f0fff0;
     } */
     tr.Unreserved,tr.k-alt.Unreserved{
-    background-color: #f0fff0;
+    background-color: #cef7ce;
    /* background-color: #fff0f0 ; */
     }
     .box-styles{
@@ -64,8 +62,8 @@
      padding: .2rem .25rem;
     }
     .no-padding{
-        padding-right:0rem !important ;
-    padding-left: 0rem !important;
+        padding-right:0.4rem !important ;
+    padding-left: 0.4rem !important;
     }
     .Header-content{
     padding: .2rem .25rem;
@@ -304,7 +302,7 @@
 
 										</div>
 									</li>
-									<li id="SiteProjectDetails">Container Search / Reserve
+									<li id="ContainerSearch">Container Search / Reserve
 										<div class="padding-10">
 											<div class="row">
 												<div class="col-sm-12">
@@ -363,7 +361,7 @@
 										</div>
 										
 									</li>
-									<li id="PORequestDetails">Container Details
+									<li id="ContainerDetails">Container Details
 										<div>
 										<div id="grid1"></div>
 											
@@ -385,16 +383,16 @@
 										 <div class="row">
 										
     <div class="col-sm box-styles">
-     Container Code:<b id="containerCode"></b>
+     Container Code:<span class="paddinglt-5" id="containerCode_1"></span>
     </div>
     <div class="col-sm box-styles">
-      Business Unit:
+      Business Unit:   <span class="paddinglt-5" id="BusinessUnit"></span>
     </div>
     <div class="col-sm box-styles">
-      Location Detail Code:
+      Location Detail Code: <span class="paddinglt-5" id="LocationDetailCode"></span>
     </div>
      <div class="col-sm box-styles">
-      Location Name:
+      Location Name: <span class="paddinglt-5" id="LocationName"></span>
     </div>
   </div>
   
@@ -406,8 +404,8 @@
   <div class="card">
   										
 									  <ul class="list-group list-group-flush">
-									    <li class="list-group-item">Fuze Reservation id:<span class="bold" id="fuzeReservationId"></span></li>
-									    <li class="list-group-item">Reservation Creation Date:<span  class="bold" id="reservationCreationDate"></span></li>
+									    <li class="list-group-item">Fuze Reservation id:<span class="paddinglt-5" id="fuzeReservationId"></span></li>
+									    <li class="list-group-item">Reservation Creation Date:<span  class="paddinglt-5" id="reservationCreationDate"></span></li>
 									   
 									  </ul>
 											</div>
@@ -422,7 +420,7 @@
   Reserve for:
     </div>
     <div class="col">
-      <input type="text" class="form-control"  id="reservedUsername">
+      <input type="text" class="form-control paddinglt-5"  id="reservedUsername">
     </div>
   </div>
 </form>
@@ -444,7 +442,7 @@
      Use At PS Location:
     </div>
     <div class="col">
-      <input type="text" class="form-control">
+      <input type="text" class="form-control"   id="useAtPslc">
     </div>
   </div>
 </form></li>
@@ -456,7 +454,7 @@
      USe At PS Project:
     </div>
     <div class="col">
-      <input type="text" class="form-control" id="psproject">
+      <input type="text" class="form-control paddinglt-5" id="usePsProject">
     </div>
   </div>
 </form>
@@ -469,7 +467,7 @@
     Use By Date:
     </div>
     <div class="col">
-      <input type="text" class="form-control"  id="useByDate">
+      <input type="text" class="form-control paddinglt-5"  id="useByDate">
     </div>
   </div>
 </form>
@@ -483,7 +481,7 @@
     Fuze Project ID:
     </div>
     <div class="col">
-      <input type="text" class="form-control"  id="fuzeProjectId">
+      <input type="text" class="form-control paddinglt-5"  id="fuzeProjectId">
     </div>
   </div>
 </form>
@@ -494,10 +492,62 @@
     <div class="col-sm no-padding">
     <div class="card">
   		<ul class="list-group list-group-flush">
-									    <li class="list-group-item">PS Project Status: <span class="bold" id="fuzeStatus"></span></li>
-									    <li class="list-group-item">PS Project effective Date:</li>
-									    <li class="list-group-item">PS Project Description:</li>
-									    <li class="list-group-item">PSLC Description:</li>
+									    <li class="list-group-item">
+									    <form id="formData">
+  <div class="form-row">
+    <div class="col">
+   PS Project Status:
+    </div>
+    <div class="col">
+      <input type="text" class="form-control paddinglt-5"  id="psProjectStatus">
+    </div>
+  </div>
+</form>
+									    
+									    
+									    </li>
+									    <li class="list-group-item">
+									     <form id="formData">
+  <div class="form-row">
+    <div class="col">
+   PS Project effective Date:
+    </div>
+    <div class="col">
+      <span  class="paddinglt-5" id="psProjectDate"></span>
+    </div>
+  </div>
+</form>
+									    
+									    
+									   </li>
+									    <li class="list-group-item">
+									    
+									    <form id="formData">
+  <div class="form-row">
+    <div class="col">
+  PS Project Description:
+    </div>
+    <div class="col">
+      <span class="paddinglt-5"  id="psDescription"></span>
+    </div>
+  </div>
+</form>
+									    
+									   </li>
+									    <li class="list-group-item">
+									    
+									    <form id="formData">
+  <div class="form-row">
+    <div class="col">
+  PSLC Description:
+    </div>
+    <div class="col">
+      <span class="paddinglt-5"  id="pslc"></span>
+    </div>
+  </div>
+</form>
+									    
+									   </li>
 									  </ul>
 	</div>
     </div>
@@ -514,7 +564,7 @@
     Pass By Reason :
     </div>
     <div class="col">
-      <input type="text" class="form-control"  id="fuzeProjectId">
+      <input type="text" class="form-control paddinglt-5"  id="fuzeProjectId">
     </div>
   </div>
 </form>
@@ -533,7 +583,7 @@
    TUI Code:
     </div>
     <div class="col">
-      <input type="text" class="form-control"  id="fuzeProjectId">
+      <input type="text" class="form-control"  id="TUICode">
     </div>
   </div>
 </form>
@@ -563,7 +613,7 @@
   <div class="col-sm-12">
   <div class="Header-content">Reservation Comments</div>
   <div class="form-group">
-  <textarea rows="6" cols="2" class="form-control field-height" id="message"></textarea>
+  <textarea rows="6" cols="2" class="form-control field-height" id="reservationComments"></textarea>
   </div>
   </div>
   
@@ -573,7 +623,7 @@
   <div class="col-sm-11">
   </div>
   <div class="col-sm-1">
-  <div class="text-right"><button class="btn btn-danger btn-user btn-block custombuttonRefresh">Reserve &nbsp; <i class="fa fa-arrow-right"></i></button></div>
+  <div class="text-right"><button class="btn btn-danger btn-user btn-block custombuttonRefresh"  onclick="isReserve()" id="isReserve"> &nbsp; <i class="fa fa-arrow-right"></i></button></div>
   </div>
   
   
