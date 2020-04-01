@@ -377,7 +377,9 @@ public class ContainerService {
 	    String date = new SimpleDateFormat("ddMMyyyy").format(cal.getTime());
 	    Date useByDate = null;
 	    try {
+	    	if(containerReserveForm.getUseByDate()!=null) {
 			useByDate = new SimpleDateFormat("dd-MMM-yyyy").parse(containerReserveForm.getUseByDate());
+	    	}
 		} catch (ParseException e) {
 			logger.info("exception due to parsing date"+e);
 		}
