@@ -922,6 +922,7 @@ function showContainerSearch() {
 	panelBar.collapse($("#myReservation"));
 }
 function resetSearch(){
+	LocalMarket =null;
  containerCode=null;
  buyer=null;
 searchKeyId=null;
