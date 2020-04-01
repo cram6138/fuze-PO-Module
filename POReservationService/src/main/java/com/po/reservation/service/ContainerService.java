@@ -282,10 +282,13 @@ public class ContainerService {
 				ContainerInfo containerInfo = new ContainerInfo();
 				BeanUtils.copyProperties(container, containerInfo);
 				// containerInfo.setFuzeProjectId(container.getProject().getFuzeProject());
-				containerInfo.setPslc(container.getProject().getPslc());
+				containerInfo.setPslc(container.getPslc());
 				// containerInfo.setLocation(container.getProject().getSiteName());
 				containerInfo.setPSProject(container.getProject().getProjectName());
-				ContainerInfoList.add(containerInfo);
+				if(container.getReservationCreationDate()!=null) {
+				containerInfo.setReservationCreationDate(new SimpleDateFormat("yyyy-MM-dd").format(container.getReservationCreationDate()));
+				}
+			    ContainerInfoList.add(containerInfo);
 			}
 		}
 		return ContainerInfoList;

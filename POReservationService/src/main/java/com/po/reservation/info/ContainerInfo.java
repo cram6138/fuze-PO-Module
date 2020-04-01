@@ -11,7 +11,7 @@ public class ContainerInfo {
 	private String MRSource;
 	private String territory;
 	private String fuzeReservationId;
-	private int fuzeProjectId;
+	private Integer fuzeProjectId;
 	private String projectName;
 	private String PSProject;
 	private String pslc;
@@ -130,11 +130,11 @@ public class ContainerInfo {
 		return reservedUsername;
 	}
 
-	public int getFuzeProjectId() {
+	public Integer getFuzeProjectId() {
 		return fuzeProjectId;
 	}
 
-	public void setFuzeProjectId(int fuzeProjectId) {
+	public void setFuzeProjectId(Integer fuzeProjectId) {
 		this.fuzeProjectId = fuzeProjectId;
 	}
 
