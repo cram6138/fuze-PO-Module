@@ -7,12 +7,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
 
 @Component
 public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
@@ -54,9 +50,11 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
 			registry.addInterceptor(new AuthenticationInterceptor()).addPathPatterns("/**")
 			.excludePathPatterns("/", "/static/**",
 					"/PurchaseOrderAppUI-0.0.1-SNAPSHOT/", "/vendor/**",
-					"/PurchaseOrderAppUI-0.0.1-SNAPSHOT/login", "/login"); //
+					"/PurchaseOrderAppUI-0.0.1-SNAPSHOT/login", "/login"); 
+			registry.addInterceptor(new AuthorizationFilter());
 			// WebMvcConfigurer.super.addInterceptors(registry);
 		}
+	
 	}
 
 }
