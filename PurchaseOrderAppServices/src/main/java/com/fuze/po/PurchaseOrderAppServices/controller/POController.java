@@ -44,7 +44,7 @@ public class POController {
 		return new ResponseEntity<List<PORequestInfo>>(poRequestService.getPOList(), HttpStatus.OK);
 
 	}
-	
+
 	@GetMapping("/generatePORequestExcel")
 	public ResponseEntity<InputStreamResource> generatePORequestExcel() {
 		try {  
@@ -56,19 +56,18 @@ public class POController {
 				FileUtils.writeByteArrayToFile(file, stream);
 				InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
 
-				return ResponseEntity.ok()
-						.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + file.getName())
-						.contentType(mediaType)
-						.contentLength(file.length())
-						.body(resource);
+				return ResponseEntity.ok() .header(HttpHeaders.CONTENT_DISPOSITION,
+						"attachment;filename=" + file.getName()) .contentType(mediaType)
+						.contentLength(file.length()) .body(resource);
+
 			}else{
-				return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+				return ResponseEntity.noContent().build();
 			}
 		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return ResponseEntity.noContent().build();
 		}
 	}
-	
+
 	/*
 	 * @GetMapping("/poItems/{poRequestId}") public ResponseEntity<List<ItemInfo>>
 	 * getListOfItemsByPORequestId(@PathVariable int poRequestId) { return new
@@ -80,12 +79,12 @@ public class POController {
 	public ResponseEntity<List<ProjectInfo>> searchProjects(@RequestBody final ProjectSearchForm projectSearchForm) {
 		return new ResponseEntity<List<ProjectInfo>>(poRequestService.searchProjects(projectSearchForm), HttpStatus.OK);
 	}
-	
+
 	@PostMapping("/createProject")
 	public ResponseEntity<ResponseInfo> createProject(@RequestBody ProjectForm projectForm) {
 		ResponseInfo responseData = poRequestService.createProject(projectForm);
 		return new ResponseEntity<ResponseInfo>(responseData, HttpStatus.CREATED);
 	}
-	
+
 
 }

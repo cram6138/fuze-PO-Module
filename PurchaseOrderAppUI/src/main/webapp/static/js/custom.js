@@ -362,15 +362,19 @@ function generateExcel(){
 			 url: host_name + "/pos/RePO/generatePORequestExcel",
 	        contentType: "application/vnd.ms-excel",
 	        type:"GET",
-	        success: function (result) {
-	         popupNotification.show("PORequest Excel Downloaded Successfully", "info");
+	        success: function (result,status,xhr) {
+	        	console.log(xhr.status);
+	        	if(status == 200) {
+	        		popupNotification.show("PORequest Excel Downloaded Successfully", "info");
+	        	}else {
+	        		popupNotification.show("PORequest Excel does not exist", "info");
+	        	}
 	        },
 	        error: function (result) {
 	        	options.error(result);
 	        	 popupNotification.show("somthing Went Wrong", "error");
 	         }
-	       });
-	 })
+	       });	 })
 	}
 
 
