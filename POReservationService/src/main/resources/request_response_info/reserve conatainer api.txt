@@ -1,0 +1,58 @@
+for reserve button fun
+
+endpoint: http://localhost:8088/reservation/reserve/container
+
+input request:
+{
+	"containerCode" :"CT00123422",
+	"businessUnit":null,
+	"locationDetailCode" :null,
+	"locationName": null,
+	"useAtPslc" :"ALB",
+	"usePsProject": "PS P1",
+	"useByDate" : "21-Jun-2020",
+	"fuzeProjectId" : null,
+    "psProjectStatus" : "O",
+	"reservationNotes" : null,
+	"reservationComments" : null,
+	"userInfo" :{
+         "id" :2,
+	     "username" :null,
+	     "isActive" :true,
+	     "userRole" : [null,null],
+	     "firstName" : "Ram",
+	     "lastName" : null,
+	     "createdOn" : null,
+	     "territory" :"AMERICAN SAMOA",
+	     "market" :"MARKET1"
+    }
+}
+
+output:response
+
+{
+    "id": 0,
+    "containerCode": null,
+    "territory": null,
+    "fuzeReservationId": "FUZE27032020185023",
+    "fuzeProjectId": 0,
+    "projectName": null,
+    "pslc": null,
+    "reservedUsername": null,
+    "useByDate": null,
+    "reservationCreationDate": "2020-03-27",
+    "fuzeStatus": null,
+    "catsStatus": null,
+    "market": null,
+    "localMarket": null,
+    "subMarket": null,
+    "buyerId": 0,
+    "buyerName": null,
+    "itemsInfo": null,
+    "reservationNotes": null,
+    "message": "Reservation done succesfully",
+    "mrorderCode": null,
+    "mrsource": null,
+    "psproject": null
+}
+
