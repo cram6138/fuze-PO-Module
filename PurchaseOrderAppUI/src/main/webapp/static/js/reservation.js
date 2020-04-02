@@ -56,14 +56,9 @@ var searchKeyId=null;
 var projectId=null;
 
 var wnd, detailsTemplate;
-$(document)
-		.ready(
-				function() {
+$(document).ready(function(){
 					$("#ReservDataList").hide();
-					//detailInit();
-					// selectedPODetail();
 					listofItem();
-
 					$("#panelbar").kendoPanelBar({
 						expandMode : "multiple"
 					});
@@ -76,7 +71,7 @@ $(document)
 					});
 					var server_name;
 					$.getScript("static/js/config.js", function() {
-						server_name = appConfig.service_application;
+						server_name = appConfig.zuul_service;
 					})
 
 					var Teritory = $("#Teritory").kendoDropDownList({
@@ -134,12 +129,7 @@ $(document)
 										$("#ReservDataList").show();
 										var terirory = Teritory.text(), markts = Markets
 												.text(), subMrks = Submarkets.text(),local;
-//										alert("Order details:\n" + terirory
-//												+ ":" + Teritory.value() + "\n"
-//												+ markts + ":"
-//												+ Markets.value() + "\n"
-//												+ subMrks + ":"
-//												+ Submarkets.value() + "");
+
 										if($("#LocalMarket").val()!=""){
 											LocalMarket=$("#LocalMarket").val();
 										}
@@ -164,6 +154,16 @@ $(document)
 										if(subMrks=="Select SubMarket..."){
 											subMrks = null;
 										}
+										if(containerCode==""){
+											containerCode = null;
+										}
+										if(projectId==""){
+											projectId = null;
+										}
+										if(searchKeyId==""){
+											projectId = null;
+										}
+										
 										var grid = $("#grid").kendoGrid({
 										dataSource : {
 											transport : {
@@ -201,6 +201,7 @@ $(document)
 															success : function(result) {
 																options.success(result);
 																reservationStatusGrid = result;
+																resetSearch();
 //																$.each(result, function(index, value) {
 //																	options.success(result[index].projects);
 //																	console.log(result[[ index ]].projects);
@@ -412,7 +413,7 @@ function readData(options){
 	 $.getScript("static/js/config.js", function(){
 		 host_name = appConfig.reservation_application;
 		 $.ajax({
-			 url: host_name + "reservation/container/reserved",
+			 url: host_name + "/reservation/container/reserved",
 	        contentType: "application/json",
 	        type:"GET",
 	        success: function (result) {
@@ -429,7 +430,7 @@ function getContainerDetails(options){
     //alert("ContainerDetails");
   var host_name;
     $.getScript("static/js/config.js", function() {
-        host_name = appConfig.reservation_application;
+    	host_name = appConfig.reservation_application;
  var baseURL = host_name+"/reservation/containersByUserInfo";
   $.ajax({
       type: "POST",
@@ -614,7 +615,7 @@ function onDataBound(e) {
 function readDataChild(options) {
 	var host_name;
 	$.getScript("static/js/config.js", function() {
-		host_name = appConfig.service_application;
+		host_name = appConfig.reservation_application;
 		$.ajax({
 			url : host_name + "/RePO/getPoRequest",
 			dataType : "json",
@@ -634,7 +635,7 @@ function readDataChild(options) {
 function poreadData(options) {
 	var host_name;
 	$.getScript("static/js/config.js", function() {
-		host_name = appConfig.service_application;
+		host_name = appConfig.reservation_application;
 		$.ajax({
 			url : host_name + "/RePO/getPoRequest",
 			dataType : "json",
@@ -754,7 +755,7 @@ function isReserve(){
 			$.ajax({
 				url : currentURL,
 				 contentType: "application/json",
-			        type:"GET",
+			        type:"POST",
 				success : function(result) {
 					//options.success(result);
 					popupNotification.show(result.message, "info");
@@ -806,37 +807,37 @@ function listofItem() {
 						id : {
 							type : "string"
 						},
-						siteName : {
+						containerCode : {
+							type : "string"
+						},
+						territory : {
 							type : "string"
 						},
 						projectName : {
 							type : "string"
 						},
+						pslc : {
+							type : "string"
+						},
+						useByDate : {
+							type : "string"
+						},
+						fuzeStatus : {
+							type : "string"
+						},
+						catsStatus : {
+							type : "string"
+						},
 						market : {
+							type : "string"
+						},
+						localMarket : {
 							type : "string"
 						},
 						subMarket : {
 							type : "string"
 						},
-						projectType : {
-							type : "string"
-						},
-						fuzeProject : {
-							type : "string"
-						},
-						pslc : {
-							type : "string"
-						},
-						projectStatus : {
-							type : "string"
-						},
-						type : {
-							type : "string"
-						},
-						customProjectType : {
-							type : "string"
-						},
-						siteTracker : {
+						buyerName : {
 							type : "string"
 						},
 						teritory : {
@@ -853,48 +854,48 @@ function listofItem() {
 		filterable : true,
 		resizable : true,
 		columns : [ {
-			field : "siteName",
-			title : "siteName",
+			field : "containerCode",
+			title : "containerCode",
 			width : "180px"
 		}, {
-			field : " fuzeProject",
-			title : "fuzeProject",
+			field : " territory",
+			title : "territory",
 			width : "120px"
 		}, {
 			field : "projectName",
 			title : "projectName",
 			width : "120px"
 		}, {
+			field : " pslc",
+			title : "pslc",
+			width : "120px"
+		}, {
+			field : " useByDate",
+			title : "useByDate",
+			width : "120px"
+		}, {
+			field : " fuzeStatus",
+			title : "fuzeStatus",
+			width : "120px"
+		}, {
+			field : " catsStatus",
+			title : "catsStatus",
+			width : "120px"
+		}, {
 			field : " market",
 			title : "market",
+			width : "120px"
+		}, {
+			field : " localMarket",
+			title : "localMarket",
 			width : "120px"
 		}, {
 			field : " subMarket",
 			title : "subMarket",
 			width : "120px"
 		}, {
-			field : " projectType",
-			title : "projectType",
-			width : "120px"
-		}, {
-			field : " pslc",
-			title : "pslc",
-			width : "120px"
-		}, {
-			field : " projectStatus",
-			title : "projectStatus",
-			width : "120px"
-		}, {
-			field : " type",
-			title : "type",
-			width : "120px"
-		}, {
-			field : " customProjectType",
-			title : "customProjectType",
-			width : "120px"
-		}, {
-			field : " siteTracker",
-			title : "siteTracker",
+			field : " buyerName",
+			title : "buyerName",
 			width : "120px"
 		},
 
@@ -919,4 +920,12 @@ function showContainerSearch() {
 	panelBar.collapse($("#containerReserve"));
 	panelBar.collapse($("#ContainerDetails"));
 	panelBar.collapse($("#myReservation"));
+}
+function resetSearch(){
+	LocalMarket =null;
+ containerCode=null;
+ buyer=null;
+searchKeyId=null;
+ projectId=null;
+	
 }
