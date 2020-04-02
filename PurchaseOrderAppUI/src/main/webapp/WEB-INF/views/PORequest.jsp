@@ -95,7 +95,7 @@ padding: 10px;
 			  <div class="col-sm-4 d-inline">
 			  
 			  <a href="#"   onclick="getRequestData()"  class="btn btn-danger">Create PO Request </a>
-			   <a href="#"   onclick="generateExcel()"  class="btn btn-danger">Generate Excel </a>
+			  <a href=""   onclick="generateExcel()" id = "generate-excel" class="btn btn-danger">Generate Excel </a>
 			  </div>
               <!-- <div class="col-sm-5 d-inline">
               <div class="form-group">
@@ -422,6 +422,10 @@ var cart="";
 var oldValue = [];
 var oldValueIds=[];
 var tempObj;
+
+var Base_URL = appConfig.service_application + "/RePO/generatePORequestExcel";
+document.getElementById("generate-excel").setAttribute("href", encodeURI(Base_URL));
+
 var popupNotification = $("#popupNotification").kendoNotification({
 		 position: {
              pinned: true,

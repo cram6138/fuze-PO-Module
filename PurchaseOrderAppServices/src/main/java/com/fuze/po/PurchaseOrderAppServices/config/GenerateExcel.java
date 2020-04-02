@@ -1,5 +1,6 @@
 package com.fuze.po.PurchaseOrderAppServices.config;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -20,7 +21,7 @@ import com.fuze.po.PurchaseOrderAppServices.info.PORequestInfo;
 
  public  class GenerateExcel {
 
-	public static void generatePOItemsExcel(List<PORequestInfo>  poRequestInfoList) {
+	public static byte[] generatePOItemsExcel(List<PORequestInfo>  poRequestInfoList) {
 		// TODO Auto-generated method stub
 				String FILE_NAME = "FuzePOExcel.xlsx";
 				XSSFWorkbook workbook = new XSSFWorkbook();
@@ -117,14 +118,20 @@ import com.fuze.po.PurchaseOrderAppServices.info.PORequestInfo;
 							}
 							
 					      try {
-					            FileOutputStream outputStream = new FileOutputStream(FILE_NAME);
-					            workbook.write(outputStream);
-					            workbook.close();
+					    	  ByteArrayOutputStream bos = new ByteArrayOutputStream();
+					          try {
+					              workbook.write(bos);
+					          } finally {
+					              bos.close();
+					          }
+					          byte[] bytes = bos.toByteArray();
+					          return bytes;
 					        } catch (FileNotFoundException e) {
 					            e.printStackTrace();
 					        } catch (IOException e) {
 					            e.printStackTrace();
 					        }
+						return null;
 	}
 	
 }

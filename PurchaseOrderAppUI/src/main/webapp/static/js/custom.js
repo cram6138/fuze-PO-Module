@@ -360,7 +360,7 @@ function generateExcel(){
 		 host_name = appConfig.zuul_service;
 		 $.ajax({
 			 url: host_name + "/pos/RePO/generatePORequestExcel",
-	        contentType: "application/json",
+	        contentType: "application/vnd.ms-excel",
 	        type:"GET",
 	        success: function (result) {
 	         popupNotification.show("PORequest Excel Downloaded Successfully", "info");

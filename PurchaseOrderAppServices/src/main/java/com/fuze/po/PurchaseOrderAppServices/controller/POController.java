@@ -1,9 +1,15 @@
 package com.fuze.po.PurchaseOrderAppServices.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,9 +46,27 @@ public class POController {
 	}
 	
 	@GetMapping("/generatePORequestExcel")
-	public ResponseEntity<List<PORequestInfo>> generatePORequestExcel() {
-		return new ResponseEntity<List<PORequestInfo>>(poRequestService.generatePoRequestExcel(), HttpStatus.OK);
+	public ResponseEntity<InputStreamResource> generatePORequestExcel() {
+		try {  
+			String filename = "FuzePOExcel.xlsx";
+			byte[] stream = poRequestService.generatePoRequestExcel();
+			if (stream.length != 0) {
+				MediaType mediaType = MediaType.parseMediaType("application/vnd.ms-excel");
+				File file = new File(filename);
+				FileUtils.writeByteArrayToFile(file, stream);
+				InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
 
+				return ResponseEntity.ok()
+						.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + file.getName())
+						.contentType(mediaType)
+						.contentLength(file.length())
+						.body(resource);
+			}else{
+				return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 	
 	/*

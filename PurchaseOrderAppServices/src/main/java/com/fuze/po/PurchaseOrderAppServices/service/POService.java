@@ -123,10 +123,9 @@ public class POService {
     	return poRequestInfoList;
 	}
 
-	public List<PORequestInfo> generatePoRequestExcel() {
+	public byte[] generatePoRequestExcel() {
 		List<PORequestInfo> poRequestInfoList = getPOList();
-		GenerateExcel.generatePOItemsExcel(poRequestInfoList);
-		return poRequestInfoList;
+		return GenerateExcel.generatePOItemsExcel(poRequestInfoList);
 	}
 	
 	private PORequestInfo populatePOInfo(PORequest po) {
