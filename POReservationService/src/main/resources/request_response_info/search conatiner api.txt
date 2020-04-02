@@ -1,0 +1,55 @@
+url:http://localhost:8088/reservation/search/container
+
+input request:
+
+{
+    "territory" : "AMERICAN SAMOA",
+    "market" : "MARKET2",
+    "subMarket" : "SUBMARKET12",
+    "localMarket" : null,
+    "containerCode" : null,
+    "buyer" : null,
+    "projectId" : null,
+    "searchKey" : null,
+    "userInfo" :{
+         "id" :2,
+	     "username" :null,
+	     "isActive" :true,
+	     "userRole" : [null,null],
+	     "firstName" : null,
+	     "lastName" : null,
+	     "createdOn" : null,
+	     "territory" :"AMERICAN SAMOA",
+	     "market" :"MARKET1"
+    }
+}
+
+output response:
+[
+    {
+        "id": 8,
+        "containerCode": "CT00123423",
+        "territory": "AMERICAN SAMOA",
+        "fuzeReservationId": null,
+        "fuzeProjectId": 0,
+        "projectName": null,
+        "pslc": "pslc 1",
+        "reservedUsername": null,
+        "useByDate": null,
+        "reservationCreationDate": null,
+        "fuzeStatus": "Received",
+        "catsStatus": "EA",
+        "market": "MARKET2",
+        "localMarket": "LM002",
+        "subMarket": "SUBMARKET12",
+        "buyerId": 0,
+        "buyerName": null,
+        "itemsInfo": null,
+        "reservationNotes": null,
+        "message": null,
+        "reserved": false,
+        "psproject": "ABBC",
+        "mrorderCode": null,
+        "mrsource": null
+    }
+]

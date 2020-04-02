@@ -1,0 +1,35 @@
+for reserve button fun
+
+endpoint: http://localhost:8088/reservation/unreserve/container/{containerCode}
+	
+pass containerCode  in url  : CT00123422
+	
+
+output:response
+{
+    "id": 0,
+    "containerCode": null,
+    "territory": null,
+    "fuzeReservationId": null,
+    "fuzeProjectId": 0,
+    "projectName": null,
+    "pslc": null,
+    "reservedUsername": null,
+    "useByDate": null,
+    "reservationCreationDate": null,
+    "fuzeStatus": null,
+    "catsStatus": null,
+    "market": null,
+    "localMarket": null,
+    "subMarket": null,
+    "buyerId": 0,
+    "buyerName": null,
+    "itemsInfo": null,
+    "reservationNotes": null,
+    "message": "UnReservation done succesfully",
+    "reserved": false,
+    "psproject": null,
+    "mrorderCode": null,
+    "mrsource": null
+}
+
