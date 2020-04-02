@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.po.reservation.exception.ContainerResourceNotFoundException;
 import com.po.reservation.form.ContainerForm;
 import com.po.reservation.form.ContainerReserveForm;
@@ -36,6 +37,7 @@ public class ContainerController {
 	@Autowired
 	private ContainerService containerService;
 
+	@HystrixCommand(fallbackMethod="fallBackGetContainers")
 	@PostMapping("/search/container")
 	public ResponseEntity<List<ContainerInfo>> searchContainers(@Valid @RequestBody final ContainerForm containerForm) {
 		List<ContainerInfo> containerList = new ArrayList<>();
@@ -49,7 +51,8 @@ public class ContainerController {
 		}
 		return new ResponseEntity<List<ContainerInfo>>(containerList, HttpStatus.OK);
 	}
-
+	
+	@HystrixCommand(fallbackMethod="fallBackGetContainers")
 	@PostMapping("/searchByCheckBox/container")
 	public ResponseEntity<List<ContainerInfo>> searchContainersBasedOnCheckBox(
 			@RequestBody final ContainerSearchForm containerSearchForm) {
@@ -61,7 +64,7 @@ public class ContainerController {
 		}
 		return new ResponseEntity<List<ContainerInfo>>(containerList, HttpStatus.OK);
 	}
-	
+
 	@PostMapping("/containersByUserInfo")
 	public Map<String, Object> containerByUserInfo(@RequestBody UserInfo request) {
 		logger.info("Entering into gettingContainerDetails method in Container controller");
@@ -73,6 +76,7 @@ public class ContainerController {
 	 * @param containerId
 	 * @return ContainerInfo
 	 */
+	@HystrixCommand(fallbackMethod="fallBackGetContainer")
 	@GetMapping("/container/{containerId}")
 	public ResponseEntity<ContainerInfo> containerById(@PathVariable("containerId") final int containerId) {
 		ContainerInfo containerInfo = null;
@@ -87,7 +91,7 @@ public class ContainerController {
 	/**
 	 * @return List<ContainerInfo>
 	 */
-
+	@HystrixCommand(fallbackMethod="fallBackGetContainers")
 	@PostMapping("/container/list")
 	public ResponseEntity<List<ContainerInfo>> getContainers(@RequestBody final UserInfo userInfo) {
 		List<ContainerInfo> containerInfos = new ArrayList<ContainerInfo>();
@@ -98,7 +102,7 @@ public class ContainerController {
 		}
 		return new ResponseEntity<List<ContainerInfo>>(containerInfos, HttpStatus.OK);
 	}
-
+	@HystrixCommand(fallbackMethod="fallBackGetContainers")
 	@PostMapping("/container/reserved")
 	public ResponseEntity<List<ContainerInfo>> getReservedContainerByUser(@RequestBody final UserInfo userInfo) {
 		List<ContainerInfo> reservedContainerList = new ArrayList<ContainerInfo>();
@@ -110,6 +114,7 @@ public class ContainerController {
 		return new ResponseEntity<List<ContainerInfo>>(reservedContainerList, HttpStatus.OK);
 	}
 	
+	@HystrixCommand(fallbackMethod="fallBackGetContainer")
 	@PostMapping("/reserve/container")
 	public ResponseEntity<ContainerInfo> reserveContainer(@RequestBody final ContainerReserveForm containerReserveForm) {
 		ContainerInfo containerInfo = new ContainerInfo();
@@ -121,6 +126,7 @@ public class ContainerController {
 		return new ResponseEntity<ContainerInfo>(containerInfo, HttpStatus.OK);
 	}
 	
+	@HystrixCommand(fallbackMethod="fallBackGetContainer")
 	@GetMapping("/unreserve/container/{containerCode}")
 	public ResponseEntity<ContainerInfo> unreserveContainer(@PathVariable String containerCode) {
 		ContainerInfo containerInfo = null;
@@ -131,4 +137,39 @@ public class ContainerController {
 		}
 		return new ResponseEntity<ContainerInfo>(containerInfo, HttpStatus.OK);
 	}
+	
+   public ResponseEntity<List<ContainerInfo>>  fallBackGetContainers(){
+	   ContainerInfo containerInfo=new ContainerInfo();
+	   List<ContainerInfo> containers= new ArrayList<>();
+	   containerInfo.setId(0);
+	   containerInfo.setFuzeReservationId("0");
+	   containerInfo.setContainerCode("0");
+	   containerInfo.setPslc("0");
+	   containerInfo.setMROrderCode("0");
+	   containerInfo.setMRSource("0");
+	   containerInfo.setTerritory("0");
+	   containerInfo.setFuzeProjectId(0);
+	   containerInfo.setProjectName("0");
+	   containerInfo.setMarket("0");
+	   containerInfo.setSubMarket("0");
+	   containerInfo.setTerritory("0");
+	   containers.add(containerInfo);
+    	return new ResponseEntity<List<ContainerInfo>>(containers,HttpStatus.OK);
+    	    }
+   public ResponseEntity<ContainerInfo>  fallBackGetContainer(){
+	   ContainerInfo containerInfo=new ContainerInfo();
+	   containerInfo.setId(0);
+	   containerInfo.setFuzeReservationId("0");
+	   containerInfo.setContainerCode("0");
+	   containerInfo.setPslc("0");
+	   containerInfo.setMROrderCode("0");
+	   containerInfo.setMRSource("0");
+	   containerInfo.setTerritory("0");
+	   containerInfo.setFuzeProjectId(0);
+	   containerInfo.setProjectName("0");
+	   containerInfo.setMarket("0");
+	   containerInfo.setSubMarket("0");
+	   containerInfo.setTerritory("0");
+	   return new ResponseEntity<ContainerInfo>(containerInfo,HttpStatus.OK);
+    	    }
 }
