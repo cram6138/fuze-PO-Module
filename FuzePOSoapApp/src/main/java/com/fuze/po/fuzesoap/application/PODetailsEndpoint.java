@@ -101,7 +101,7 @@ public class PODetailsEndpoint {
 
 	@Autowired
 	private ContainerEntityRepository containerEnityRepository;
-	
+
 	@Autowired
 	private UserEntityRepository userEntityRepository;
 
@@ -293,6 +293,7 @@ public class PODetailsEndpoint {
 		try {
 
 			Optional<PORequestEntity> dbPORequest = poRequestEntityRepository.findById(request.getPoRequestId());
+
 			Optional<ProjectEntity> dbProject = projectEntityRepository
 					.findById(Integer.parseInt(dbPORequest.get().getProjectId()));
 			Optional<UserEntity> dbUserEntity = userEntityRepository.findById(request.getUserId());
@@ -340,33 +341,74 @@ public class PODetailsEndpoint {
 	// Getting the project details
 
 	@ResponsePayload
+
 	@PayloadRoot(namespace = NAMESPACE_URI_REUSE_PROJECT_DETAILS, localPart = "ReuseProjectDetailsRequest")
 	public ReuseProjectDetailsResponse getReuseProjectDetails(@RequestPayload ReuseProjectDetailsRequest request)
 			throws DatatypeConfigurationException {
 		ReuseProjectDetailsResponse response = new ReuseProjectDetailsResponse();
 
-		Optional<ProjectEntity> dbProject = projectEntityRepository.findByPslcOrProjectName(
-				request.getPslcLocationCode() != null ? request.getPslcLocationCode() : request.getPsProject());
+		try {
 
-		XMLGregorianCalendar xmlDate = null;
-		GregorianCalendar gc = new GregorianCalendar();
-		gc.setTime(dbProject.get().getEffectiveDate());
-		xmlDate = DatatypeFactory.newInstance().newXMLGregorianCalendar(gc);
+			Optional<ContainerEntity> dbContainer = containerEnityRepository.findByPslc(request.getPslcLocationCode());
 
-		XMLGregorianCalendar xmlDate1 = null;
-		GregorianCalendar gc1 = new GregorianCalendar();
-		xmlDate1 = DatatypeFactory.newInstance().newXMLGregorianCalendar(gc1);
+			Optional<ProjectEntity> dbProjectByProjectName = projectEntityRepository
+					.findByProjectName(request.getPsProject());
 
-		if (dbProject.isPresent()) {
-			response.setPslcLocationCode(dbProject.get().getPslc());
-			response.setFuzeProjectId(dbProject.get().getFuzeProject());
-			response.setPslcDescription(dbProject.get().getPslc_description());
-			response.setPsProject(dbProject.get().getProjectName());
-			response.setPsProjectDescription(dbProject.get().getProject_description());
-			response.setPsProjectEffectiveDate(xmlDate);
-			response.setUseByDate(xmlDate1);
-			response.setPsProjectStatus(dbProject.get().getProjectStatus());
+			XMLGregorianCalendar xmlDate = null;
+			GregorianCalendar gc = new GregorianCalendar();
+
+			// gc.setTime(dbProjectByProjectName.get().getEffectiveDate());
+
+			xmlDate = DatatypeFactory.newInstance().newXMLGregorianCalendar(gc);
+
+			XMLGregorianCalendar xmlDate1 = null;
+			GregorianCalendar gc1 = new GregorianCalendar();
+			xmlDate1 = DatatypeFactory.newInstance().newXMLGregorianCalendar(gc1);
+
+			if (dbContainer.isPresent()) {
+				Optional<ProjectEntity> dbProject = projectEntityRepository.findByPslc(dbContainer.get().getPslc());
+
+				gc.setTime(dbProject.get().getEffectiveDate());
+				if (dbProject.isPresent()) {
+					response.setPslcLocationCode(dbProject.get().getPslc());
+					response.setFuzeProjectId(dbProject.get().getFuzeProject());
+					response.setPslcDescription(dbProject.get().getPslc_description());
+					response.setPsProject(dbProject.get().getProjectName());
+					response.setPsProjectDescription(dbProject.get().getProject_description());
+					response.setPsProjectEffectiveDate(xmlDate);
+					response.setUseByDate(xmlDate1);
+					response.setPsProjectStatus(dbProject.get().getProjectStatus());
+					response.setStatus(1);
+					response.setMessage("success");
+
+				} else {
+
+					response.setStatus(0);
+					response.setMessage("project not mapped.");
+
+				}
+
+			}
+			if (dbProjectByProjectName.isPresent()) {
+
+				response.setPslcLocationCode(dbProjectByProjectName.get().getPslc());
+				response.setFuzeProjectId(dbProjectByProjectName.get().getFuzeProject());
+				response.setPslcDescription(dbProjectByProjectName.get().getPslc_description());
+				response.setPsProject(dbProjectByProjectName.get().getProjectName());
+				response.setPsProjectDescription(dbProjectByProjectName.get().getProject_description());
+				response.setPsProjectEffectiveDate(xmlDate);
+				response.setUseByDate(xmlDate1);
+				response.setPsProjectStatus(dbProjectByProjectName.get().getProjectStatus());
+				response.setStatus(1);
+				response.setMessage("success");
+
+			}
 		}
+
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		return response;
 	}
 

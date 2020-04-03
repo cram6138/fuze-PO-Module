@@ -1,0 +1,16 @@
+http://localhost:8080/addContainerDetails
+
+request:
+
+
+{
+"poRequestId":4,
+"userId":1
+}
+
+response:
+
+{
+    "message": "Successfully saved.",
+    "status": 1
+}

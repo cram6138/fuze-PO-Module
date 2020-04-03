@@ -1,0 +1,9 @@
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+    <SOAP-ENV:Header/>
+    <SOAP-ENV:Body>
+        <ns2:AddContainerDetailsResponse xmlns:ns2="http://www.addcontainerdetails.com/addcontainerdetails">
+            <ns2:message>Successfully saved.</ns2:message>
+            <ns2:status>1</ns2:status>
+        </ns2:AddContainerDetailsResponse>
+    </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

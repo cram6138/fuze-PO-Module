@@ -1,0 +1,28 @@
+http://localhost:8088/reuseProjectDetails
+
+request:
+
+{
+"psProject":"project_name2"
+}
+
+or
+
+{
+"pslcLocationCode":"pslc3"
+}
+
+
+
+response
+
+{
+    "pslcLocationCode": "pslc3",
+    "psProject": "project_name2",
+    "fuzeProjectId": "fuze_project2",
+    "psProjectStatus": "inprogress",
+    "psProjectEffectiveDate": "2020-04-03T18:30:00.000+0000",
+    "useByDate": "2020-04-01T18:30:00.000+0000",
+    "psProjectDescription": "project_description3",
+    "pslcDescription": "pslc_description3"
+}

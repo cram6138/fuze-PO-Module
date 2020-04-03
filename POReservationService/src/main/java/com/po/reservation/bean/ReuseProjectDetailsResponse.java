@@ -52,7 +52,9 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "psProjectEffectiveDate",
     "useByDate",
     "psProjectDescription",
-    "pslcDescription"
+    "pslcDescription",
+    "message",
+    "status"
 })
 @XmlRootElement(name = "ReuseProjectDetailsResponse", namespace = "http://www.fuze.reservation.application.com/reuseprojectdetails")
 public class ReuseProjectDetailsResponse {
@@ -75,6 +77,10 @@ public class ReuseProjectDetailsResponse {
     protected String psProjectDescription;
     @XmlElement(namespace = "http://www.fuze.reservation.application.com/reuseprojectdetails", required = true)
     protected String pslcDescription;
+    @XmlElement(namespace = "http://www.fuze.reservation.application.com/reuseprojectdetails", required = true)
+    protected String message;
+    @XmlElement(namespace = "http://www.fuze.reservation.application.com/reuseprojectdetails", required = true)
+    protected Integer status;
 
     /**
      * Gets the value of the pslcLocationCode property.
@@ -268,4 +274,23 @@ public class ReuseProjectDetailsResponse {
         this.pslcDescription = value;
     }
 
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+    
+    
+    
 }

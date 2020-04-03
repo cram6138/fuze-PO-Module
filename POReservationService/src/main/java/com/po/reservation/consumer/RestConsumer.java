@@ -26,18 +26,10 @@ public class RestConsumer {
 	@Autowired
 	private SoapConsumer client;
 
-	// for adding container details
-
-	@PostMapping("/addContainerDetails")
-	public AddContainerDetailsResponse addContainerDetails(@RequestBody AddContainerDetailsRequest request) {
-		return client.addContainerDetails(request);
-	}
-	
-	//Getting the project details
+	// Getting the project details
 	@PostMapping("/reuseProjectDetails")
 	public ReuseProjectDetailsResponse reUseProjectDetails(@RequestBody ReuseProjectDetailsRequest request) {
 		return client.reUseProjectDetails(request);
 	}
-	
 
 }

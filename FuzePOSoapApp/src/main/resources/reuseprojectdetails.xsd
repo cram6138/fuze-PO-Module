@@ -24,6 +24,8 @@
 				<xs:element name="useByDate" type="xs:date" />
 				<xs:element name="psProjectDescription" type="xs:string" />
 				<xs:element name="pslcDescription" type="xs:string" />
+				<xs:element name="message" type="xs:string" />
+				<xs:element name="status" type="xs:int" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>

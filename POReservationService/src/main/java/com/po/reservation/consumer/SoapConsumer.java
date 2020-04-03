@@ -32,23 +32,8 @@ public class SoapConsumer {
 
 	private WebServiceTemplate webServiceTemplate;
 
-	// consume the addContainerDetails From soap application
+	// consume the reUseProjectDetails From soap application
 
-	public AddContainerDetailsResponse addContainerDetails(AddContainerDetailsRequest addContainerDetailsRequest) {
-		logger.info("Entering in SoapConsumer class in AddContainerDetails method");
-		webServiceTemplate = new WebServiceTemplate(jaxb2Marshaller);
-		AddContainerDetailsResponse addContainerDetailsResponse = null;
-		try {
-			addContainerDetailsResponse = (AddContainerDetailsResponse) webServiceTemplate
-					.marshalSendAndReceive(soapBaseUrl + "/addContainerDetails", addContainerDetailsRequest);
-		} catch (Exception e) {
-			logger.info("Exception  in AddContainerDetails  method" + e.getMessage());
-		}
-		return addContainerDetailsResponse;
-	}
-	
-	// consume the reUseProjectDetails  From soap application
-	
 	public ReuseProjectDetailsResponse reUseProjectDetails(ReuseProjectDetailsRequest reuseProjectDetailsRequest) {
 		logger.info("Entering in SoapConsumer class in reUseProjectDetails method");
 		webServiceTemplate = new WebServiceTemplate(jaxb2Marshaller);
@@ -61,6 +46,5 @@ public class SoapConsumer {
 		}
 		return reuseProjectDetailsResponse;
 	}
-
 
 }

@@ -1,0 +1,15 @@
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+    <SOAP-ENV:Header/>
+    <SOAP-ENV:Body>
+        <ns2:ReuseProjectDetailsResponse xmlns:ns2="http://www.fuze.reservation.application.com/reuseprojectdetails">
+            <ns2:pslcLocationCode>pslc2</ns2:pslcLocationCode>
+            <ns2:psProject>project_name2</ns2:psProject>
+            <ns2:fuzeProjectId>fuze_project2</ns2:fuzeProjectId>
+            <ns2:psProjectStatus>open</ns2:psProjectStatus>
+            <ns2:psProjectEffectiveDate>2020-04-04+05:30</ns2:psProjectEffectiveDate>
+            <ns2:useByDate>2020-04-02+05:30</ns2:useByDate>
+            <ns2:psProjectDescription>project_description2</ns2:psProjectDescription>
+            <ns2:pslcDescription>pslc_description2</ns2:pslcDescription>
+        </ns2:ReuseProjectDetailsResponse>
+    </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
