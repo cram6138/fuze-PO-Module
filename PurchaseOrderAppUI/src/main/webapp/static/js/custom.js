@@ -364,7 +364,7 @@ function generateExcel(){
 	        type:"GET",
 	        success: function (result,status,xhr) {
 	        	console.log(xhr.status);
-	        	if(status == 200) {
+	        	if(xhr.status == 200) {
 	        		popupNotification.show("PORequest Excel Downloaded Successfully", "info");
 	        	}else {
 	        		popupNotification.show("PORequest Excel does not exist", "info");

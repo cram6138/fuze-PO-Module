@@ -423,7 +423,7 @@ var oldValue = [];
 var oldValueIds=[];
 var tempObj;
 
-var Base_URL = appConfig.service_application + "/RePO/generatePORequestExcel";
+var Base_URL = appConfig.zuul_service + "/pos/RePO/generatePORequestExcel";
 document.getElementById("generate-excel").setAttribute("href", encodeURI(Base_URL));
 
 var popupNotification = $("#popupNotification").kendoNotification({
