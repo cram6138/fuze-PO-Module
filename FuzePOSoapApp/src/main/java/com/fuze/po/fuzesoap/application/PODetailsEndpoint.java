@@ -356,9 +356,7 @@ public class PODetailsEndpoint {
 
 			XMLGregorianCalendar xmlDate = null;
 			GregorianCalendar gc = new GregorianCalendar();
-
-			// gc.setTime(dbProjectByProjectName.get().getEffectiveDate());
-
+			gc.add((GregorianCalendar.DAY_OF_WEEK), 135);
 			xmlDate = DatatypeFactory.newInstance().newXMLGregorianCalendar(gc);
 
 			XMLGregorianCalendar xmlDate1 = null;

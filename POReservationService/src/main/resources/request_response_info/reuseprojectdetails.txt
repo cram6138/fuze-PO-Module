@@ -21,8 +21,10 @@ response
     "psProject": "project_name2",
     "fuzeProjectId": "fuze_project2",
     "psProjectStatus": "inprogress",
-    "psProjectEffectiveDate": "2020-04-03T18:30:00.000+0000",
-    "useByDate": "2020-04-01T18:30:00.000+0000",
+    "psProjectEffectiveDate": "2020-08-15T18:30:00.000+0000",
+    "useByDate": "2020-04-02T18:30:00.000+0000",
     "psProjectDescription": "project_description3",
-    "pslcDescription": "pslc_description3"
+    "pslcDescription": "pslc_description3",
+    "message": "success",
+    "status": 1
 }
