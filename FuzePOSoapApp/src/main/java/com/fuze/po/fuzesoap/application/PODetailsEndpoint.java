@@ -349,7 +349,10 @@ public class PODetailsEndpoint {
 
 		try {
 
-			Optional<ContainerEntity> dbContainer = containerEnityRepository.findByPslc(request.getPslcLocationCode());
+			/*
+			 * Optional<ContainerEntity> dbContainer =
+			 * containerEnityRepository.findByPslc(request.getPslcLocationCode());
+			 */
 
 			Optional<ProjectEntity> dbProjectByProjectName = projectEntityRepository
 					.findByProjectName(request.getPsProject());
@@ -363,8 +366,8 @@ public class PODetailsEndpoint {
 			GregorianCalendar gc1 = new GregorianCalendar();
 			xmlDate1 = DatatypeFactory.newInstance().newXMLGregorianCalendar(gc1);
 
-			if (dbContainer.isPresent()) {
-				Optional<ProjectEntity> dbProject = projectEntityRepository.findByPslc(dbContainer.get().getPslc());
+//			if (dbContainer.isPresent()) {
+				Optional<ProjectEntity> dbProject = projectEntityRepository.findByPslc(request.getPslcLocationCode());
 
 				gc.setTime(dbProject.get().getEffectiveDate());
 				if (dbProject.isPresent()) {
@@ -386,7 +389,7 @@ public class PODetailsEndpoint {
 
 				}
 
-			}
+//			}
 			if (dbProjectByProjectName.isPresent()) {
 
 				response.setPslcLocationCode(dbProjectByProjectName.get().getPslc());

@@ -454,7 +454,7 @@
      USe At PS Project:
     </div>
     <div class="col">
-      <input type="text" class="form-control paddinglt-5" id="usePsProject">
+      <input type="text" class="form-control paddinglt-5" id="usePsProject123" value="">
     </div>
   </div>
 </form>
@@ -481,7 +481,7 @@
     Fuze Project ID:
     </div>
     <div class="col">
-      <input type="text" class="form-control paddinglt-5"  id="fuzeProjectId">
+      <input type="text" class="form-control paddinglt-5"  id="fuzeProjectId123" value="">
     </div>
   </div>
 </form>
@@ -499,7 +499,7 @@
    PS Project Status:
     </div>
     <div class="col">
-      <input type="text" class="form-control paddinglt-5"  id="psProjectStatus">
+      <span class="paddinglt-5"  id="psProjectStatus"></span>
     </div>
   </div>
 </form>
@@ -542,7 +542,7 @@
   PSLC Description:
     </div>
     <div class="col">
-      <span class="paddinglt-5"  id="pslc"></span>
+      <span class="paddinglt-5"  id="pslcDesc"></span>
     </div>
   </div>
 </form>

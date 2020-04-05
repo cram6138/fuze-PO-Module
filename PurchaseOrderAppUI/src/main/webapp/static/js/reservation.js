@@ -1,6 +1,6 @@
-//var userData =localStorage.setItem('UserData', user);
-//var cat = localStorage.getItem(userData);
+var psStatus ; 
 var currentDatalist = [];
+var listPLSC =[];
  var ReservationStatus1 = false;
 var popupNotification = $("#popupNotification").kendoNotification({
 		 position: {
@@ -57,6 +57,44 @@ var projectId=null;
 
 var wnd, detailsTemplate;
 $(document).ready(function(){
+	 $("#useByDate").kendoDatePicker({
+		  value: new Date(),
+		  format:"dd-MMM-yyyy"
+	 });
+	var host_name;
+  	 $.getScript("static/js/config.js", function(){
+  		 host_name = appConfig.zuul_service;
+  		 $.ajax({
+  			 url: host_name + "/pos/RePO/search/project",
+  	        contentType: "application/json",
+  	        type:"POST",
+  	     contentType : "application/json; charset=utf-8",
+  	        data:JSON.stringify({
+  	         "projectName":null,
+  	      "teritory":null,
+  	      "market": null,
+  	      "subMarket": null,
+  	      "siteName": null,
+  	      "projectType": null
+  	  }),
+  	        success: function (result) {
+  	        	$.each(result, function(index, value) {
+  	        		listPLSC.push(result[index].pslc);
+  	 	        	}) 
+  					console.log(listPLSC);
+  	        },
+  	        error: function (result) {
+  	        	options.error(result);
+  	         }
+  	       });
+  	 })
+	
+	$("#useAtPslc").kendoAutoComplete({
+        dataSource: listPLSC,
+        select: onPslcChange,
+        filter: "startswith",
+        placeholder: "Select PSLC...",
+    });
 					$("#ReservDataList").hide();
 					listofItem();
 					$("#panelbar").kendoPanelBar({
@@ -121,7 +159,7 @@ $(document).ready(function(){
 					setSearchData.push(terirory);
 					setSearchData.push(markts);
 					setSearchData.push(subMrks);
-					console.log(setSearchData);
+					//console.log(setSearchData);
 
 					$("#get")
 							.click(
@@ -403,7 +441,7 @@ function customBoolEditor1(container, options) {
 
 function showDetail(e) {
 	// localStorage.removeItem('currentValue');
-	console.log(e);
+	//console.log(e);
 	localStorage.setItem('currentValue', e);
 	// window.location.href='empInfo/'+ e;
 }
@@ -454,7 +492,7 @@ function getContainerDetails(options){
          
       }),
       success : function(result) {
-            options.success(result.containerInfoDetails);
+        //    options.success(result.containerInfoDetails);
 //            $.each(result, function(index, value) {
 //                options.success(result[index].projects);
 //                console.log(result[[ index ]].projects);
@@ -484,7 +522,7 @@ function territories(options) {
 			type : "GET",
 			success : function(result) {
 				options.success(result);
-				console.log(result);
+			//	console.log(result);
 
 			},
 			error : function(result) {
@@ -505,7 +543,7 @@ function market(options) {
 			type : "GET",
 			success : function(result) {
 				options.success(result);
-				console.log(result);
+				//console.log(result);
 
 			},
 			error : function(result) {
@@ -526,7 +564,7 @@ function submarket(options) {
 			type : "GET",
 			success : function(result) {
 				options.success(result);
-				console.log(result);
+				//console.log(result);
 
 			},
 			error : function(result) {
@@ -656,27 +694,39 @@ function reservedStage(selectedRow,ReservationStatus){
 		if(reservationStatusGrid[index].id ==selectedRow){
 			currentDatalist =reservationStatusGrid[index];
 		}
-		console.log(currentDatalist);
+		//console.log(currentDatalist);
 	});
 	openRUnR();
 	if(ReservationStatus == false){
 		document.getElementById("isReserve").innerHTML ="Reserve";
 		ReservationStatus1 = ReservationStatus;
+		document.getElementById("containerCode_1").innerHTML=currentDatalist.containerCode;
+		document.getElementById("fuzeReservationId").innerHTML="";
+		document.getElementById("reservationCreationDate").innerHTML="";
+//document.getElementById("reservationComments").innerHTML=currentDatalist.reserved;
+		document.getElementById("reservationNotes").innerHTML="";
+		document.getElementById("psProjectStatus").innerHTML="";
+		document.getElementById("useByDate").innerHTML="";
+		document.getElementById("usePsProject123").value="";
+		document.getElementById("fuzeProjectId123").value="";
 	}else{
-		document.getElementById("isReserve").innerHTML ="UnReserve"
-			ReservationStatus1 = ReservationStatus;
+						document.getElementById("isReserve").innerHTML ="UnReserve"
+						ReservationStatus1 = ReservationStatus;
+						document.getElementById("useAtPslc").value =currentDatalist.pslc;
+						document.getElementById("containerCode_1").innerHTML=currentDatalist.containerCode;
+						document.getElementById("fuzeReservationId").innerHTML=currentDatalist.fuzeReservationId;
+						document.getElementById("reservationCreationDate").value=currentDatalist.reservationCreationDate;
+			//document.getElementById("reservationComments").innerHTML=currentDatalist.reserved;
+						document.getElementById("reservationNotes").innerHTML=currentDatalist.reservationNotes;
+						document.getElementById("psProjectStatus").innerHTML=currentDatalist.psproject;
+						document.getElementById("useByDate").value=currentDatalist.useByDate;
+						document.getElementById("usePsProject123").value=currentDatalist.psproject;
+						document.getElementById("fuzeProjectId123").value=currentDatalist.fuzeProjectId;
+						onPslcChange(currentDatalist.pslc);
 	}
 	
-	document.getElementById("containerCode_1").innerHTML=currentDatalist.containerCode;
-	document.getElementById("fuzeReservationId").innerHTML=currentDatalist.fuzeReservationId;
-		document.getElementById("reservationCreationDate").innerHTML=currentDatalist.reservationCreationDate;
-			//document.getElementById("reservationComments").innerHTML=currentDatalist.reserved;
-				document.getElementById("reservationNotes").innerHTML=currentDatalist.reservationNotes;
-					document.getElementById("psProjectStatus").innerHTML=currentDatalist.psproject;
-						document.getElementById("useByDate").innerHTML=currentDatalist.useByDate;
-						document.getElementById("usePsProject").innerHTML=currentDatalist.psproject;
-					document.getElementById("fuzeProjectId").innerHTML=currentDatalist.fuzeProjectId;
-						document.getElementById("pslc").innerHTML=currentDatalist.pslc;
+						
+						//document.getElementById("pslc").innerHTML=currentDatalist.pslc;
 		
 	}
 	
@@ -685,13 +735,11 @@ function isReserve(){
 	var currentURL;
 	var reservationComments =$("#reservationComments").val();
 	var reservationNotes =$("#reservationNotes").val();
-	var psProjectStatus =$("#psProjectStatus").val();
-	var useByDate =$("#useByDate").val();
-	var usePsProject =$("#usePsProject").val();
+	//var psProjectStatus =$("#psProjectStatus").val();
+	var useByDate=$("#useByDate").val();
+	var usePsProject=$("#usePsProject123").val();
 	var useAtPslc =$("#useAtPslc").val();
-	
-	
-	
+	console.log(useByDate);
 	$.getScript("static/js/config.js", function() {
 		host_name = appConfig.zuul_service;
 		if(ReservationStatus1 == false){
@@ -709,7 +757,7 @@ function isReserve(){
 					"usePsProject": usePsProject,
 					"useByDate" : useByDate,
 					"fuzeProjectId" : currentDatalist.fuzeProjectId,
-				    "psProjectStatus" : psProjectStatus,
+				    "psProjectStatus" : psStatus,
 					"reservationNotes" : reservationNotes,
 					"reservationComments" : reservationComments,
 					 "userInfo" :{
@@ -751,11 +799,12 @@ function isReserve(){
 				}
 			});
 		}else{
-			currentURL=host_name + "/por/reservation/unreserve/container/"+currentDatalist.containerCode
+			currentURL=host_name + "/por/reservation/unreserve/container/"+currentDatalist.containerCode;
+		//	onPslcChange(useAtPslc);
 			$.ajax({
 				url : currentURL,
 				 contentType: "application/json",
-			        type:"POST",
+			        type:"GET",
 				success : function(result) {
 					//options.success(result);
 					popupNotification.show(result.message, "info");
@@ -780,7 +829,7 @@ function isReserve(){
 }
 
 function toolbar_click() {
-	console.log("Toolbar command is clicked!");
+	//console.log("Toolbar command is clicked!");
 	return false;
 }
 
@@ -927,5 +976,47 @@ function resetSearch(){
  buyer=null;
 searchKeyId=null;
  projectId=null;
+	
+}
+
+
+
+function onPslcChange(e){
+	//console.log(e.dataItem);
+	var currentPSCode = null;
+	if(ReservationStatus1 == false){
+		currentPSCode = e.dataItem;
+	}else{
+		currentPSCode = e;
+	}
+	
+	$.getScript("static/js/config.js", function(){
+ 		 host_name = appConfig.zuul_service;
+ 		 $.ajax({
+ 			 url: host_name + "/por/reuseProjectDetails",
+ 	        contentType: "application/json",
+ 	        type:"POST",
+ 	     contentType : "application/json; charset=utf-8",
+ 	        data:JSON.stringify({
+ 	           "pslcLocationCode":currentPSCode
+ 	       }),
+ 	        success: function (result) {
+       	        	
+ 	        	document.getElementById("psProjectStatus").innerHTML=result.psProjectStatus;
+ 	        	document.getElementById("useByDate").value=result.useByDate;
+				document.getElementById("usePsProject123").value=result.psProject;
+				document.getElementById("fuzeProjectId123").value=result.fuzeProjectId;
+				document.getElementById("useAtPslc").innerHTML=result.pslcLocationCode;
+				document.getElementById("psDescription").innerHTML=result.psProjectDescription;
+				document.getElementById("pslcDesc").innerHTML=result.pslcDescription;
+				document.getElementById("psProjectDate").innerHTML=result.psProjectEffectiveDate;
+               psStatus =result.psProjectStatus;
+				},
+ 	        error: function (result) {
+ 	        	console.log("errpr");
+ 	        	//options.error(result);
+ 	         }
+ 	       });
+ 	 })
 	
 }

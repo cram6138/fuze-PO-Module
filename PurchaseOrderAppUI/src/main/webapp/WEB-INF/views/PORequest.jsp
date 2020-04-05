@@ -534,7 +534,8 @@ var popupNotification = $("#popupNotification").kendoNotification({
 									"siteTracker": siteTracker,
 									"poStatus": "poStatus",
 									"poitems" : oldValue,
-									"projectIds" :[2]
+									"projectIds" :[2],
+									"userId":${currentUserInfo.id}
 									//"projectIds" :[checkedProjectList.toString()]
 							
 						}),
