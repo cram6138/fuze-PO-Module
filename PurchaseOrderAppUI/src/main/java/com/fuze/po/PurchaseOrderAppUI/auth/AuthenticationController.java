@@ -79,20 +79,13 @@ public class AuthenticationController {
 		ObjectMapper mapper = new ObjectMapper();
 		this.populateAuthentionToken(authenticationToken, user);
 		UserInfo userInfo = populateUserInfo(user);
-		// request.set
-		// return authenticationToken;
-		/*
-		 * response.setHeader("token", authenticationToken.getAccessToken());
-		 * request.getSession().setAttribute("token",
-		 * authenticationToken.getAccessToken());
-		 * request.getSession().setAttribute("username", user.getUsername());
-		 */
+		
 		session.setAttribute("currentUserInfo", userInfo);
 		System.out.println(session.getAttribute("currentUserInfo"));
-		return "/index";
+		return "index";
 	}
 
-	private void populateAuthentionToken(final AuthenticationToken authenticationToken, final User user) {
+	public void populateAuthentionToken(final AuthenticationToken authenticationToken, final User user) {
 		final List<String> roles = getUserRoles(user.getUserRoles());
 		final UserInfo userInfo = populateUserInfo(user);
 		final String accessToken = Jwts.builder().setSubject(user.getUsername()).setIssuedAt(new Date())
@@ -117,7 +110,7 @@ public class AuthenticationController {
 		return roles;
 	}
 
-	private UserInfo populateUserInfo(User user) {
+	public UserInfo populateUserInfo(User user) {
 		UserInfo userInfo = new UserInfo();
 		userInfo.setId(user.getId());
 		userInfo.setFirstName(user.getFirstName());
@@ -132,13 +125,13 @@ public class AuthenticationController {
 		return userInfo;
 	}
 
-	private User authenticated(UserCredential login) {
+	public User authenticated(UserCredential login) {
 		String sha256 = AuthenticationController.sha56(login.getPassword());
 		User user = userRepository.findByUsernameAndPassword(login.getUsername(), sha256);
 		return user;
 	}
 
-	private static String sha56(String password) {
+	public static String sha56(String password) {
 		byte[] sha256;
 		try {
 			sha256 = MessageDigest.getInstance("SHA-256").digest(password.getBytes("UTF-8"));

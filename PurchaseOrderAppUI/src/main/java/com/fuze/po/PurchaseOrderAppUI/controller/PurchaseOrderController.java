@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -49,8 +50,15 @@ public class PurchaseOrderController {
 		return "login";
 	}
 
-	@GetMapping("/index")
+	@GetMapping("/{sessionId}")
 	public String WelcomePage(Model model, HttpServletRequest request) {
+		model.addAttribute("index", "active");
+		// Object obj = (UserInfo)request.getSession().getAttribute("currentUserInfo");
+		return "index";
+	}
+	
+	@GetMapping("/index")
+	public String loadIndexPage(Model model, HttpServletRequest request) {
 		model.addAttribute("index", "active");
 		// Object obj = (UserInfo)request.getSession().getAttribute("currentUserInfo");
 		return "index";

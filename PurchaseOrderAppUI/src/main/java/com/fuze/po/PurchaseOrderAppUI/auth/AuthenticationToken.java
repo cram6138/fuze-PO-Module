@@ -9,6 +9,8 @@ public class AuthenticationToken {
 	@JsonProperty
 	private String message;
 	@JsonProperty
+	private String sessionId;
+	@JsonProperty
 	private UserInfo userInfo;
 	
 	
@@ -33,6 +35,14 @@ public class AuthenticationToken {
 
 	public String getMessage() {
 		return message;
+	}
+
+	public String getSessionId() {
+		return sessionId;
+	}
+
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
 	}
 
 	public void setMessage(String message) {
