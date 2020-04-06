@@ -375,7 +375,7 @@
 										<div class="col-sm-12">
 										 <div class="Header-content">
 										<div class="d-inline">Reservation Details</div>
-										<div class="d-inline text-right rightButton"><button class="btn btn-danger btn-user btn-block custombuttonRefresh">Refresh &nbsp;<i class="fa fa-arrow-right"></i></button></div>
+										<div class="d-inline text-right rightButton"><button class="btn btn-danger btn-user btn-block custombuttonRefresh" id="reFreshFunc">Refresh &nbsp;<i class="fa fa-arrow-right"></i></button></div>
 										 
 										 </div>
 										 </div>

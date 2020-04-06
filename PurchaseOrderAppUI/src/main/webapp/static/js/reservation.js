@@ -57,6 +57,11 @@ var projectId=null;
 
 var wnd, detailsTemplate;
 $(document).ready(function(){
+	
+	$("#reFreshFunc").click(function(){
+		SetPSLC(psStatus);
+		
+	});
 	 $("#useByDate").kendoDatePicker({
 		  value: new Date(),
 		  format:"dd-MMM-yyyy"
@@ -693,8 +698,9 @@ function reservedStage(selectedRow,ReservationStatus){
 	$.each(reservationStatusGrid, function(index, value) {
 		if(reservationStatusGrid[index].id ==selectedRow){
 			currentDatalist =reservationStatusGrid[index];
+			psStatus=reservationStatusGrid[index].pslc;
 		}
-		//console.log(currentDatalist);
+		//console.log(currentDatalist); 		
 	});
 	openRUnR();
 	if(ReservationStatus == false){
@@ -709,6 +715,10 @@ function reservedStage(selectedRow,ReservationStatus){
 		document.getElementById("useByDate").innerHTML="";
 		document.getElementById("usePsProject123").value="";
 		document.getElementById("fuzeProjectId123").value="";
+		document.getElementById("psProjectStatus").innerHTML="";
+     	document.getElementById("psDescription").innerHTML="";
+		document.getElementById("pslcDesc").innerHTML="";
+		document.getElementById("psProjectDate").innerHTML="";
 	}else{
 						document.getElementById("isReserve").innerHTML ="UnReserve"
 						ReservationStatus1 = ReservationStatus;
@@ -981,42 +991,50 @@ searchKeyId=null;
 
 
 
+
 function onPslcChange(e){
 	//console.log(e.dataItem);
 	var currentPSCode = null;
 	if(ReservationStatus1 == false){
 		currentPSCode = e.dataItem;
+		SetPSLC(currentPSCode);
 	}else{
 		currentPSCode = e;
+		SetPSLC(currentPSCode);
 	}
 	
+	
+	
+}
+
+
+function SetPSLC(e){
 	$.getScript("static/js/config.js", function(){
- 		 host_name = appConfig.zuul_service;
- 		 $.ajax({
- 			 url: host_name + "/por/reuseProjectDetails",
- 	        contentType: "application/json",
- 	        type:"POST",
- 	     contentType : "application/json; charset=utf-8",
- 	        data:JSON.stringify({
- 	           "pslcLocationCode":currentPSCode
- 	       }),
- 	        success: function (result) {
-       	        	
- 	        	document.getElementById("psProjectStatus").innerHTML=result.psProjectStatus;
- 	        	document.getElementById("useByDate").value=result.useByDate;
+		 host_name = appConfig.zuul_service;
+		 $.ajax({
+			 url: host_name + "/por/reuseProjectDetails",
+	        contentType: "application/json",
+	        type:"POST",
+	     contentType : "application/json; charset=utf-8",
+	        data:JSON.stringify({
+	           "pslcLocationCode":e
+	       }),
+	        success: function (result) {
+      	        	
+	        	document.getElementById("psProjectStatus").innerHTML=result.psProjectStatus;
+	        	document.getElementById("useByDate").value=result.useByDate;
 				document.getElementById("usePsProject123").value=result.psProject;
 				document.getElementById("fuzeProjectId123").value=result.fuzeProjectId;
 				document.getElementById("useAtPslc").innerHTML=result.pslcLocationCode;
 				document.getElementById("psDescription").innerHTML=result.psProjectDescription;
 				document.getElementById("pslcDesc").innerHTML=result.pslcDescription;
 				document.getElementById("psProjectDate").innerHTML=result.psProjectEffectiveDate;
-               psStatus =result.psProjectStatus;
+              psStatus =result.psProjectStatus;
 				},
- 	        error: function (result) {
- 	        	console.log("errpr");
- 	        	//options.error(result);
- 	         }
- 	       });
- 	 })
-	
+	        error: function (result) {
+	        	console.log("errpr");
+	        	//options.error(result);
+	         }
+	       });
+	 })
 }
