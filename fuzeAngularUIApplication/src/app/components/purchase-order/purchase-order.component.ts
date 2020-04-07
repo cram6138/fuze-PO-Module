@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { AuthenticationObj } from 'src/app/model/authenticationObj';
-import { AppComponent } from 'src/app/app.component';
 
 @Component({
   selector: 'app-purchase-order',
@@ -10,15 +7,9 @@ import { AppComponent } from 'src/app/app.component';
 })
 export class PurchaseOrderComponent implements OnInit {
 
-  private currentUserSubject: BehaviorSubject<AuthenticationObj>;
-  constructor(private appComponent: AppComponent) {
-    this.currentUserSubject = new BehaviorSubject<AuthenticationObj>(JSON.parse(localStorage.getItem('currentUser')));
-  }
+  constructor() { }
 
   ngOnInit(): void {
-    if (!this.appComponent.user) {
-      this.appComponent.user = this.currentUserSubject.value.userInfo;
-    }
   }
 
 }
