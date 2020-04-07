@@ -1008,7 +1008,8 @@ function onPslcChange(e){
 }
 
 
-function SetPSLC(e){
+function SetPSLC(item){
+	var currentPSCode=item;
 	$.getScript("static/js/config.js", function(){
 		 host_name = appConfig.zuul_service;
 		 $.ajax({
@@ -1017,7 +1018,7 @@ function SetPSLC(e){
 	        type:"POST",
 	     contentType : "application/json; charset=utf-8",
 	        data:JSON.stringify({
-	           "pslcLocationCode":e
+	           "pslcLocationCode":currentPSCode
 	       }),
 	        success: function (result) {
       	        	
