@@ -7,7 +7,11 @@
     margin-left: 35%;
     padding: 2%;
     height: 30%;
-    background-color: slateblue;
+    background-color: rgb(240, 137, 185);
+}
+
+.error-message {
+  color: red;
 }
 
 .input-width{

@@ -4,11 +4,11 @@ import { AuthenticationObj } from 'src/app/model/authenticationObj';
 import { AppComponent } from 'src/app/app.component';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-po-request-details',
+  templateUrl: './po-request-details.component.html',
+  styleUrls: ['./po-request-details.component.css']
 })
-export class HomeComponent implements OnInit {
+export class PoRequestDetailsComponent implements OnInit {
 
   private currentUserSubject: BehaviorSubject<AuthenticationObj>;
   constructor(private appComponent: AppComponent) {

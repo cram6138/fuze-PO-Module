@@ -4,11 +4,11 @@ import { AuthenticationObj } from 'src/app/model/authenticationObj';
 import { AppComponent } from 'src/app/app.component';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-site-project-details',
+  templateUrl: './site-project-details.component.html',
+  styleUrls: ['./site-project-details.component.css']
 })
-export class HomeComponent implements OnInit {
+export class SiteProjectDetailsComponent implements OnInit {
 
   private currentUserSubject: BehaviorSubject<AuthenticationObj>;
   constructor(private appComponent: AppComponent) {

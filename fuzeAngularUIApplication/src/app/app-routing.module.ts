@@ -7,12 +7,13 @@ import { PurchaseOrderReservationComponent } from './components/purchase-order-r
 
 
 const routes: Routes = [
-  {path: '**', component:LoginComponent},
-  {path: '', component:LoginComponent},
 
-  {path: 'purchase-order', component:PurchaseOrderComponent},
-  {path: 'purchase-order-reservation', component:PurchaseOrderReservationComponent},
-  {path: 'home', component:HomeComponent},
+  {path: 'purchase-order', component: PurchaseOrderComponent},
+  {path: 'po-reservation', component: PurchaseOrderReservationComponent},
+  {path: 'home', component: HomeComponent},
+  {path: '', component: LoginComponent},
+  {path: '**', component: LoginComponent},
+
 ];
 
 @NgModule({
