@@ -332,7 +332,8 @@ public class PODetailsEndpoint {
 					containerEntity.setBuyer(dbUserEntity.get());
 					containerEntity.setContainerCode(containercode);
 					containerEntity.setPslc(dbProject.get().getPslc());
-					containerEntity.setPSProject(dbPORequest.get().getPsProject());
+					containerEntity.setPSProject(dbProject.get().getProjectName());
+					containerEntity.setCatsStatus("EA");
 
 					containerEnityRepository.save(containerEntity);
 					response.setMessage("Successfully saved.");
