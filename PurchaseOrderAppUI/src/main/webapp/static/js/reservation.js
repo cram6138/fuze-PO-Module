@@ -492,12 +492,13 @@ function getContainerDetails(options){
                     ],
                 "lastName":user.lastName,
                 "territory":user.territory,
-                "Market":user.Market
+                "Market":user.market
             
          
       }),
       success : function(result) {
-        //    options.success(result.containerInfoDetails);
+            options.success(result.containerInfoDetails);
+ //          console.log(result.containerInfoDetails);
 //            $.each(result, function(index, value) {
 //                options.success(result[index].projects);
 //                console.log(result[[ index ]].projects);
