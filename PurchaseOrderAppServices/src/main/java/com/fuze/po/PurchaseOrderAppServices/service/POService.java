@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -62,7 +63,12 @@ public class POService {
 			PORequest poRequest = populatePORequestEntity(requestForm);
 			Set<Project> projects = new HashSet<Project>();
 			for (Integer projectId: requestForm.getProjectIds()) {
-				projects.add(projectRepository.getOne(projectId));
+				/* projects.add(projectRepository.getOne(projectId)); */
+				
+				Optional<Project> dbProject = projectRepository.findById(projectId);
+				projects.add(dbProject.get());
+				
+				
 			}
 			poRequest.setProjects(projects);
 			// save po

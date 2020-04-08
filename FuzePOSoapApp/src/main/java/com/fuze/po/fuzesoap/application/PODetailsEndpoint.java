@@ -5,8 +5,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
@@ -38,6 +40,7 @@ import com.fuze.po.fuzesoap.application.entity.CartItemsEntity;
 import com.fuze.po.fuzesoap.application.entity.ContainerEntity;
 import com.fuze.po.fuzesoap.application.entity.ItemEntity;
 import com.fuze.po.fuzesoap.application.entity.POItemsEntity;
+import com.fuze.po.fuzesoap.application.entity.PORequest;
 import com.fuze.po.fuzesoap.application.entity.PORequestEntity;
 import com.fuze.po.fuzesoap.application.entity.ProjectEntity;
 import com.fuze.po.fuzesoap.application.entity.UserEntity;
@@ -47,6 +50,7 @@ import com.fuze.po.fuzesoap.application.repository.ContainerEntityRepository;
 import com.fuze.po.fuzesoap.application.repository.ItemEntityRepository;
 import com.fuze.po.fuzesoap.application.repository.POItemsEntityRepository;
 import com.fuze.po.fuzesoap.application.repository.PORequestEntityRepository;
+import com.fuze.po.fuzesoap.application.repository.PORequestRepository;
 import com.fuze.po.fuzesoap.application.repository.ProjectEntityRepository;
 import com.fuze.po.fuzesoap.application.repository.UserEntityRepository;
 import com.poaddcartitemsproducer.addcartitems.AddCartItemsRequest;
@@ -104,6 +108,9 @@ public class PODetailsEndpoint {
 
 	@Autowired
 	private UserEntityRepository userEntityRepository;
+	
+	@Autowired
+	private PORequestRepository poRequestRepository;
 
 	@ResponsePayload
 	@PayloadRoot(namespace = NAMESPACE_URI_CART_DETAILS, localPart = "CartDetailsRequest")
@@ -292,10 +299,17 @@ public class PODetailsEndpoint {
 		AddContainerDetailsResponse response = new AddContainerDetailsResponse();
 		try {
 
-			Optional<PORequestEntity> dbPORequest = poRequestEntityRepository.findById(request.getPoRequestId());
+			Optional<PORequest> dbPORequest = poRequestRepository.findById(request.getPoRequestId());
+			
+			
+			Set<ProjectEntity> projects = new HashSet<ProjectEntity>();
+			for (ProjectEntity row: dbPORequest.get().getProjects()) {
+				Optional<ProjectEntity> dbProjectEnity = projectEntityRepository.findById(row.getId());
+				projects.add(dbProjectEnity.get());
+			
 
 			Optional<ProjectEntity> dbProject = projectEntityRepository
-					.findById(Integer.parseInt(dbPORequest.get().getProjectId()));
+					.findById(row.getId());
 			Optional<UserEntity> dbUserEntity = userEntityRepository.findById(request.getUserId());
 
 			if (dbPORequest.isPresent()) {
@@ -331,7 +345,7 @@ public class PODetailsEndpoint {
 				response.setMessage("Purchase Order not exists");
 				response.setStatus(0);
 			}
-
+		}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
