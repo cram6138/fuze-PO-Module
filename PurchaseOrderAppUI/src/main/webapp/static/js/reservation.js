@@ -708,7 +708,7 @@ function reservedStage(selectedRow,ReservationStatus){
 		ReservationStatus1 = ReservationStatus;
 		document.getElementById("containerCode_1").innerHTML=currentDatalist.containerCode;
 		document.getElementById("fuzeReservationId").innerHTML="";
-		document.getElementById("reservationCreationDate").innerHTML="";
+		document.getElementById("reservationCreationDate").innerHTML=currentDatalist.reservationCreationDate;
 //document.getElementById("reservationComments").innerHTML=currentDatalist.reserved;
 		document.getElementById("reservationNotes").innerHTML="";
 		document.getElementById("psProjectStatus").innerHTML="";
@@ -718,6 +718,9 @@ function reservedStage(selectedRow,ReservationStatus){
 		document.getElementById("psProjectStatus").innerHTML="";
      	document.getElementById("psDescription").innerHTML="";
 		document.getElementById("pslcDesc").innerHTML="";
+		document.getElementById("BusinessUnit").innerHTML=currentDatalist.pslc;
+		document.getElementById("LocationDetailCode").innerHTML=currentDatalist.pslc;
+		document.getElementById("LocationName").innerHTML=currentDatalist.pslc;
 		document.getElementById("psProjectDate").innerHTML="";
 	}else{
 						document.getElementById("isReserve").innerHTML ="UnReserve"
@@ -725,13 +728,16 @@ function reservedStage(selectedRow,ReservationStatus){
 						document.getElementById("useAtPslc").value =currentDatalist.pslc;
 						document.getElementById("containerCode_1").innerHTML=currentDatalist.containerCode;
 						document.getElementById("fuzeReservationId").innerHTML=currentDatalist.fuzeReservationId;
-						document.getElementById("reservationCreationDate").value=currentDatalist.reservationCreationDate;
+						document.getElementById("reservationCreationDate").innerHTML=currentDatalist.reservationCreationDate;
 			//document.getElementById("reservationComments").innerHTML=currentDatalist.reserved;
 						document.getElementById("reservationNotes").innerHTML=currentDatalist.reservationNotes;
 						document.getElementById("psProjectStatus").innerHTML=currentDatalist.psproject;
 						document.getElementById("useByDate").value=currentDatalist.useByDate;
 						document.getElementById("usePsProject123").value=currentDatalist.psproject;
 						document.getElementById("fuzeProjectId123").value=currentDatalist.fuzeProjectId;
+						document.getElementById("BusinessUnit").innerHTML=currentDatalist.pslc;
+						document.getElementById("LocationDetailCode").innerHTML=currentDatalist.pslc;
+						document.getElementById("LocationName").innerHTML=currentDatalist.pslc;
 						onPslcChange(currentDatalist.pslc);
 	}
 	
@@ -995,7 +1001,7 @@ searchKeyId=null;
 function onPslcChange(e){
 	//console.log(e.dataItem);
 	var currentPSCode = null;
-	if(ReservationStatus1 == false){
+	if(e.dataItem){
 		currentPSCode = e.dataItem;
 		SetPSLC(currentPSCode);
 	}else{
@@ -1018,7 +1024,7 @@ function SetPSLC(item){
 	        type:"POST",
 	     contentType : "application/json; charset=utf-8",
 	        data:JSON.stringify({
-	           "pslcLocationCode":currentPSCode
+	           "pslcLocationCode":item
 	       }),
 	        success: function (result) {
       	        	
