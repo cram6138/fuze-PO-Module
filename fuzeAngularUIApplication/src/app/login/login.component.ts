@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { Config } from '../common/config';
 import { AppComponent } from '../app.component';
+import { BehaviorSubject } from 'rxjs';
+import { AuthenticationObj } from '../model/authenticationObj';
 
 @Component({
   selector: 'app-login',
@@ -16,13 +18,20 @@ export class LoginComponent implements OnInit {
   submitted = false;
   returnUrl: string;
   errorMsg: string;
+  private currentUserSubject: BehaviorSubject<AuthenticationObj>;
+
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private appComponent: AppComponent,
     private authService: AuthService
-  ) {}
+  ) {
+    this.currentUserSubject = new BehaviorSubject<AuthenticationObj>(JSON.parse(localStorage.getItem('currentUser')));
+    if (this.currentUserSubject.value) {
+      this.router.navigate(['/home']);
+    }
+  }
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({

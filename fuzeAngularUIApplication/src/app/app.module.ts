@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InputsModule } from '@progress/kendo-angular-inputs';
 import { HomeComponent } from './components/home/home.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { PurchaseOrderComponent } from './components/purchase-order/purchase-order.component';
 import { PurchaseOrderReservationComponent } from './components/purchase-order-reservation/purchase-order-reservation.component';
@@ -32,6 +32,8 @@ import { MyReservationsComponent } from './components/purchase-order-reservation
 import { ContainerSearchReserveComponent } from './components/purchase-order-reservation/container-search-reserve/container-search-reserve.component';
 import { ContainerDetailsComponent } from './components/purchase-order-reservation/container-details/container-details.component';
 import { ContainerReserveUnreserveComponent } from './components/purchase-order-reservation/container-reserve-unreserve/container-reserve-unreserve.component';
+import { JwtInterceptor } from './auth/jwt-interceptor';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 
 @NgModule({
@@ -68,10 +70,11 @@ import { ContainerReserveUnreserveComponent } from './components/purchase-order-
     MatSliderModule,
     MatOptionModule,
     MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatExpansionModule
   ],
   providers: [CookieService,
-  AppComponent],
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

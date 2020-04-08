@@ -1,7 +1,35 @@
-<p>purchase-order-reservation works!</p>
-<div>
-    <div>My Reservations</div>
-    <div>Container Search/Reserve</div>
-    <div>Container Details</div>
-    <div>Container Reserve/ Un Reserve</div>
-</div>
+<mat-accordion>
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                My Reservations
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <app-my-reservations></app-my-reservations>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Container Search/Reserve
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <app-container-search-reserve></app-container-search-reserve>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Container Details
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <app-container-details></app-container-details>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Container Reserve/Un Reserve
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <app-container-reserve-unreserve></app-container-reserve-unreserve>
+    </mat-expansion-panel>
+</mat-accordion>
+

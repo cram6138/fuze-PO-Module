@@ -23,4 +23,15 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/']);
   }
 
+  poReservation() {
+    this.router.navigate(['/po-reservation']);
+  }
+
+  purchaseOrder() {
+    this.router.navigate(['/purchase-order']);
+  }
+
+  home() {
+    this.router.navigate(['/home']);
+  }
 }

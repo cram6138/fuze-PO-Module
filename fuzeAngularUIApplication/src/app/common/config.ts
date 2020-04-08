@@ -1,4 +1,4 @@
 export class Config {
-    public static zuul_service = 'http://localhost:8888';
-    public static ui2_service = 'http://localhost:8090/';
+    public static ZUUL_SERVICE = 'http://localhost:8888';
+    public static UI2_SERVICE = 'http://localhost:8090/';
 }

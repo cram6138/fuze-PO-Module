@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { UserModel } from '../model/user-model';
 import { Config } from '../common/config';
 import { AuthenticationObj } from '../model/authenticationObj';
-import { AppComponent } from '../app.component';
 import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
@@ -26,7 +24,7 @@ export class AuthService {
         'Content-Type': 'application/json'
       })
     };
-    return this.http.post<AuthenticationObj>(Config.ui2_service + '/ang/login', { username, password }, httpOptions);
+    return this.http.post<AuthenticationObj>(Config.ZUUL_SERVICE + '/pos/login', { username, password }, httpOptions);
   }
 
   storeCurrentUserInfo(authObj: AuthenticationObj) {
@@ -34,8 +32,6 @@ export class AuthService {
     localStorage.setItem('currentUser', JSON.stringify(authObj));
     this.currentUserSubject.next(authObj);
   }
-
-  // getCurrentUserInfo()
 
   logout() {
     // remove user from local storage and set current user to null
