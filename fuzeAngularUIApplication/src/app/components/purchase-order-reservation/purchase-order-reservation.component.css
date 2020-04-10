@@ -1,0 +1,11 @@
+.res-tab {
+    font: 400 13.3333px Arial;
+    padding: 7px 6px 2px;
+    border-width: 2px;
+    border-style: groove;
+    border-color: aliceblue;
+    text-align: -webkit-left;
+    align-items: flex-start;
+    background-color: buttonface;
+    width: 100%;
+}

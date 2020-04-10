@@ -13,9 +13,8 @@ public class AuthorizationFilter implements HandlerInterceptor {
 		UserInfo user = (UserInfo)request.getSession().getAttribute("currentUserInfo");
 		switch (request.getRequestURI()) {
 		case "/reports":
-			if(!user.getUserRole().contains("ADMIN")) {
+			if(!user.getUserRole().contains(UserRoles.ADMIN.getValue()))
 				throw new AuthorizationException();
-			}
 			break;
 		default:
 			break;

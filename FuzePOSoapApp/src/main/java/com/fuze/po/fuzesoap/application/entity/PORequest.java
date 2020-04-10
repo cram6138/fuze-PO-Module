@@ -41,6 +41,9 @@ public class PORequest {
 	@JoinTable(name = "po_projects", joinColumns = @JoinColumn(name = "po_request_id"), inverseJoinColumns = @JoinColumn(name = "project_id"))
 	private Set<ProjectEntity> projects;
 
+	@Column(name = "ps_project")
+	private String psProject;
+
 	public int getId() {
 		return id;
 	}
@@ -105,10 +108,19 @@ public class PORequest {
 		this.poName = poName;
 	}
 
+	public String getPsProject() {
+		return psProject;
+	}
+
+	public void setPsProject(String psProject) {
+		this.psProject = psProject;
+	}
+
 	@Override
 	public String toString() {
-		return "PORequest [id=" + id + ", pslc=" + pslc + ", poStatus=" + poStatus + ", teritory=" + teritory
-				+ ", market=" + market + ", siteTracker=" + siteTracker + ", projects=" + projects + "]";
+		return "PORequest [id=" + id + ", poName=" + poName + ", pslc=" + pslc + ", poStatus=" + poStatus
+				+ ", teritory=" + teritory + ", market=" + market + ", siteTracker=" + siteTracker + ", projects="
+				+ projects + ", psProject=" + psProject + "]";
 	}
 
 }

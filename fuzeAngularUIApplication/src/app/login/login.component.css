@@ -1,0 +1,25 @@
+
+.body-bg {
+  background-color: rgb(127, 157, 247);
+}
+.login-sec {
+    width: 30%;
+    margin-left: 35%;
+    padding: 2%;
+    height: 30%;
+    background-color: rgb(240, 137, 185);
+}
+
+.error-message {
+  color: red;
+}
+
+.input-width{
+  width: 170;
+}
+
+mat-card-title {
+  justify-content: center;
+  font-size: x-large;
+  font-weight: bold;
+}

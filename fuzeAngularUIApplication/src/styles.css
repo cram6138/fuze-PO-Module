@@ -2,3 +2,25 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.mat-expansion-panel-header-title {
+    color: red;
+}
+
+.mat-expansion-panel {
+    background: rgb(247, 245, 245);
+}
+
+.mat-expansion-indicator::after {
+    color: red;
+}
+
+.mat-body p, .mat-body-1 p, .mat-typography p {
+    color: black;
+}
+
+.mat-expansion-panel-header:not([aria-disabled=true]) {
+    border-style: ridge;
+    border-width: thin;
+    border: #ff4619;
+}
