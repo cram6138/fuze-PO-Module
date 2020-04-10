@@ -8,6 +8,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.Column;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -311,6 +312,8 @@ public class PODetailsEndpoint {
 							+ dbProject.get().getLocalMarket().substring(0, 2).toUpperCase() + dtf.format(now);
 
 					containerEntity.setMarket(dbProject.get().getMarket());
+
+					containerEntity.setPoRequestId(request.getPoRequestId());
 					containerEntity.setTerritory(dbPORequest.get().getTeritory());
 					containerEntity.setSubMarket(dbProject.get().getSubMarket());
 					containerEntity.setLocalMarket(dbProject.get().getLocalMarket());
