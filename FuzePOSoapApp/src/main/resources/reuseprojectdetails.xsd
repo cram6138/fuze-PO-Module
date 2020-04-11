@@ -20,8 +20,8 @@
 				<xs:element name="psProject" type="xs:string" />
 				<xs:element name="fuzeProjectId" type="xs:string" />
 				<xs:element name="psProjectStatus" type="xs:string" />
-				<xs:element name="psProjectEffectiveDate" type="xs:date" />
-				<xs:element name="useByDate" type="xs:date" />
+				<xs:element name="psProjectEffectiveDate" type="xs:string" />
+				<xs:element name="useByDate" type="xs:string" />
 				<xs:element name="psProjectDescription" type="xs:string" />
 				<xs:element name="pslcDescription" type="xs:string" />
 				<xs:element name="message" type="xs:string" />

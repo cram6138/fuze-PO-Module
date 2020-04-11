@@ -1,8 +1,10 @@
 package com.fuze.po.fuzesoap.application;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
@@ -10,7 +12,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import javax.persistence.Column;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -368,26 +369,40 @@ public class PODetailsEndpoint {
 			Optional<ProjectEntity> dbProjectByProjectName = projectEntityRepository
 					.findByProjectName(request.getPsProject());
 
-			XMLGregorianCalendar xmlDate = null;
-			GregorianCalendar gc = new GregorianCalendar();
-			gc.add((GregorianCalendar.DAY_OF_WEEK), 135);
-			xmlDate = DatatypeFactory.newInstance().newXMLGregorianCalendar(gc);
-
-			XMLGregorianCalendar xmlDate1 = null;
-			GregorianCalendar gc1 = new GregorianCalendar();
-			xmlDate1 = DatatypeFactory.newInstance().newXMLGregorianCalendar(gc1);
+			
+			Date currentDate = new Date();
+			Calendar c = Calendar.getInstance();
+	        c.setTime(currentDate);
+	        c.add(Calendar.DATE, 135);
+	        Date psDate = c.getTime();
+			SimpleDateFormat psSimpleDate = new SimpleDateFormat("MM-dd-YYYY");
+			SimpleDateFormat useBySimpleDate = new SimpleDateFormat("MM-dd-YYYY");
+			String psProjectEffectiveDate = psSimpleDate.format(psDate);
+			String useByDate = useBySimpleDate.format(new Date());
+			
+			
+			/*
+			 * XMLGregorianCalendar xmlDate = null; GregorianCalendar gc = new
+			 * GregorianCalendar(); gc.add((GregorianCalendar.DAY_OF_WEEK), 135); xmlDate =
+			 * DatatypeFactory.newInstance().newXMLGregorianCalendar(gc);
+			 * 
+			 * XMLGregorianCalendar xmlDate1 = null; GregorianCalendar gc1 = new
+			 * GregorianCalendar(); xmlDate1 =
+			 * DatatypeFactory.newInstance().newXMLGregorianCalendar(gc1);
+			 */
+			 
 
 			Optional<ProjectEntity> dbProject = projectEntityRepository.findByPslc(request.getPslcLocationCode());
 
-			gc.setTime(dbProject.get().getEffectiveDate());
+			//gc.setTime(dbProject.get().getEffectiveDate());
 			if (dbProject.isPresent()) {
 				response.setPslcLocationCode(dbProject.get().getPslc());
 				response.setFuzeProjectId(dbProject.get().getFuzeProject());
 				response.setPslcDescription(dbProject.get().getPslc_description());
 				response.setPsProject(dbProject.get().getProjectName());
 				response.setPsProjectDescription(dbProject.get().getProject_description());
-				response.setPsProjectEffectiveDate(xmlDate);
-				response.setUseByDate(xmlDate1);
+				response.setPsProjectEffectiveDate(psProjectEffectiveDate);
+				response.setUseByDate(useByDate);
 				response.setPsProjectStatus(dbProject.get().getProjectStatus());
 				response.setStatus(1);
 				response.setMessage("success");
@@ -406,8 +421,8 @@ public class PODetailsEndpoint {
 				response.setPslcDescription(dbProjectByProjectName.get().getPslc_description());
 				response.setPsProject(dbProjectByProjectName.get().getProjectName());
 				response.setPsProjectDescription(dbProjectByProjectName.get().getProject_description());
-				response.setPsProjectEffectiveDate(xmlDate);
-				response.setUseByDate(xmlDate1);
+				response.setPsProjectEffectiveDate(psProjectEffectiveDate);
+				response.setUseByDate(useByDate);
 				response.setPsProjectStatus(dbProjectByProjectName.get().getProjectStatus());
 				response.setStatus(1);
 				response.setMessage("success");
