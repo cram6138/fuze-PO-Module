@@ -1,5 +1,6 @@
 package com.po.reservation.service;
 
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -12,6 +13,11 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import javax.persistence.EntityManager;
+import javax.persistence.ParameterMode;
+import javax.persistence.PersistenceContext;
+import javax.persistence.StoredProcedureQuery;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +46,8 @@ import com.po.reservation.repository.UserRepository;
  */
 @Service
 public class ContainerService {
+	@PersistenceContext
+	private EntityManager em;
 
 	private static Logger logger = LoggerFactory.getLogger(ContainerService.class);
 
@@ -288,6 +296,9 @@ public class ContainerService {
 				if(container.getReservationCreationDate()!=null) {
 					containerInfo.setReservationCreationDate(new SimpleDateFormat("yyyy-MM-dd").format(container.getReservationCreationDate()));
 				}
+				if(container.getUseBy()!=null) {
+					containerInfo.setUseBy(new SimpleDateFormat("dd-MMM-yy").format(container.getUseBy()));
+				}
 				ContainerInfoList.add(containerInfo);
 			}
 		}
@@ -437,4 +448,7 @@ public class ContainerService {
 	    }	
 		return containerInfo;
 	}
+
+
+	
 }
