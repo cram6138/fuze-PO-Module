@@ -17,6 +17,7 @@ public class ContainerInfo {
 	private String pslc;
 	private String reservedUsername;
 	private Date useByDate;
+	private String useBy;
 	private String reservationCreationDate;
 	private String fuzeStatus;
 	private String catsStatus;
@@ -222,4 +223,11 @@ public class ContainerInfo {
 		this.reserved = reserved;
 	}
 
+	public String getUseBy() {
+		return useBy;
+	}
+
+	public void setUseBy(String useBy) {
+		this.useBy = useBy;
+	}
 }
