@@ -332,26 +332,31 @@ $(document).ready(function(){
 											},
 											{
 												field : "containerCode",
-												title : "ContainerCode",
+												title : "Container Code",
 												width : "240px"
 											},
 											
 												{ title: "Reserving",
 												 columns: [{
 													field : "fuzeReservationId",
-													title : "fuzeReservationId",
+													title : "Fuze Reservation Id",
 													width : "180px"
 												},
 												{
 													field : " fuzeProjectId",
-													title : "fuzeProjectId",
+													title : "Fuze ProjectId",
 													width : "120px"
 													
+												},
+												{
+													field : "userBy",
+													title : "UserBy Date",
+													width : "120px"
 												},
 												
 												{
 													field : "psproject",
-													title : "psproject",
+													title : "PS Project",
 													width : "120px"
 												},
 												{
@@ -361,33 +366,33 @@ $(document).ready(function(){
 												},
 												{
 													field : " reservedUsername",
-													title : "reservedUsername",
+													title : "Reserved Username",
 													width : "120px"
 												},
 												{
 													field : " fuzeStatus",
-													title : "fuzeStatus",
+													title : "Fuze Status",
 													width : "120px"
 												}]
 												},
 													{
 														field : " catsStatus",
-														title : "catsStatus",
+														title : "Cats Status",
 														width : "120px"
 													},
 													{
 														field : " localMarket",
-														title : "localMarket",
+														title : "Local Market",
 														width : "120px"
 													},
 													{
 														field : " buyerId",
-														title : "buyerId",
+														title : "Buyer Id",
 														width : "120px"
 													},
 													{
 														field : " buyerName",
-														title : "buyerName",
+														title : "Buyer Name",
 														width : "120px"
 													
 											
@@ -1040,15 +1045,16 @@ function SetPSLC(item){
 	           "pslcLocationCode":item
 	       }),
 	        success: function (result) {
-      	        	
+	        	var dateFormat= formatDate(result.useByDate);
+	        	var ProjectEffectiveDate =formatDate(result.psProjectEffectiveDate);
 	        	document.getElementById("psProjectStatus").innerHTML=result.psProjectStatus;
-	        	document.getElementById("useByDate").value=result.useBy;
+	        	document.getElementById("useByDate").value=dateFormat;
 				document.getElementById("usePsProject123").value=result.psProject;
 				document.getElementById("fuzeProjectId123").value=result.fuzeProjectId;
 				document.getElementById("useAtPslc").innerHTML=result.pslcLocationCode;
 				document.getElementById("psDescription").innerHTML=result.psProjectDescription;
 				document.getElementById("pslcDesc").innerHTML=result.pslcDescription;
-				document.getElementById("psProjectDate").innerHTML=result.psProjectEffectiveDate;
+				document.getElementById("psProjectDate").innerHTML=ProjectEffectiveDate;
               psStatus =result.psProjectStatus;
 				},
 	        error: function (result) {
@@ -1057,4 +1063,19 @@ function SetPSLC(item){
 	         }
 	       });
 	 })
+}
+
+
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join('-');
 }

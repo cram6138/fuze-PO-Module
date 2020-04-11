@@ -175,9 +175,9 @@ padding: 10px;
 						<tr>
 							<th>Id</th>
 							<th>Name</th>
-							<th>description</th>
-							<th>vendor</th>
-							<th>vendorId</th>
+							<th>Description</th>
+							<th>Price</th>
+							
 						</tr>
 						<tbody id="catalog_table">
 						
@@ -786,10 +786,7 @@ var popupNotification = $("#popupNotification").kendoNotification({
 											+ '</td><td>'
 											+ ListData.description
 											+ '</td><td>'
-											+ ListData.vendor
-											+ '</td><td>'
-											+ ListData.vendorId
-											
+											+ ListData.price
 											+ '</td></tr>';
 											
 								});
