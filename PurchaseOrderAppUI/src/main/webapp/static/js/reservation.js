@@ -23,7 +23,7 @@ function onChange(e) {
 	// kendoConsole.log("The selected product ids are: [" +
 	// this.selectedKeyNames().join(", ") + "]");
 };
-function onClick(e) {
+/*function onClick(e) {
 	var grid = $("#grid").data("kendoGrid");
 	oldPageSize = grid.dataSource.pageSize();
 	grid.dataSource.pageSize(grid.dataSource.data().length);
@@ -34,13 +34,13 @@ function onClick(e) {
 	}
 	;
 	grid.dataSource.pageSize(oldPageSize);
-};
+};*/
 // bind click event to the checkbox
-function isNumeric(n) {
+/*function isNumeric(n) {
 	return !isNaN(parseFloat(n)) && isFinite(n);
-}
+}*/
 
-function getBoolean(str) {
+/*function getBoolean(str) {
 	if ("true".startsWith(str)) {
 		return true;
 	} else if ("false".startsWith(str)) {
@@ -48,7 +48,7 @@ function getBoolean(str) {
 	} else {
 		return null;
 	}
-}
+}*/
 var LocalMarket=null;
 var containerCode=null;
 var buyer=null;
@@ -275,13 +275,14 @@ $(document).ready(function(){
 													fields : {
 														"id":{type : "string"},
 												        "containerCode": {type : "string"},
+												        "po_name": {type : "string"},
 												        "territory": {type : "string"},
 												        "fuzeReservationId": {type : "string"},
 												        "fuzeProjectId": {type : "string"},
 												        "projectName": {type : "string"},
 												        "pslc":{type : "string"},
 												        "reservedUsername": {type : "string"},
-												        "useByDate": {type : "string"},
+												        "useBy": {type : "string"},
 												        "reservationCreationDate":{type : "string"},
 												        "fuzeStatus":{type : "string"},
 												        "catsStatus": {type : "string"},
@@ -300,7 +301,7 @@ $(document).ready(function(){
 													}
 												}
 											},
-											pageSize : 10
+											pageSize : 5
 										},
 										groupable: true,
 				                        sortable: true,
@@ -316,18 +317,23 @@ $(document).ready(function(){
 												title : "Action",
 												width : "160px",
 												//template : "<a href='javascript:openPODetail()' id='name-link1'><i class='fa fa-lock'></i>&nbsp;Reserve</a>"
-												template :"#if(reserved==false){#<a href='javascript:reservedStage(#=id#,#=reserved#)' id='name-link1'><i class='fa fa-lock'></i>&nbsp;Reserve</a>#}else{#<a href='javascript:reservedStage(#=id#,#=reserved#)' id='name-link1'><i class='fa fa-lock'></i>&nbsp;UnReserve</a>#}#"
+												template :"#if(reserved==false){#<a href='javascript:reservedStage(#=id#,#=reserved#)' id='name-link1'><i class='fa fa-lock'></i>&nbsp;Reserve</a>#}else{#<a href='javascript:reservedStage(#=id#,#=reserved#)' id='name-link1'><i class='fa fa-unlock' aria-hidden='true'></i>&nbsp;UnReserve</a>#}#"
 											},
-											{
+											/*{
 												field : "projectName",
 												title : "View Details",
 												width : "120px",
 												template : "<a href='javascript:openPODetail()' id='name-link1'><i class='fa fa-eye' aria-hidden='true'></i>&nbsp;Details</a>"
+											},*/
+											{
+												field : "po_name",
+												title : "PO Name",
+												width : "240px"
 											},
 											{
 												field : "containerCode",
 												title : "ContainerCode",
-												width : "180px"
+												width : "240px"
 											},
 											
 												{ title: "Reserving",
@@ -733,7 +739,7 @@ function reservedStage(selectedRow,ReservationStatus){
 			//document.getElementById("reservationComments").innerHTML=currentDatalist.reserved;
 						document.getElementById("reservationNotes").innerHTML=currentDatalist.reservationNotes;
 						document.getElementById("psProjectStatus").innerHTML=currentDatalist.psproject;
-						document.getElementById("useByDate").value=currentDatalist.useByDate;
+						document.getElementById("useByDate").value=currentDatalist.useBy;
 						document.getElementById("usePsProject123").value=currentDatalist.psproject;
 						document.getElementById("fuzeProjectId123").value=currentDatalist.fuzeProjectId;
 						document.getElementById("BusinessUnit").innerHTML=currentDatalist.pslc;
@@ -885,7 +891,7 @@ function listofItem() {
 						pslc : {
 							type : "string"
 						},
-						useByDate : {
+						useBy : {
 							type : "string"
 						},
 						fuzeStatus : {
@@ -912,57 +918,63 @@ function listofItem() {
 					}
 				}
 			},
-			pageSize : 10
+			pageSize : 5
 		},
-		sortable : true,
-
-		pageable : true,
-		filterable : true,
-		resizable : true,
+		groupable: true,
+        sortable: true,
+        resizable: true,
+        pageable: true,
+        filterable : true,
 		columns : [ {
 			field : "containerCode",
-			title : "containerCode",
+			title : "Container Code",
+			width : "240px"
+		}, 
+		{
+			field : "po_name",
+			title : "PO Name",
+			width : "240px"
+		},
+		{
+			field : " territory",
+			title : "Territory",
 			width : "180px"
 		}, {
-			field : " territory",
-			title : "territory",
-			width : "120px"
-		}, {
 			field : "projectName",
-			title : "projectName",
-			width : "120px"
+			title : "Project Name",
+			width : "180px"
 		}, {
 			field : " pslc",
 			title : "pslc",
-			width : "120px"
+			width : "100px"
 		}, {
-			field : " useByDate",
-			title : "useByDate",
-			width : "120px"
+			field : " useBy",
+			title : "UseBy Date",
+			width : "180px"
 		}, {
 			field : " fuzeStatus",
-			title : "fuzeStatus",
-			width : "120px"
+			title : "Fuze Status",
+			width : "180px"
 		}, {
 			field : " catsStatus",
-			title : "catsStatus",
-			width : "120px"
+			title : "Cats Status",
+			width : "180px"
 		}, {
 			field : " market",
-			title : "market",
-			width : "120px"
+			title : "Market",
+			width : "180px"
 		}, {
 			field : " localMarket",
-			title : "localMarket",
-			width : "120px"
+			title : "Local Market",
+			width : "180px"
 		}, {
 			field : " subMarket",
-			title : "subMarket",
-			width : "120px"
+			title : "Sub Market",
+			width : "180px"
 		}, {
 			field : " buyerName",
-			title : "buyerName",
-			width : "120px"
+			title : "Buyer Name",
+			width : "180px"
 		},
 
 		],
@@ -1030,7 +1042,7 @@ function SetPSLC(item){
 	        success: function (result) {
       	        	
 	        	document.getElementById("psProjectStatus").innerHTML=result.psProjectStatus;
-	        	document.getElementById("useByDate").value=result.useByDate;
+	        	document.getElementById("useByDate").value=result.useBy;
 				document.getElementById("usePsProject123").value=result.psProject;
 				document.getElementById("fuzeProjectId123").value=result.fuzeProjectId;
 				document.getElementById("useAtPslc").innerHTML=result.pslcLocationCode;

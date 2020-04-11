@@ -13,6 +13,7 @@
 <!-- Custom fonts for this template-->
 <link href="static/vendor/fontawesome-free/css/all.min.css"
 	rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link
 	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
 	rel="stylesheet">
@@ -31,8 +32,9 @@
     padding: 0px !important;
   }
   .paddinglt-5{
-  padding-left:10px;
-  font-weight:700;
+     padding-left: 10px;
+    font-weight: 600;
+    font-size: 13px;
   }
   form#formData input.form-control {
     height: 1.5rem !important;
@@ -85,7 +87,14 @@
         height: 26px;
     padding: 1px;
     }
-    
+    .k-panelbar>.k-item>.k-link.k-state-selected{
+    color: #ff6358;
+    background-color: #f4f4f4 !important;
+    }
+    .k-panelbar>.k-item>.k-link{
+    color: black;
+    background-color: #f4f4f4 !important;
+    }
 </style>
 </head>
 
@@ -367,7 +376,7 @@
 											
 										</div>
 									</li>
-									<li id="containerReserve">Container Reserve/ Un Reserve
+									<li id="containerReserve">Container Reserve / UnReserve
 										<div>
 										
 										<div class ="container-fluid">
@@ -599,7 +608,7 @@
   
   <div class="row">
   <div class="col-sm-12">
-  <div class="Header-content">ReservationNotes:</div>
+  <div class="Header-content">Reservation Notes:</div>
   <div class="form-group">
   <textarea rows="2" cols="2" class="form-control" id="reservationNotes"></textarea>
   </div>
@@ -754,6 +763,7 @@
 	                         id: "id",
 	                         fields: {
 	                        	 containerCode : {type:"string"},
+	                        	 po_name: {type:"string"},
 	                        	 MROrderCode: {type:"string"},
 	                        	 MRSource: {type:"string"},
 	                        	 fuzeReservationId: {type:"string"},
@@ -762,7 +772,7 @@
 	                        	 PSProject: {type:"string"},
 	                        	 pslc: {type:"string"},
 	                        	 reservedUsername: {type:"string"},
-	                        	 useByDate: {type:"string"},
+	                        	 useBy: {type:"string"},
 	                        	 reservationCreationDate: {type:"string"},
 	                        	 fuzeStatus: {type:"string"},
 	                        	 catsStatus: {type:"string"},
@@ -778,33 +788,31 @@
 			         pageSize: 10
 			    },
 			    groupable: true,
-                sortable: true,
-                resizable: true,
-                reorderable: true,
-                pageable: true,
+		        sortable: true,
+		        resizable: true,
+		        pageable: true,
+		        filterable : true,
                 change: onChange,
-			    
-	            filterable: true,
-			    
 			   columns: [
 			    	
-	                { field:"containerCode", title:"Container Code", width: "150px"},
+	                { field:"containerCode", title:"Container Code", width: "240px"},
+	                { field:"po_name", title:"PO Name", width: "240px"},
 	                { field:"MROrderCode", title:"MR Order Code", width: "150px"},
 	                { field:" MRSource",title:"MR Source", width: "150px"},
-	                { field:" fuzeReservationId", title:"Fuze Reservation Id" , width: "150px"},
+	                { field:" fuzeReservationId", title:"Fuze Reservation Id" , width: "240px"},
 	                { field:" fuzeProjectId",title:"Fuze Project Id", width: "150px"},
 	                { field:"projectName", title:"Project Name", width: "150px"},
 	                { field:"PSProject", title:"PS Project", width: "150px"},
 	                { field:" pslc",title:"PSLC", width: "150px"},
 	                { field:" reservedUsername", title:"Reserved By", width: "150px"},
-	                { field:" useByDate",title:"Use By Date", width: "150px"},						                
+	                { field:" useBy",title:"Use By Date", width: "240px"},						                
 	                { field:"reservationCreationDate", title:"Reservation Creation Date", width: "150px"},
 	                { field:"fuzeStatus", title:"Fuze Status", width: "150px"},
 	                { field:" catsStatus",title:"Cats Status", width: "150px"},
-	                { field:" territory", title:"Territory", width: "150px"},
+	                { field:" territory", title:"Territory", width: "200px"},
 	                { field:" market",title:"Market", width: "150px"},						                    
 	                { field:"subMarket", title:"Sub Market", width: "150px"},
-	                { field:"localMarket", title:"Local Market", width: "100px"},
+	                { field:"localMarket", title:"Local Market", width: "150px"},
 	                { field:" buyerId",title:"Buyer Id", width: "150px"},
 	                { field:" buyerName", title:"Buyer Name", width: "150px"},
 	                
