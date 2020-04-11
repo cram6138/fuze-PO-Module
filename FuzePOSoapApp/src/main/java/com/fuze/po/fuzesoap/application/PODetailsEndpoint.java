@@ -109,7 +109,7 @@ public class PODetailsEndpoint {
 
 	@Autowired
 	private UserEntityRepository userEntityRepository;
-	
+
 	@Autowired
 	private PORequestRepository poRequestRepository;
 
@@ -301,55 +301,53 @@ public class PODetailsEndpoint {
 		try {
 
 			Optional<PORequest> dbPORequest = poRequestRepository.findById(request.getPoRequestId());
-			
-			
+
 			Set<ProjectEntity> projects = new HashSet<ProjectEntity>();
-			for (ProjectEntity row: dbPORequest.get().getProjects()) {
+			for (ProjectEntity row : dbPORequest.get().getProjects()) {
 				Optional<ProjectEntity> dbProjectEnity = projectEntityRepository.findById(row.getId());
 				projects.add(dbProjectEnity.get());
-			
 
-			Optional<ProjectEntity> dbProject = projectEntityRepository
-					.findById(row.getId());
-			Optional<UserEntity> dbUserEntity = userEntityRepository.findById(request.getUserId());
+				Optional<ProjectEntity> dbProject = projectEntityRepository.findById(row.getId());
+				Optional<UserEntity> dbUserEntity = userEntityRepository.findById(request.getUserId());
 
-			if (dbPORequest.isPresent()) {
-				if (dbUserEntity.isPresent()) {
-					ContainerEntity containerEntity = new ContainerEntity();
+				if (dbPORequest.isPresent()) {
+					if (dbUserEntity.isPresent()) {
+						ContainerEntity containerEntity = new ContainerEntity();
 
-					DateTimeFormatter dtf = DateTimeFormatter.ofPattern("ddMyyyyhhmmss");
-					LocalDateTime now = LocalDateTime.now();
+						DateTimeFormatter dtf = DateTimeFormatter.ofPattern("ddMyyyyhhmmss");
+						LocalDateTime now = LocalDateTime.now();
 
-					String containercode = dbPORequest.get().getTeritory().substring(0, 2).toUpperCase()
-							+ dbProject.get().getMarket().substring(0, 2).toUpperCase()
-							+ dbProject.get().getSubMarket().substring(0, 2).toUpperCase()
-							+ dbProject.get().getLocalMarket().substring(0, 2).toUpperCase() + dtf.format(now);
+						String containercode = dbPORequest.get().getTeritory().substring(0, 2).toUpperCase()
+								+ dbProject.get().getMarket().substring(0, 2).toUpperCase()
+								+ dbProject.get().getSubMarket().substring(0, 2).toUpperCase()
+								+ dbProject.get().getLocalMarket().substring(0, 2).toUpperCase() + dtf.format(now);
 
-					containerEntity.setMarket(dbProject.get().getMarket());
+						containerEntity.setMarket(dbProject.get().getMarket());
+						containerEntity.setPoName(dbPORequest.get().getPoName());
 
-					containerEntity.setPoRequestId(request.getPoRequestId());
-					containerEntity.setTerritory(dbPORequest.get().getTeritory());
-					containerEntity.setSubMarket(dbProject.get().getSubMarket());
-					containerEntity.setLocalMarket(dbProject.get().getLocalMarket());
-					containerEntity.setProject(dbProject.get());
-					containerEntity.setBuyer(dbUserEntity.get());
-					containerEntity.setContainerCode(containercode);
-					containerEntity.setPslc(dbProject.get().getPslc());
-					containerEntity.setPSProject(dbProject.get().getProjectName());
-					containerEntity.setCatsStatus("EA");
+						containerEntity.setPoRequestId(request.getPoRequestId());
+						containerEntity.setTerritory(dbPORequest.get().getTeritory());
+						containerEntity.setSubMarket(dbProject.get().getSubMarket());
+						containerEntity.setLocalMarket(dbProject.get().getLocalMarket());
+						containerEntity.setProject(dbProject.get());
+						containerEntity.setBuyer(dbUserEntity.get());
+						containerEntity.setContainerCode(containercode);
+						containerEntity.setPslc(dbProject.get().getPslc());
+						containerEntity.setPSProject(dbProject.get().getProjectName());
+						containerEntity.setCatsStatus("EA");
 
-					containerEnityRepository.save(containerEntity);
-					response.setMessage("Successfully saved.");
-					response.setStatus(1);
+						containerEnityRepository.save(containerEntity);
+						response.setMessage("Successfully saved.");
+						response.setStatus(1);
+					} else {
+						response.setMessage("User not exists");
+						response.setStatus(0);
+					}
 				} else {
-					response.setMessage("User not exists");
+					response.setMessage("Purchase Order not exists");
 					response.setStatus(0);
 				}
-			} else {
-				response.setMessage("Purchase Order not exists");
-				response.setStatus(0);
 			}
-		}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -367,11 +365,6 @@ public class PODetailsEndpoint {
 
 		try {
 
-			/*
-			 * Optional<ContainerEntity> dbContainer =
-			 * containerEnityRepository.findByPslc(request.getPslcLocationCode());
-			 */
-
 			Optional<ProjectEntity> dbProjectByProjectName = projectEntityRepository
 					.findByProjectName(request.getPsProject());
 
@@ -384,30 +377,28 @@ public class PODetailsEndpoint {
 			GregorianCalendar gc1 = new GregorianCalendar();
 			xmlDate1 = DatatypeFactory.newInstance().newXMLGregorianCalendar(gc1);
 
-//			if (dbContainer.isPresent()) {
-				Optional<ProjectEntity> dbProject = projectEntityRepository.findByPslc(request.getPslcLocationCode());
+			Optional<ProjectEntity> dbProject = projectEntityRepository.findByPslc(request.getPslcLocationCode());
 
-				gc.setTime(dbProject.get().getEffectiveDate());
-				if (dbProject.isPresent()) {
-					response.setPslcLocationCode(dbProject.get().getPslc());
-					response.setFuzeProjectId(dbProject.get().getFuzeProject());
-					response.setPslcDescription(dbProject.get().getPslc_description());
-					response.setPsProject(dbProject.get().getProjectName());
-					response.setPsProjectDescription(dbProject.get().getProject_description());
-					response.setPsProjectEffectiveDate(xmlDate);
-					response.setUseByDate(xmlDate1);
-					response.setPsProjectStatus(dbProject.get().getProjectStatus());
-					response.setStatus(1);
-					response.setMessage("success");
+			gc.setTime(dbProject.get().getEffectiveDate());
+			if (dbProject.isPresent()) {
+				response.setPslcLocationCode(dbProject.get().getPslc());
+				response.setFuzeProjectId(dbProject.get().getFuzeProject());
+				response.setPslcDescription(dbProject.get().getPslc_description());
+				response.setPsProject(dbProject.get().getProjectName());
+				response.setPsProjectDescription(dbProject.get().getProject_description());
+				response.setPsProjectEffectiveDate(xmlDate);
+				response.setUseByDate(xmlDate1);
+				response.setPsProjectStatus(dbProject.get().getProjectStatus());
+				response.setStatus(1);
+				response.setMessage("success");
 
-				} else {
+			} else {
 
-					response.setStatus(0);
-					response.setMessage("project not mapped.");
+				response.setStatus(0);
+				response.setMessage("project not mapped.");
 
-				}
+			}
 
-//			}
 			if (dbProjectByProjectName.isPresent()) {
 
 				response.setPslcLocationCode(dbProjectByProjectName.get().getPslc());

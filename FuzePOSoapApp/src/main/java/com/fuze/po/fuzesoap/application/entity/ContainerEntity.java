@@ -82,11 +82,19 @@ public class ContainerEntity {
 	@Column(name = "pslc")
 	private String pslc;
 
-	
 	@Column(name = "porequest_id")
 	private Integer poRequestId;
 
-	
+	@Column(name = "po_name")
+	private String poName;
+
+	public String getPoName() {
+		return poName;
+	}
+
+	public void setPoName(String poName) {
+		this.poName = poName;
+	}
 
 	public Integer getPoRequestId() {
 		return poRequestId;
