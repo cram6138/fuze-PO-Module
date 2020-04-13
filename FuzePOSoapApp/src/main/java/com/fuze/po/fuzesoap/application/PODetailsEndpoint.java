@@ -369,32 +369,19 @@ public class PODetailsEndpoint {
 			Optional<ProjectEntity> dbProjectByProjectName = projectEntityRepository
 					.findByProjectName(request.getPsProject());
 
-			
 			Date currentDate = new Date();
 			Calendar c = Calendar.getInstance();
-	        c.setTime(currentDate);
-	        c.add(Calendar.DATE, 135);
-	        Date psDate = c.getTime();
+			c.setTime(currentDate);
+			c.add(Calendar.DATE, 135);
+			Date psDate = c.getTime();
 			SimpleDateFormat psSimpleDate = new SimpleDateFormat("MM-dd-YYYY");
 			SimpleDateFormat useBySimpleDate = new SimpleDateFormat("MM-dd-YYYY");
 			String psProjectEffectiveDate = psSimpleDate.format(psDate);
 			String useByDate = useBySimpleDate.format(new Date());
-			
-			
-			/*
-			 * XMLGregorianCalendar xmlDate = null; GregorianCalendar gc = new
-			 * GregorianCalendar(); gc.add((GregorianCalendar.DAY_OF_WEEK), 135); xmlDate =
-			 * DatatypeFactory.newInstance().newXMLGregorianCalendar(gc);
-			 * 
-			 * XMLGregorianCalendar xmlDate1 = null; GregorianCalendar gc1 = new
-			 * GregorianCalendar(); xmlDate1 =
-			 * DatatypeFactory.newInstance().newXMLGregorianCalendar(gc1);
-			 */
-			 
 
 			Optional<ProjectEntity> dbProject = projectEntityRepository.findByPslc(request.getPslcLocationCode());
 
-			//gc.setTime(dbProject.get().getEffectiveDate());
+			
 			if (dbProject.isPresent()) {
 				response.setPslcLocationCode(dbProject.get().getPslc());
 				response.setFuzeProjectId(dbProject.get().getFuzeProject());
