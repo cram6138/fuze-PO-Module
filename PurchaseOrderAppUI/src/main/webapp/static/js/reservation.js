@@ -275,7 +275,7 @@ $(document).ready(function(){
 													fields : {
 														"id":{type : "string"},
 												        "containerCode": {type : "string"},
-												        "po_name": {type : "string"},
+												        "poName": {type : "string"},
 												        "territory": {type : "string"},
 												        "fuzeReservationId": {type : "string"},
 												        "fuzeProjectId": {type : "string"},
@@ -326,7 +326,7 @@ $(document).ready(function(){
 												template : "<a href='javascript:openPODetail()' id='name-link1'><i class='fa fa-eye' aria-hidden='true'></i>&nbsp;Details</a>"
 											},*/
 											{
-												field : "po_name",
+												field : "poName",
 												title : "PO Name",
 												width : "240px"
 											},
@@ -936,7 +936,7 @@ function listofItem() {
 			width : "240px"
 		}, 
 		{
-			field : "po_name",
+			field : "poName",
 			title : "PO Name",
 			width : "240px"
 		},

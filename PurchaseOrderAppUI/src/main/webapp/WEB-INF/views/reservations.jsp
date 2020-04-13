@@ -763,7 +763,7 @@
 	                         id: "id",
 	                         fields: {
 	                        	 containerCode : {type:"string"},
-	                        	 po_name: {type:"string"},
+	                        	 poName: {type:"string"},
 	                        	 MROrderCode: {type:"string"},
 	                        	 MRSource: {type:"string"},
 	                        	 fuzeReservationId: {type:"string"},
@@ -796,7 +796,7 @@
 			   columns: [
 			    	
 	                { field:"containerCode", title:"Container Code", width: "240px"},
-	                { field:"po_name", title:"PO Name", width: "240px"},
+	                { field:"poName", title:"PO Name", width: "240px"},
 	                { field:"MROrderCode", title:"MR Order Code", width: "150px"},
 	                { field:" MRSource",title:"MR Source", width: "150px"},
 	                { field:" fuzeReservationId", title:"Fuze Reservation Id" , width: "240px"},
