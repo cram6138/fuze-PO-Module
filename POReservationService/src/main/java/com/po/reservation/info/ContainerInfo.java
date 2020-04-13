@@ -3,6 +3,8 @@ package com.po.reservation.info;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
+
 public class ContainerInfo {
 
 	private int id;
@@ -30,6 +32,8 @@ public class ContainerInfo {
 	private String reservationNotes;
 	private String message;
 	private boolean reserved;
+	private Integer poRequestId;
+	private String poName;
 
 	public List<ItemInfo> getItemsInfo() {
 		return itemsInfo;
@@ -229,5 +233,21 @@ public class ContainerInfo {
 
 	public void setUseBy(String useBy) {
 		this.useBy = useBy;
+	}
+
+	public Integer getPoRequestId() {
+		return poRequestId;
+	}
+
+	public void setPoRequestId(Integer poRequestId) {
+		this.poRequestId = poRequestId;
+	}
+
+	public String getPoName() {
+		return poName;
+	}
+
+	public void setPoName(String poName) {
+		this.poName = poName;
 	}
 }

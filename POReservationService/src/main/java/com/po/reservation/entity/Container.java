@@ -13,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedStoredProcedureQueries;
+import javax.persistence.NamedStoredProcedureQuery;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -91,6 +93,12 @@ public class Container {
 	@JoinColumn(name = "reserved_by_user_id")
 	@JsonIgnore
 	private User reservedByUser;
+	
+	@Column(name = "porequest_id")
+	private Integer poRequestId;
+
+	@Column(name = "po_name")
+	private String poName;
 
 	public String getPSProject() {
 		return PSProject;
@@ -260,6 +268,22 @@ public class Container {
 		this.reservedByUser = reservedByUser;
 	}
 
+	public Integer getPoRequestId() {
+		return poRequestId;
+	}
+
+	public void setPoRequestId(Integer poRequestId) {
+		this.poRequestId = poRequestId;
+	}
+
+	public String getPoName() {
+		return poName;
+	}
+
+	public void setPoName(String poName) {
+		this.poName = poName;
+	}
+
 	@Override
 	public String toString() {
 		return "Container [id=" + id + ", territory=" + territory + ", market=" + market + ", subMarket=" + subMarket
@@ -267,7 +291,8 @@ public class Container {
 				+ ", project=" + project + ", reserved=" + reserved + ", mrOrderCode=" + mrOrderCode
 				+ ", fuzeReservationId=" + fuzeReservationId + ", reservedBy=" + reservedBy + ", fuzeStatus="
 				+ fuzeStatus + ", catsStatus=" + catsStatus + ", useBy=" + useBy + ", reservationCreationDate="
-				+ reservationCreationDate + ", items=" + items + ",reservationNotes="+reservationNotes+ ",reservedByUser="+reservedByUser+"]";
+				+ reservationCreationDate + ", items=" + items + ",reservationNotes="+reservationNotes+ ""
+						+ ",reservedByUser="+reservedByUser+",poRequestId = "+poRequestId+",poName= "+poName+"]";
 	}
 
 }
