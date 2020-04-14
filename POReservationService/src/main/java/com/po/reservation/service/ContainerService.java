@@ -232,8 +232,7 @@ public class ContainerService {
 	 * @return List<ContainerInfo> containerInfoList
 	 */
 	public List<ContainerInfo> getReservedContainerByUser(final UserInfo userInfo) {
-		List<Container> containers = containerRepository.findAllReservedContainerByUser(userInfo.getTerritory(),
-				userInfo.getMarket(), userInfo.getId());
+		List<Container> containers = containerRepository.findAllReservedContainerByUser(userInfo.getId());
 		List<ContainerInfo> containerInfoList = new ArrayList<ContainerInfo>();
 
 		if (containers != null && !containers.isEmpty()) {
@@ -449,6 +448,4 @@ public class ContainerService {
 		return containerInfo;
 	}
 
-
-	
 }
