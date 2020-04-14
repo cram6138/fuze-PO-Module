@@ -1,23 +1,35 @@
-{
-  "compileOnSave": false,
-  "compilerOptions": {
-    "baseUrl": "./",
-    "outDir": "./dist/out-tsc",
-    "sourceMap": true,
-    "declaration": false,
-    "downlevelIteration": true,
-    "experimentalDecorators": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "importHelpers": true,
-    "target": "es2015",
-    "lib": [
-      "es2018",
-      "dom"
-    ]
+{ 
+  "compilerOptions":{ 
+     "target":"es6",
+     "moduleResolution":"node",
+     "module":"commonjs",
+     "declaration":false,
+     "noLib":false,
+     "emitDecoratorMetadata":true,
+     "sourceMap":true,
+     "pretty":true,
+     "allowUnreachableCode":true,
+     "allowUnusedLabels":true,
+     "noImplicitAny":true,
+     "noImplicitReturns":false,
+     "noImplicitUseStrict":false,
+     "experimentalDecorators": true,
+     "allowJs": true,
+     "outDir": "./dist/out-tsc",
+     "baseUrl":"./",
+     "importHelpers": true,
+     "listFiles":false,
+     "noEmitHelpers":true
   },
-  "angularCompilerOptions": {
-    "fullTemplateTypeCheck": true,
-    "strictInjectionParameters": true
-  }
-}
+  "include":[ 
+    "src/**/*.d.ts"
+  ],
+  "files": [
+    "src/main.ts",
+        "src/polyfills.ts" 
+  ],
+  "exclude":[ 
+     "node_modules"
+  ],
+  "compileOnSave":false
+}   

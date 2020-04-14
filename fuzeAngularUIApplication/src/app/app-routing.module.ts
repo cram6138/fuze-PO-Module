@@ -1,24 +1,20 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LoginComponent } from './login/login.component';
-import { HomeComponent } from './components/home/home.component';
-import { PurchaseOrderComponent } from './components/purchase-order/purchase-order.component';
-import { PurchaseOrderReservationComponent } from './components/purchase-order-reservation/purchase-order-reservation.component';
-
+import { AppComponent } from './app.component';
+import { AuthGuard } from './shared';
 
 const routes: Routes = [
-
-  {path: 'purchase-order', component: PurchaseOrderComponent},
-  {path: 'po-reservation', component: PurchaseOrderReservationComponent},
-  {path: 'home', component: HomeComponent},
-  {path: '', component: LoginComponent},
-  {path: '**', component: LoginComponent},
-
+    { path: '', loadChildren: () => import('./layout/layout.module').then(m => m.LayoutModule), canActivate: [AuthGuard] },
+    { path: 'login', loadChildren: () => import('./login/login.module').then(m => m.LoginModule) },
+    { path: 'signup', loadChildren: () => import('./signup/signup.module').then(m => m.SignupModule) },
+    { path: 'error', loadChildren: () => import('./server-error/server-error.module').then(m => m.ServerErrorModule) },
+    { path: 'access-denied', loadChildren: () => import('./access-denied/access-denied.module').then(m => m.AccessDeniedModule) },
+    { path: 'not-found', loadChildren: () => import('./not-found/not-found.module').then(m => m.NotFoundModule) },
+    { path: '**', redirectTo: 'not-found' }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule]
 })
-
-export class AppRoutingModule { }
+export class AppRoutingModule {}

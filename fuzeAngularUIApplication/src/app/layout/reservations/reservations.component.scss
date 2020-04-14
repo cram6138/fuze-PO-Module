@@ -1,0 +1,73 @@
+.k-panelbar>.k-item>.k-link.k-state-selected {
+	color: black;
+	background-color: #f4f4f4;
+}
+
+.form-control{
+        height: 1.8rem !important;
+    padding: 0px !important;
+  }
+  .paddinglt-5{
+     padding-left: 10px;
+    font-weight: 600;
+    font-size: 13px;
+  }
+  form#formData input.form-control {
+    height: 1.5rem !important;
+    border-radius: 5px !important;
+}
+  /* tr.reserved,tr.k-alt.reserved {
+        background-color: #f0fff0;
+    } */
+    tr.Unreserved,tr.k-alt.Unreserved{
+    background-color: #cef7ce;
+   /* background-color: #fff0f0 ; */
+    }
+    .box-styles{
+    background:#f8f9fc;
+    display:inline-block;
+    padding-top:5px;
+    padding-bottom:5px;
+    margin:2px;
+    }
+    .card-header{
+        padding: .2rem .25rem;
+    margin-bottom: 0;
+    background-color: #f8f9fc;
+    border-bottom:#e3e6f0;
+    }
+    .list-group-item{
+     padding: .2rem .25rem;
+    }
+    .no-padding{
+        padding-right:0.4rem !important ;
+    padding-left: 0.4rem !important;
+    }
+    .Header-content{
+    padding: .2rem .25rem;
+    background-color:#f8f9fc;
+    border:2px solid #f8f9fc;
+    color:#e74a3b;
+    position:relative;
+    }
+   .field-height {
+    height: 100px !important;
+    }
+    .rightButton{
+    position: absolute;
+    right: 0px;
+    top: 0px;
+}
+    
+    .custombuttonRefresh{
+        height: 26px;
+    padding: 1px;
+    }
+    .k-panelbar>.k-item>.k-link.k-state-selected{
+    color: #ff6358;
+    background-color: #f4f4f4 !important;
+    }
+    .k-panelbar>.k-item>.k-link{
+    color: black;
+    background-color: #f4f4f4 !important;
+    }

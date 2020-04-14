@@ -1,0 +1,376 @@
+<div [@routerTransition]>
+    <div class="panelbar-wrapper">
+        <kendo-panelbar>
+            <kendo-panelbar-item [title]="'MyReservations'">
+                <ng-template kendoPanelBarContent>
+                <kendo-grid
+                [kendoGridBinding]="MyReservations"
+                [pageSize]="10"
+                [pageable]="true"
+                [sortable]="true"
+                [filterable]="true"
+                [groupable]="true"
+                [height]="510">
+                <kendo-grid-column field="CompanyName" [width]="140"></kendo-grid-column>
+                <kendo-grid-column field="ContactName" [width]="120"></kendo-grid-column>
+                <kendo-grid-column field="City" [width]="100"></kendo-grid-column>
+                <kendo-grid-column field="ContactTitle" [width]="130"></kendo-grid-column>
+            </kendo-grid>
+            </ng-template>
+            </kendo-panelbar-item>
+            <kendo-panelbar-item [title]="'Container Search / Reserve'">
+                <ng-template kendoPanelBarContent>
+                    <form class="user">
+                        <div class="form-group row">
+                            <div class="col-sm-3 mb-3 mb-sm-0">
+                                <label style="color: #e74a3b;">Teritory</label> <input
+                                    class="form-control" id="Teritory">
+                            </div>
+                            <div class="col-sm-3">
+                                <label style="color: #e74a3b;">Markets</label> <input
+                                    class="form-control" id="Markets">
+                            </div>
+                            <div class="col-sm-3">
+                                <label style="color: #e74a3b;">Sub Markets</label> <input
+                                    class="form-control" id="SubMarket">
+                            </div>
+                            <div class="col-sm-3">
+                                <label style="color: #e74a3b;">Local Market</label> <input
+                                    class="form-control" id="LocalMarket">
+                            </div>
+                            <div class="col-sm-3">
+                                <label style="color: #e74a3b;">Container Code</label> <input
+                                    class="form-control" id="containerCode">
+                            </div>
+                            <div class="col-sm-3">
+                                <label style="color: #e74a3b;">Buyer</label> <input
+                                    class="form-control" id="buyer">
+                            </div>
+                            <div class="col-sm-3">
+                                <label style="color: #e74a3b;">Project ID</label> <input
+                                    class="form-control" id="projectID">
+                            </div>
+                            <div class="col-sm-3">
+                                <label style="color: #e74a3b;">Search Key</label> <input
+                                    class="form-control" id="searchKeyId">
+                            </div>
+
+                            <div class="col-sm-3">
+                                <label style="width: 100%;">&nbsp;</label> <a href="#"
+                                    id="get"
+                                    class="btn btn-danger btn-user btn-block d-lg-inline">
+                                    Search </a> 
+
+                            </div>
+
+                        </div>
+                    </form>
+                    <kendo-grid
+                    [kendoGridBinding]="ContainerSearch"
+                    [pageSize]="10"
+                    [pageable]="true"
+                    [sortable]="true"
+                    [filterable]="true"
+                    [groupable]="true"
+                    [height]="510">
+                    <kendo-grid-column field="CompanyName" [width]="140"></kendo-grid-column>
+                    <kendo-grid-column field="ContactName" [width]="120"></kendo-grid-column>
+                    <kendo-grid-column field="City" [width]="100"></kendo-grid-column>
+                    <kendo-grid-column field="ContactTitle" [width]="130"></kendo-grid-column>
+                </kendo-grid>
+                </ng-template>
+               
+            </kendo-panelbar-item>
+            <kendo-panelbar-item [title]="'Container Details'" >
+                <ng-template kendoPanelBarContent>
+
+                    
+                    <kendo-grid
+                    [kendoGridBinding]="ContainerDetails"
+                    [pageSize]="10"
+                    [pageable]="true"
+                    [sortable]="true"
+                    [filterable]="true"
+                    [groupable]="true"
+                    [height]="510">
+                    <kendo-grid-column field="CompanyName" [width]="140"></kendo-grid-column>
+                    <kendo-grid-column field="ContactName" [width]="120"></kendo-grid-column>
+                    <kendo-grid-column field="City" [width]="100"></kendo-grid-column>
+                    <kendo-grid-column field="ContactTitle" [width]="130"></kendo-grid-column>
+                </kendo-grid>
+                </ng-template>
+                    </kendo-panelbar-item>
+            <kendo-panelbar-item [title]="'Container Reserve / UnReserve'" >
+                <ng-template kendoPanelBarContent>
+                <div>
+										
+                    <div class ="container-fluid">
+                    <div class="row">
+                    <div class="col-sm-12">
+                     <div class="Header-content">
+                    <div class="d-inline">Reservation Details</div>
+                    <div class="d-inline text-right rightButton">
+                        <button class="btn btn-danger btn-user btn-block custombuttonRefresh" id="reFreshFunc">Refresh &nbsp;<i class="fa fa-arrow-right"></i></button>
+                    </div>
+                     
+                     </div>
+                     </div>
+                    </div>
+                     <div class="row">
+                    
+<div class="col-sm box-styles">
+Container Code:<span class="paddinglt-5" id="containerCode_1"></span>
+</div>
+<div class="col-sm box-styles">
+Business Unit:   <span class="paddinglt-5" id="BusinessUnit"></span>
+</div>
+<div class="col-sm box-styles">
+Location Detail Code: <span class="paddinglt-5" id="LocationDetailCode"></span>
+</div>
+<div class="col-sm box-styles">
+Location Name: <span class="paddinglt-5" id="LocationName"></span>
+</div>
+</div>
+
+<div class="row">
+
+
+<div class="col-sm-4 no-padding">
+<div class="Header-content">Fuze Details</div>	
+<div class="card">
+                      
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Fuze Reservation id:<span class="paddinglt-5" id="fuzeReservationId"></span></li>
+                    <li class="list-group-item">Reservation Creation Date:<span  class="paddinglt-5" id="reservationCreationDate"></span></li>
+                   
+                  </ul>
+                        </div>
+                         <div class="Header-content">Reserve for:</div>
+                         <div class="card">
+                      
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                    <form id="formData">
+<div class="form-row">
+<div class="col">
+Reserve for:
+</div>
+<div class="col">
+<input type="text" class="form-control paddinglt-5"  id="reservedUsername">
+</div>
+</div>
+</form>
+                    
+                   </li>
+                    </ul>
+                    </div>	
+</div>
+<div class="col-sm-8 no-padding">
+<div class="Header-content">Reuse Project Details</div>
+<div class="row">
+<div class="col-sm no-padding">
+<div class="card">
+                          
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><form id="formData">
+<div class="form-row">
+<div class="col">
+Use At PS Location:
+</div>
+<div class="col">
+<input type="text" class="form-control"   id="useAtPslc">
+</div>
+</div>
+</form></li>
+                    <li class="list-group-item">
+                    
+                    <form id="formData">
+<div class="form-row">
+<div class="col">
+USe At PS Project:
+</div>
+<div class="col">
+<input type="text" class="form-control paddinglt-5" id="usePsProject123" value="">
+</div>
+</div>
+</form>
+                    
+                   </li>
+                    <li class="list-group-item">
+                    <form id="formData">
+<div class="form-row">
+<div class="col">
+Use By Date:
+</div>
+<div class="col">
+<input type="text" class="form-control paddinglt-5"  id="useByDate">
+</div>
+</div>
+</form>
+                    
+                   </li>
+                    <li class="list-group-item">
+                    
+                              <form id="formData">
+<div class="form-row">
+<div class="col">
+Fuze Project ID:
+</div>
+<div class="col">
+<input type="text" class="form-control paddinglt-5"  id="fuzeProjectId123" value="">
+</div>
+</div>
+</form>
+                  </li>
+                  </ul>
+                        </div>
+</div>
+<div class="col-sm no-padding">
+<div class="card">
+<ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                    <form id="formData">
+<div class="form-row">
+<div class="col">
+PS Project Status:
+</div>
+<div class="col">
+<span class="paddinglt-5"  id="psProjectStatus"></span>
+</div>
+</div>
+</form>
+                    
+                    
+                    </li>
+                    <li class="list-group-item">
+                     <form id="formData">
+<div class="form-row">
+<div class="col">
+PS Project effective Date:
+</div>
+<div class="col">
+<span  class="paddinglt-5" id="psProjectDate"></span>
+</div>
+</div>
+</form>
+                    
+                    
+                   </li>
+                    <li class="list-group-item">
+                    
+                    <form id="formData">
+<div class="form-row">
+<div class="col">
+PS Project Description:
+</div>
+<div class="col">
+<span class="paddinglt-5"  id="psDescription"></span>
+</div>
+</div>
+</form>
+                    
+                   </li>
+                    <li class="list-group-item">
+                    
+                    <form id="formData">
+<div class="form-row">
+<div class="col">
+PSLC Description:
+</div>
+<div class="col">
+<span class="paddinglt-5"  id="pslcDesc"></span>
+</div>
+</div>
+</form>
+                    
+                   </li>
+                  </ul>
+</div>
+</div>
+</div>
+<div class="Header-content">Reservation Bypass Details</div>
+<div class="row">
+<div class="col-sm no-padding">
+<div class="card">
+<ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                     <form id="formData">
+<div class="form-row">
+<div class="col">
+Pass By Reason :
+</div>
+<div class="col">
+<input type="text" class="form-control paddinglt-5"  id="fuzeProjectId">
+</div>
+</div>
+</form>
+                    
+                   </li>
+                    </ul>
+                    </div>
+                    </div>
+                    <div class="col-sm no-padding">
+<div class="card">
+<ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                    <form id="formData">
+<div class="form-row">
+<div class="col">
+TUI Code:
+</div>
+<div class="col">
+<input type="text" class="form-control"  id="TUICode">
+</div>
+</div>
+</form>
+                    
+                    </li>
+                    </ul>
+                    </div>
+                    </div>
+</div>
+</div>
+
+</div>
+
+<div class="row">
+<div class="col-sm-12">
+<div class="Header-content">Reservation Notes:</div>
+<div class="form-group">
+<textarea rows="2" cols="2" class="form-control" id="reservationNotes"></textarea>
+</div>
+</div>
+
+
+</div>
+
+
+<div class="row">
+<div class="col-sm-12">
+<div class="Header-content">Reservation Comments</div>
+<div class="form-group">
+<textarea rows="6" cols="2" class="form-control field-height" id="reservationComments"></textarea>
+</div>
+</div>
+
+
+</div>
+<div class="row">
+<div class="col-sm-11">
+</div>
+<div class="col-sm-1">
+<div class="text-right"><button class="btn btn-danger btn-user btn-block custombuttonRefresh"  onclick="isReserve()" id="isReserve"> &nbsp; <i class="fa fa-arrow-right"></i></button></div>
+</div>
+
+
+</div>
+
+</div>	
+
+                        
+                    </div>
+                </ng-template>           
+            </kendo-panelbar-item>
+        </kendo-panelbar>
+    </div>
+</div>
