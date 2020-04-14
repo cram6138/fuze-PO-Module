@@ -1,6 +1,5 @@
 package com.po.reservation.service;
 
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -15,7 +14,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
-import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceContext;
 import javax.persistence.StoredProcedureQuery;
 
@@ -46,8 +44,6 @@ import com.po.reservation.repository.UserRepository;
  */
 @Service
 public class ContainerService {
-	@PersistenceContext
-	private EntityManager em;
 
 	private static Logger logger = LoggerFactory.getLogger(ContainerService.class);
 
@@ -56,6 +52,9 @@ public class ContainerService {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	@PersistenceContext
+    private EntityManager entityManager;
 
 	public List<ContainerInfo> searchContainers(ContainerForm containerForm) {
 
@@ -336,27 +335,29 @@ public class ContainerService {
 	}
 
 	public void releaseReservedContainer() {
-		List<Container> containers = containerRepository.findAll();
-		containers = containers.stream().filter(container -> container.getCatsStatus().equals(CatsStatus.RESERVED_ACCESS.getValue()))
-				.collect(Collectors.toList());
-		List<Container> savingContainers = new ArrayList<Container>();
-		for (Container container : containers) {
-			if(container.getUseBy().getTime() < new Date().getTime()) {
-				savingContainers.add(getUpdatedContainer(container));
-			}
-		}
-		containerRepository.saveAll(savingContainers);
-	}
-
-	private Container getUpdatedContainer(Container container) {
-		container.setCatsStatus(CatsStatus.AVAILABLE_ACCESS.getValue());
-		container.setFuzeReservationId(null);
-		container.setUseBy(null);
-		container.setReservationCreationDate(null);
-		container.setReserved(false);
-		container.setReservedBy(null);
-		container.setReservedByUser(null);
-		return container;
+		logger.info("Entering in conatiner info in database");
+		 StoredProcedureQuery container =
+				 entityManager.createNamedStoredProcedureQuery("schedularReservedContainerDetails");
+		 container.execute();
+		//commented java code implemented with procedures
+		 
+		 /*
+		 * List<Container> containers = containerRepository.findAll(); containers =
+		 * containers.stream().filter(container ->
+		 * container.getCatsStatus().equals(CatsStatus.RESERVED_ACCESS.getValue()))
+		 * .collect(Collectors.toList()); List<Container> savingContainers = new
+		 * ArrayList<Container>(); for (Container container : containers) {
+		 * if(container.getUseBy().getTime() < new Date().getTime()) {
+		 * savingContainers.add(getUpdatedContainer(container)); } }
+		 * containerRepository.saveAll(savingContainers); }
+		 * 
+		 * private Container getUpdatedContainer(Container container) {
+		 * container.setCatsStatus(CatsStatus.AVAILABLE_ACCESS.getValue());
+		 * container.setFuzeReservationId(null); container.setUseBy(null);
+		 * container.setReservationCreationDate(null); container.setReserved(false);
+		 * container.setReservedBy(null); container.setReservedByUser(null); return
+		 * container;
+		 */
 	}
 	
 	public ContainerInfo reserveContainer(ContainerReserveForm containerReserveForm) {

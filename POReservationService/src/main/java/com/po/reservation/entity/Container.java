@@ -19,6 +19,10 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+@NamedStoredProcedureQueries({
+    @NamedStoredProcedureQuery(name = "schedularReservedContainerDetails",
+                                procedureName = "schedular_reserved_containerDetails", 
+                                resultClasses = Container.class)})
 @Entity
 @Table(name = "container")
 public class Container {
