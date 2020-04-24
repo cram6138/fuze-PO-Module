@@ -1,0 +1,8 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Myreservation`(In userId int(50))
+BEGIN
+
+ select * 
+ from container 
+ where cats_status='ER' and reserved_by_user_id=userId;
+
+END
