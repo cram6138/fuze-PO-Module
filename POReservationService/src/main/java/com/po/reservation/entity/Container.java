@@ -20,9 +20,11 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @NamedStoredProcedureQueries({
-    @NamedStoredProcedureQuery(name = "schedularReservedContainerDetails",
-                                procedureName = "schedular_reserved_containerDetails", 
-                                resultClasses = Container.class)})
+		@NamedStoredProcedureQuery(name = "schedularReservedContainerDetails", procedureName = "schedular_reserved_containerDetails", resultClasses = Container.class),
+
+		@NamedStoredProcedureQuery(name = "reserveContainerDetails", procedureName = "reserveContainerDetails", resultClasses = Container.class),
+		@NamedStoredProcedureQuery(name = "unreserveContainerDetails", procedureName = "unreserveContainerDetails", resultClasses = Container.class),
+		@NamedStoredProcedureQuery(name = "Myreservation", procedureName = "Myreservation", resultClasses = Container.class) })
 @Entity
 @Table(name = "container")
 public class Container {
@@ -84,20 +86,20 @@ public class Container {
 	private String PSProject;
 	@Column(name = "pslc")
 	private String pslc;
-	
+
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "container_items", joinColumns = @JoinColumn(name = "container_id"), inverseJoinColumns = @JoinColumn(name = "item_id"))
 	@JsonIgnore
 	private Set<Item> items;
-	
+
 	@Column(name = "reservation_notes")
 	private String reservationNotes;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "reserved_by_user_id")
 	@JsonIgnore
 	private User reservedByUser;
-	
+
 	@Column(name = "porequest_id")
 	private Integer poRequestId;
 
@@ -255,7 +257,7 @@ public class Container {
 	public void setItems(Set<Item> items) {
 		this.items = items;
 	}
-	
+
 	public String getReservationNotes() {
 		return reservationNotes;
 	}
@@ -295,8 +297,8 @@ public class Container {
 				+ ", project=" + project + ", reserved=" + reserved + ", mrOrderCode=" + mrOrderCode
 				+ ", fuzeReservationId=" + fuzeReservationId + ", reservedBy=" + reservedBy + ", fuzeStatus="
 				+ fuzeStatus + ", catsStatus=" + catsStatus + ", useBy=" + useBy + ", reservationCreationDate="
-				+ reservationCreationDate + ", items=" + items + ",reservationNotes="+reservationNotes+ ""
-						+ ",reservedByUser="+reservedByUser+",poRequestId = "+poRequestId+",poName= "+poName+"]";
+				+ reservationCreationDate + ", items=" + items + ",reservationNotes=" + reservationNotes + ""
+				+ ",reservedByUser=" + reservedByUser + ",poRequestId = " + poRequestId + ",poName= " + poName + "]";
 	}
 
 }

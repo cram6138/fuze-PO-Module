@@ -1,0 +1,19 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `unreserveContainerDetails`(in containerCode 
+ varchar(50),out fuzereservationid varchar(50),out message varchar(100))
+BEGIN
+DECLARE EXIT HANDLER FOR NOT FOUND SELECT 'container code is not present' as message into message;
+ DECLARE EXIT HANDLER FOR 1146 SELECT 'Please create a table first' as  message  into message; 
+DECLARE EXIT HANDLER FOR SQLEXCEPTION SELECT 'SQLException encountered' as  message into message;
+
+   
+select fue_reservation_id into fuzereservationid from container where container_code=containerCode;
+
+if(fuzereservationid!=null || fuzereservationid!='')then
+update container set fue_reservation_id=null,reservation_creation_date=null,reserved_by=null,
+reserved_by_user_id=null,reservation_notes=null,use_by=null,is_reserved = false,cats_status='EA'
+where container_code=containerCode ;
+ select 'UnReservation done succesfully'  as result into message;
+ else 
+  select 'There is no record exist,UnReservation  not done succesfully'  as result into message;
+end if;
+END
