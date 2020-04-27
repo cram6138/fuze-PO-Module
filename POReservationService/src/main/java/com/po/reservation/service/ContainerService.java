@@ -14,6 +14,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
+import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceContext;
 import javax.persistence.StoredProcedureQuery;
 
@@ -49,12 +50,12 @@ public class ContainerService {
 
 	@Autowired
 	private ContainerRepository containerRepository;
-	
+
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	@PersistenceContext
-    private EntityManager entityManager;
+	private EntityManager entityManager;
 
 	public List<ContainerInfo> searchContainers(ContainerForm containerForm) {
 
@@ -230,6 +231,7 @@ public class ContainerService {
 	 * @param UserInfo userInfo
 	 * @return List<ContainerInfo> containerInfoList
 	 */
+	
 	public List<ContainerInfo> getReservedContainerByUser(final UserInfo userInfo) {
 		List<Container> containers = containerRepository.findAllReservedContainerByUser(userInfo.getId());
 		List<ContainerInfo> containerInfoList = new ArrayList<ContainerInfo>();
@@ -244,7 +246,7 @@ public class ContainerService {
 		}
 
 		return containerInfoList;
-	}
+	}	 
 
 	private List<Container> getContainerListBasedOnSearchKey(String searchKey, List<Container> containerList) {
 
@@ -291,10 +293,11 @@ public class ContainerService {
 				containerInfo.setPslc(container.getPslc());
 				// containerInfo.setLocation(container.getProject().getSiteName());
 				containerInfo.setPSProject(container.getProject().getProjectName());
-				if(container.getReservationCreationDate()!=null) {
-					containerInfo.setReservationCreationDate(new SimpleDateFormat("yyyy-MM-dd").format(container.getReservationCreationDate()));
+				if (container.getReservationCreationDate() != null) {
+					containerInfo.setReservationCreationDate(
+							new SimpleDateFormat("yyyy-MM-dd").format(container.getReservationCreationDate()));
 				}
-				if(container.getUseBy()!=null) {
+				if (container.getUseBy() != null) {
 					containerInfo.setUseBy(new SimpleDateFormat("dd-MMM-yy").format(container.getUseBy()));
 				}
 				ContainerInfoList.add(containerInfo);
@@ -336,12 +339,12 @@ public class ContainerService {
 
 	public void releaseReservedContainer() {
 		logger.info("Entering in conatiner info in database");
-		 StoredProcedureQuery container =
-				 entityManager.createNamedStoredProcedureQuery("schedularReservedContainerDetails");
-		 container.execute();
-		//commented java code implemented with procedures
-		 
-		 /*
+		StoredProcedureQuery container = entityManager
+				.createNamedStoredProcedureQuery("schedularReservedContainerDetails");
+		container.execute();
+		// commented java code implemented with procedures
+
+		/*
 		 * List<Container> containers = containerRepository.findAll(); containers =
 		 * containers.stream().filter(container ->
 		 * container.getCatsStatus().equals(CatsStatus.RESERVED_ACCESS.getValue()))
@@ -359,24 +362,26 @@ public class ContainerService {
 		 * container;
 		 */
 	}
-	
+
 	public ContainerInfo reserveContainer(ContainerReserveForm containerReserveForm) {
 		ContainerInfo containerInfo = new ContainerInfo();
 		Container container = containerRepository.findByContainerCode(containerReserveForm.getContainerCode());
 		if (container != null) {
-			if (containerReserveForm.getUseAtPslc() != null && container.getPslc().equals(containerReserveForm.getUseAtPslc())) {
-               if(containerReserveForm.getUsePsProject()!= null && 
-            		   container.getPSProject().equals(containerReserveForm.getUsePsProject())) {
-            	   if(containerReserveForm.getPsProjectStatus().equals(ProjectStatus.OPEN.getValue()) ||
-            			   containerReserveForm.getPsProjectStatus().equals(ProjectStatus.INSERVICE.getValue())){
-            		   containerInfo = updateContainerWithReservationDetails(containerReserveForm,container);
-            	   }else {
-            		   containerInfo.setMessage("Project is not in open status in PeopleSoft.PeopleSoft Project is outside of your business unit"); 
-            	   }
-               }else {
-            	   containerInfo.setMessage("PS Project is not matched with PeopleSoft Project"); 
-               }
-			}else {
+			if (containerReserveForm.getUseAtPslc() != null
+					&& container.getPslc().equals(containerReserveForm.getUseAtPslc())) {
+				if (containerReserveForm.getUsePsProject() != null
+						&& container.getPSProject().equals(containerReserveForm.getUsePsProject())) {
+					if (containerReserveForm.getPsProjectStatus().equals(ProjectStatus.OPEN.getValue())
+							|| containerReserveForm.getPsProjectStatus().equals(ProjectStatus.INSERVICE.getValue())) {
+						containerInfo = updateContainerWithReservationDetails(containerReserveForm, container);
+					} else {
+						containerInfo.setMessage(
+								"Project is not in open status in PeopleSoft.PeopleSoft Project is outside of your business unit");
+					}
+				} else {
+					containerInfo.setMessage("PS Project is not matched with PeopleSoft Project");
+				}
+			} else {
 				containerInfo.setMessage("Pslc is not matched with PeopleSoft location");
 			}
 		}
@@ -384,69 +389,162 @@ public class ContainerService {
 		return containerInfo;
 	}
 
-	private ContainerInfo updateContainerWithReservationDetails(ContainerReserveForm containerReserveForm,Container container) {
+	private ContainerInfo updateContainerWithReservationDetails(ContainerReserveForm containerReserveForm,
+			Container container) {
 		ContainerInfo containerInfo = new ContainerInfo();
 		Calendar cal = Calendar.getInstance();
 		container.setReservationCreationDate(cal.getTime());
-	    String date = new SimpleDateFormat("ddMMyyyy").format(cal.getTime());
-	    Date useByDate = null;
-	    try {
-	    	if(containerReserveForm.getUseByDate()!= null) {
-			useByDate = new SimpleDateFormat("dd-MMM-yyyy").parse(containerReserveForm.getUseByDate());
-	    	}
+		String date = new SimpleDateFormat("ddMMyyyy").format(cal.getTime());
+		Date useByDate = null;
+		try {
+			if (containerReserveForm.getUseByDate() != null) {
+				useByDate = new SimpleDateFormat("dd-MMM-yyyy").parse(containerReserveForm.getUseByDate());
+			}
 		} catch (ParseException e) {
-			logger.info("exception due to parsing date"+e);
+			logger.info("exception due to parsing date" + e);
 		}
-	    container.setFuzeReservationId(ProjectStatus.FUZE+date+String.valueOf(generatePin()));
-	    container.setReserved(true);
-	    container.setCatsStatus(CatsStatus.RESERVED_ACCESS.getValue());
-	    container.setUseBy(useByDate);
-	    container.setReservedBy(containerReserveForm.getUserInfo().getFirstName());
-	    User user = userRepository.findById(containerReserveForm.getUserInfo().getId());
-	    container.setReservedByUser(user);
-	    container.setReservationNotes(containerReserveForm.getReservationNotes());
-	    containerRepository.save(container);
-	    logger.info("succesfully updated conatiner info in database");
-	    if(container!= null) {
-	    	containerInfo.setFuzeReservationId(container.getFuzeReservationId());
-	    	containerInfo.setReservationCreationDate(new SimpleDateFormat("yyyy-MM-dd").format(container.getReservationCreationDate()));
-	    	containerInfo.setReservationNotes(container.getReservationNotes());
-	    	containerInfo.setMessage("Reservation done succesfully");
-	    }	
-	
-		return containerInfo;	
+		container.setFuzeReservationId(ProjectStatus.FUZE + date + String.valueOf(generatePin()));
+		container.setReserved(true);
+		container.setCatsStatus(CatsStatus.RESERVED_ACCESS.getValue());
+		container.setUseBy(useByDate);
+		container.setReservedBy(containerReserveForm.getUserInfo().getFirstName());
+		User user = userRepository.findById(containerReserveForm.getUserInfo().getId());
+		container.setReservedByUser(user);
+		container.setReservationNotes(containerReserveForm.getReservationNotes());
+		containerRepository.save(container);
+		logger.info("succesfully updated conatiner info in database");
+		if (container != null) {
+			containerInfo.setFuzeReservationId(container.getFuzeReservationId());
+			containerInfo.setReservationCreationDate(
+					new SimpleDateFormat("yyyy-MM-dd").format(container.getReservationCreationDate()));
+			containerInfo.setReservationNotes(container.getReservationNotes());
+			containerInfo.setMessage("Reservation done succesfully");
+		}
+
+		return containerInfo;
+		 
+
 	}
-	  
+
 	public static int generatePin() {
 		Random generator = new Random();
-	    return 100000 + generator.nextInt(900000);
+		return 100000 + generator.nextInt(900000);
 	}
 
 	public ContainerInfo unReserveContainer(String containerCode) {
 		ContainerInfo containerInfo = new ContainerInfo();
 		Container container = containerRepository.findByContainerCode(containerCode);
-		if(container!=null) {
-		container.setFuzeReservationId(null);
-		container.setReservationCreationDate(null);
-		container.setReservedBy(null);
-		container.setReservedByUser(null);
-		container.setReservationNotes(null);
-		container.setUseBy(null);
-		container.setReserved(false);
-		container.setCatsStatus(CatsStatus.AVAILABLE_ACCESS.getValue());
-		containerRepository.save(container);
-		logger.info("succesfully updated conatiner info in database");
-		}else {
+		if (container != null) {
+			container.setFuzeReservationId(null);
+			container.setReservationCreationDate(null);
+			container.setReservedBy(null);
+			container.setReservedByUser(null);
+			container.setReservationNotes(null);
+			container.setUseBy(null);
+			container.setReserved(false);
+			container.setCatsStatus(CatsStatus.AVAILABLE_ACCESS.getValue());
+			containerRepository.save(container);
+			logger.info("succesfully updated conatiner info in database");
+		} else {
 			logger.info("There is no record exist");
 			containerInfo.setMessage("UnReservation  not done succesfully");
 		}
-		if(container!= null) {
-	    	containerInfo.setFuzeReservationId(container.getFuzeReservationId());
-	    	containerInfo.setReservationCreationDate(null);
-	    	containerInfo.setReservationNotes(container.getReservationNotes());
-	    	containerInfo.setMessage("UnReservation done succesfully");
-	    }	
+		if (container != null) {
+			containerInfo.setFuzeReservationId(container.getFuzeReservationId());
+			containerInfo.setReservationCreationDate(null);
+			containerInfo.setReservationNotes(container.getReservationNotes());
+			containerInfo.setMessage("UnReservation done succesfully");
+		}
 		return containerInfo;
 	}
+	
+	
+	public ContainerInfo reserveContainerV2(ContainerReserveForm containerReserveForm) {
+		Date useByDate = null;
+		try {
+			if (containerReserveForm.getUseByDate() != null) {
+				useByDate = new SimpleDateFormat("dd-MMM-yyyy").parse(containerReserveForm.getUseByDate());
+			}
+		} catch (ParseException e) {
+			logger.info("exception due to parsing date" + e);
+		}
 
+		Calendar cal = Calendar.getInstance();
+		String date = new SimpleDateFormat("ddMMyyyy").format(cal.getTime());
+
+		StoredProcedureQuery query = entityManager.createNamedStoredProcedureQuery("reserveContainerDetails")
+				.registerStoredProcedureParameter(1, String.class, ParameterMode.IN)
+				.registerStoredProcedureParameter(2, Integer.class, ParameterMode.IN)
+				.registerStoredProcedureParameter(3, Date.class, ParameterMode.IN)
+				.registerStoredProcedureParameter(4, String.class, ParameterMode.IN)
+				.registerStoredProcedureParameter(5, String.class, ParameterMode.INOUT)
+				.registerStoredProcedureParameter(6, String.class, ParameterMode.INOUT)
+				.registerStoredProcedureParameter(7, Date.class, ParameterMode.INOUT)
+				.registerStoredProcedureParameter(8, String.class, ParameterMode.OUT)
+				.registerStoredProcedureParameter(9, String.class, ParameterMode.IN)
+				.registerStoredProcedureParameter(10, String.class, ParameterMode.IN)
+				.registerStoredProcedureParameter(11, String.class, ParameterMode.IN)
+				.registerStoredProcedureParameter(12, String.class, ParameterMode.OUT)
+				.registerStoredProcedureParameter(13, String.class, ParameterMode.OUT)
+
+				.setParameter(1, containerReserveForm.getContainerCode())
+				.setParameter(2, containerReserveForm.getUserInfo().getId()).setParameter(3, useByDate)
+				.setParameter(4, containerReserveForm.getUserInfo().getFirstName())
+				.setParameter(5, containerReserveForm.getReservationNotes())
+				.setParameter(6, ProjectStatus.FUZE + date + String.valueOf(generatePin()))
+				.setParameter(7, cal.getTime()).setParameter(9, containerReserveForm.getUseAtPslc())
+				.setParameter(10, containerReserveForm.getUsePsProject())
+				.setParameter(11, containerReserveForm.getPsProjectStatus());
+
+		query.execute();
+		ContainerInfo containerInfo = new ContainerInfo();
+		containerInfo.setFuzeReservationId((String) query.getOutputParameterValue(6));
+		containerInfo.setReservationCreationDate(
+				new SimpleDateFormat("yyyy-MM-dd").format((Date) query.getOutputParameterValue(7)));
+		containerInfo.setReservationNotes((String) query.getOutputParameterValue(5));
+		containerInfo.setMessage((String) query.getOutputParameterValue(13));
+		return containerInfo;
+
+	}
+	
+	
+	public ContainerInfo unReserveContainerV2(String containerCode) {
+
+		StoredProcedureQuery query = entityManager.createNamedStoredProcedureQuery("unreserveContainerDetails")
+				.registerStoredProcedureParameter(1, String.class, ParameterMode.IN)
+				.registerStoredProcedureParameter(2, String.class, ParameterMode.OUT)
+				.registerStoredProcedureParameter(3, String.class, ParameterMode.OUT)
+
+				.setParameter(1, containerCode);
+		query.execute();
+		ContainerInfo containerInfo = new ContainerInfo();
+
+		containerInfo.setMessage((String) query.getOutputParameterValue(3));
+
+		return containerInfo;
+	}	
+	
+	
+	/**
+	 * @param UserInfo userInfo
+	 * @return List<ContainerInfo> containerInfoList
+	 */
+	public List<ContainerInfo> getReservedContainerByUserV2(final UserInfo userInfo) {
+        StoredProcedureQuery query = entityManager.createNamedStoredProcedureQuery("Myreservation")
+                .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN).setParameter(1, userInfo.getId());
+        query.execute();
+        List<Container> containers = query.getResultList();
+        List<ContainerInfo> containerInfoList = new ArrayList<ContainerInfo>();
+        if (containers != null && !containers.isEmpty()) {
+            for (Container container : containers) {
+                ContainerInfo containerInfo = getContainerInfo(container);
+                containerInfoList.add(containerInfo);
+            }
+        } else {
+            logger.info("method :: getReservedContainerByUser ::: Containers not found");
+        }
+        return containerInfoList;
+    }
+	
+	
 }

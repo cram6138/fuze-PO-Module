@@ -1,0 +1,44 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `reserveContainerDetails`(In containerCode  varchar(50),
+IN user_id integer,IN use_by date,IN user_name varchar(50),
+INOUT reservation_notes varchar(50),INOUT fue_reservation_id varchar(50),
+INOUT reservation_creation_date date,out pslcode varchar(50),in UseAtPslc varchar(50),
+in UseAtProjectname varchar(50),in PsProjectStatus varchar(50),out psproject varchar(50),
+out message varchar(100))
+BEGIN
+
+DECLARE EXIT HANDLER FOR NOT FOUND SELECT 'container code is not present' as message into message;
+DECLARE EXIT HANDLER FOR 1146 SELECT 'Please create a table first' as  message  into message; 
+DECLARE EXIT HANDLER FOR SQLEXCEPTION SELECT 'SQLException encountered' as  message into message;
+select pslc,ps_project into pslcode,psproject from container where container_code=containerCode;
+
+if(pslcode!=null  || pslcode!='') then
+if((UseAtPslc!=null || UseAtPslc!='')&& (pslcode like UseAtPslc)) then
+if((UseAtProjectname!=null || UseAtProjectname!='')&&(UseAtProjectname like psproject)) then
+if((PsProjectStatus like 'O')||(PsProjectStatus like 'I')) then
+
+ update container set fue_reservation_id = fue_reservation_id,
+reservation_creation_date = reservation_creation_date,is_reserved = true,
+reservation_notes = reservation_notes,
+use_by = use_by,reserved_by_user_id = user_id,cats_status = 'ER',
+reserved_by = user_name
+where  container_code = container_code and cats_status = 'EA';
+
+ select 'Reservation done succesfully'  as result into message;
+ 
+ else
+  select 'Project is not in open status in PeopleSoft.PeopleSoft Project
+  is outside of your business unit' as result  into message;
+  end if;
+ 
+ else
+ select 'PS Project is not matched with PeopleSoft Project'  as result  into message;
+
+end if;
+else
+ 
+  select 'Pslc is not matched with PeopleSoft location'  as result  into message;
+
+
+end if;
+end if;
+END
