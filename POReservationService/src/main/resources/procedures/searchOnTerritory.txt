@@ -1,0 +1,7 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `searchOnTerritory`(inout territoryid varchar(50),out territorycode varchar(50),out territoryname varchar(50))
+BEGIN
+  
+ select territory.code,territory.name into territorycode,territoryname from territory where id=territoryid;
+    
+
+END

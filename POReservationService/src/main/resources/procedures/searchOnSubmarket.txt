@@ -1,0 +1,5 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `searchOnSubmarket`(inout subMarketId int(50),out subMarketCode varchar(50),out subMarketName
+varchar(50))
+BEGIN
+select code,name into subMarketCode,subMarketName from sub_market where id=subMarketId;
+END

@@ -231,7 +231,7 @@ public class ContainerService {
 	 * @param UserInfo userInfo
 	 * @return List<ContainerInfo> containerInfoList
 	 */
-	
+
 	public List<ContainerInfo> getReservedContainerByUser(final UserInfo userInfo) {
 		List<Container> containers = containerRepository.findAllReservedContainerByUser(userInfo.getId());
 		List<ContainerInfo> containerInfoList = new ArrayList<ContainerInfo>();
@@ -246,7 +246,7 @@ public class ContainerService {
 		}
 
 		return containerInfoList;
-	}	 
+	}
 
 	private List<Container> getContainerListBasedOnSearchKey(String searchKey, List<Container> containerList) {
 
@@ -422,7 +422,6 @@ public class ContainerService {
 		}
 
 		return containerInfo;
-		 
 
 	}
 
@@ -457,94 +456,5 @@ public class ContainerService {
 		}
 		return containerInfo;
 	}
-	
-	
-	public ContainerInfo reserveContainerV2(ContainerReserveForm containerReserveForm) {
-		Date useByDate = null;
-		try {
-			if (containerReserveForm.getUseByDate() != null) {
-				useByDate = new SimpleDateFormat("dd-MMM-yyyy").parse(containerReserveForm.getUseByDate());
-			}
-		} catch (ParseException e) {
-			logger.info("exception due to parsing date" + e);
-		}
 
-		Calendar cal = Calendar.getInstance();
-		String date = new SimpleDateFormat("ddMMyyyy").format(cal.getTime());
-
-		StoredProcedureQuery query = entityManager.createNamedStoredProcedureQuery("reserveContainerDetails")
-				.registerStoredProcedureParameter(1, String.class, ParameterMode.IN)
-				.registerStoredProcedureParameter(2, Integer.class, ParameterMode.IN)
-				.registerStoredProcedureParameter(3, Date.class, ParameterMode.IN)
-				.registerStoredProcedureParameter(4, String.class, ParameterMode.IN)
-				.registerStoredProcedureParameter(5, String.class, ParameterMode.INOUT)
-				.registerStoredProcedureParameter(6, String.class, ParameterMode.INOUT)
-				.registerStoredProcedureParameter(7, Date.class, ParameterMode.INOUT)
-				.registerStoredProcedureParameter(8, String.class, ParameterMode.OUT)
-				.registerStoredProcedureParameter(9, String.class, ParameterMode.IN)
-				.registerStoredProcedureParameter(10, String.class, ParameterMode.IN)
-				.registerStoredProcedureParameter(11, String.class, ParameterMode.IN)
-				.registerStoredProcedureParameter(12, String.class, ParameterMode.OUT)
-				.registerStoredProcedureParameter(13, String.class, ParameterMode.OUT)
-
-				.setParameter(1, containerReserveForm.getContainerCode())
-				.setParameter(2, containerReserveForm.getUserInfo().getId()).setParameter(3, useByDate)
-				.setParameter(4, containerReserveForm.getUserInfo().getFirstName())
-				.setParameter(5, containerReserveForm.getReservationNotes())
-				.setParameter(6, ProjectStatus.FUZE + date + String.valueOf(generatePin()))
-				.setParameter(7, cal.getTime()).setParameter(9, containerReserveForm.getUseAtPslc())
-				.setParameter(10, containerReserveForm.getUsePsProject())
-				.setParameter(11, containerReserveForm.getPsProjectStatus());
-
-		query.execute();
-		ContainerInfo containerInfo = new ContainerInfo();
-		containerInfo.setFuzeReservationId((String) query.getOutputParameterValue(6));
-		containerInfo.setReservationCreationDate(
-				new SimpleDateFormat("yyyy-MM-dd").format((Date) query.getOutputParameterValue(7)));
-		containerInfo.setReservationNotes((String) query.getOutputParameterValue(5));
-		containerInfo.setMessage((String) query.getOutputParameterValue(13));
-		return containerInfo;
-
-	}
-	
-	
-	public ContainerInfo unReserveContainerV2(String containerCode) {
-
-		StoredProcedureQuery query = entityManager.createNamedStoredProcedureQuery("unreserveContainerDetails")
-				.registerStoredProcedureParameter(1, String.class, ParameterMode.IN)
-				.registerStoredProcedureParameter(2, String.class, ParameterMode.OUT)
-				.registerStoredProcedureParameter(3, String.class, ParameterMode.OUT)
-
-				.setParameter(1, containerCode);
-		query.execute();
-		ContainerInfo containerInfo = new ContainerInfo();
-
-		containerInfo.setMessage((String) query.getOutputParameterValue(3));
-
-		return containerInfo;
-	}	
-	
-	
-	/**
-	 * @param UserInfo userInfo
-	 * @return List<ContainerInfo> containerInfoList
-	 */
-	public List<ContainerInfo> getReservedContainerByUserV2(final UserInfo userInfo) {
-        StoredProcedureQuery query = entityManager.createNamedStoredProcedureQuery("Myreservation")
-                .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN).setParameter(1, userInfo.getId());
-        query.execute();
-        List<Container> containers = query.getResultList();
-        List<ContainerInfo> containerInfoList = new ArrayList<ContainerInfo>();
-        if (containers != null && !containers.isEmpty()) {
-            for (Container container : containers) {
-                ContainerInfo containerInfo = getContainerInfo(container);
-                containerInfoList.add(containerInfo);
-            }
-        } else {
-            logger.info("method :: getReservedContainerByUser ::: Containers not found");
-        }
-        return containerInfoList;
-    }
-	
-	
 }

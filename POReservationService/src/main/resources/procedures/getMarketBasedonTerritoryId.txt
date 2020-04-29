@@ -1,0 +1,6 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getMarketBasedonTerritoryId`(in territoryId int(50))
+BEGIN
+
+select * from market  where territory_id=territoryId;
+
+END

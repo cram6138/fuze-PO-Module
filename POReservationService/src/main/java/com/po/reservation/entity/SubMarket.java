@@ -1,6 +1,7 @@
 package com.po.reservation.entity;
 
 import javax.persistence.Column;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -8,7 +9,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedStoredProcedureQueries;
+import javax.persistence.NamedStoredProcedureQuery;
 import javax.persistence.Table;
+
+
+
+@NamedStoredProcedureQueries({
+	@NamedStoredProcedureQuery(name = "getSubmarketDetailsBasedonMarketId", procedureName = "getSubmarketDetailsBasedonMarketId", resultClasses = SubMarket.class),
+	@NamedStoredProcedureQuery(name = "getSubMarketDetails", procedureName = "getSubMarketDetails", resultClasses = SubMarket.class),
+	@NamedStoredProcedureQuery(name = "searchOnSubmarket", procedureName = "searchOnSubmarket", resultClasses = SubMarket.class)
+	
+})
+
 
 @Entity
 @Table(name = "sub_market")
