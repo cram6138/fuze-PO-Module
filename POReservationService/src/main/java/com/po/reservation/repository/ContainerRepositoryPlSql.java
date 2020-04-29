@@ -57,8 +57,8 @@ public class ContainerRepositoryPlSql {
 		query.setParameter(5,containerForm.getContainerCode());
 		query.setParameter(6,containerForm.getBuyer());
 		query.setParameter(7,(containerForm.getProjectId()==0)?null:Integer.toString(containerForm.getProjectId()));
-		query.setParameter(8,containerForm.getUserInfo().getTerritory());
-		query.setParameter(9,containerForm.getUserInfo().getMarket());
+		query.setParameter(8,(containerForm.getUserInfo()!= null)?containerForm.getUserInfo().getTerritory():null);
+		query.setParameter(9,(containerForm.getUserInfo()!= null)?containerForm.getUserInfo().getMarket():null);
 		//query.setParameter(10,containerForm.getSearchKey());
 		query.execute();
 		containerInfoList = query.getResultList();
