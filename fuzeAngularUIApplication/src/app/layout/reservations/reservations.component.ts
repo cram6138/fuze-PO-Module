@@ -37,7 +37,7 @@ export class ReservationsComponent implements OnInit {
     constructor(private reservationService:ReservationService) {
         console.log("Reservation...");
     }
-    userInfo = new UserInfo(6,"TTR121","");
+    userInfo = new UserInfo(1,null,null);
     public containerInfoDetails:any[];
     public containers:any;
     public territoryList: Array<String> = [];
@@ -147,8 +147,14 @@ export class ReservationsComponent implements OnInit {
       }
       containerSearch(){
         console.log("containerSearch()");
-        if(this.containerForm.containerCode == ""){
+        if(this.containerForm.localMarket == ""){
+            this.containerForm.localMarket=null;
+        }if(this.containerForm.containerCode == ""){
            this.containerForm.containerCode=null;
+        }if(this.containerForm.buyer == ""){
+            this.containerForm.buyer=null;
+        }if(this.containerForm.searchKey == ""){
+            this.containerForm.searchKey=null;
         }
         let response = this.reservationService.getContainer(this.containerForm);
         response.subscribe(data =>{
