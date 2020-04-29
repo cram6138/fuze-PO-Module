@@ -23,16 +23,35 @@
                     <form class="user">
                         <div class="form-group row">
                             <div class="col-sm-3 mb-3 mb-sm-0">
-                                <label style="color: #e74a3b;">Teritory</label> <input
-                                    class="form-control" id="Teritory">
+                                <label style="color: #e74a3b;">Teritory</label> 
+                                <!-- <input class="form-control" id="Teritory"> -->
+                                    <kendo-dropdownlist  class="form-control" 
+                                    [data]="territoryListData" [textField]="'name'" [value]="selectedTerritory"
+                                    [valueField]="'id'"
+                                    [defaultItem]="defaultTerritory" (valueChange)="handleTerritoryChange($event)" 
+                                    name = "territory">
+                                    </kendo-dropdownlist>
                             </div>
                             <div class="col-sm-3">
-                                <label style="color: #e74a3b;">Markets</label> <input
-                                    class="form-control" id="Markets">
+                                <label style="color: #e74a3b;">Markets</label> 
+                                <!-- <input class="form-control" id="Markets"> -->
+                                <kendo-dropdownlist  class="form-control" 
+                                [disabled]="isDisabledMarket" [value]="selectedMarket"
+                                [defaultItem]="defaultMarket" [data]="dataResultMarkets"
+                                [textField]="'name'"
+                                [valueField]="'marketId'" (valueChange)="handleMarketChange($event)"
+                                name = "market">
+                                </kendo-dropdownlist>
                             </div>
                             <div class="col-sm-3">
-                                <label style="color: #e74a3b;">Sub Markets</label> <input
-                                    class="form-control" id="SubMarket">
+                                <label style="color: #e74a3b;">Sub Markets</label> 
+                                <!-- <input class="form-control" id="SubMarket"> -->
+                                <kendo-dropdownlist  class="form-control"  [defaultItem]="defaultSubMarket"
+                                [data]="dataResultSubMarkets" [disabled]="isDisabledSubMarket"
+                                [value]="selectedSubMarket"
+                                [textField]="'name'"
+                                [valueField]="'subMarketId'" name="subMarket">
+                                </kendo-dropdownlist>
                             </div>
                             <div class="col-sm-3">
                                 <label style="color: #e74a3b;">Local Market</label> <input
@@ -40,63 +59,74 @@
                             </div>
                             <div class="col-sm-3">
                                 <label style="color: #e74a3b;">Container Code</label> <input
-                                    class="form-control" id="containerCode">
+                                    class="form-control" id="containerCode" name="containerCode" [(ngModel)]="containerForm.containerCode">
                             </div>
                             <div class="col-sm-3">
                                 <label style="color: #e74a3b;">Buyer</label> <input
-                                    class="form-control" id="buyer">
+                                    class="form-control" id="buyer" name="buyer" [(ngModel)]="containerForm.buyer">
                             </div>
                             <div class="col-sm-3">
                                 <label style="color: #e74a3b;">Project ID</label> <input
-                                    class="form-control" id="projectID">
+                                    class="form-control" id="projectId" name="projectId" [(ngModel)]="containerForm.projectId">
                             </div>
                             <div class="col-sm-3">
                                 <label style="color: #e74a3b;">Search Key</label> <input
-                                    class="form-control" id="searchKeyId">
+                                    class="form-control" id="searchKeyId" name="searchKeyId" [(ngModel)]="containerForm.searchKey">
                             </div>
 
                             <div class="col-sm-3">
-                                <label style="width: 100%;">&nbsp;</label> <a href="#"
-                                    id="get"
-                                    class="btn btn-danger btn-user btn-block d-lg-inline">
-                                    Search </a> 
+                                <label style="width: 100%;">&nbsp;</label>
+                                 <!-- <a href="" id="get"
+                                    class="btn btn-danger btn-user btn-block d-lg-inline" (click)="searchClick()">
+                                    Search </a>  -->
+                                    <button  class="btn btn-danger btn-user btn-block d-lg-inline" style="width:40%" type="submit"
+                                            (click)="containerSearch()">Search</button>
 
                             </div>
 
                         </div>
                     </form>
                     <kendo-grid
-                    [kendoGridBinding]="ContainerSearch"
-                    [pageSize]="10"
+                    [kendoGridBinding]="containers"
+                    [pageSize]="5"
                     [pageable]="true"
                     [sortable]="true"
                     [filterable]="true"
                     [groupable]="true"
-                    [height]="510">
-                    <kendo-grid-column field="CompanyName" [width]="140"></kendo-grid-column>
-                    <kendo-grid-column field="ContactName" [width]="120"></kendo-grid-column>
-                    <kendo-grid-column field="City" [width]="100"></kendo-grid-column>
-                    <kendo-grid-column field="ContactTitle" [width]="130"></kendo-grid-column>
+                    [height]="350">
+                    <kendo-grid-column field="containerCode" title="Container Code" [width]="240"></kendo-grid-column>
+                    <kendo-grid-column field="pslc" title="pslc" [width]="100"></kendo-grid-column>
+                    <kendo-grid-column field="fuzeProjectId" title="Fuze ProjectId" [width]="100"></kendo-grid-column>
+                    <kendo-grid-column field="catsStatus" title="Cats Status" [width]="130"></kendo-grid-column>
+                    <kendo-grid-column field="psproject" title="PS Project" [width]="130"></kendo-grid-column>
+                    <kendo-grid-column field="localMarket" title="Local Market"  [width]="130"></kendo-grid-column>
                 </kendo-grid>
                 </ng-template>
                
             </kendo-panelbar-item>
-            <kendo-panelbar-item [title]="'Container Details'" >
-                <ng-template kendoPanelBarContent>
+            <kendo-panelbar-item [title]="'Container Details'" (click)="containerDetails()" >
+                <ng-template kendoPanelBarContent >
 
                     
                     <kendo-grid
-                    [kendoGridBinding]="ContainerDetails"
+                    [kendoGridBinding]= "containerInfoDetails"
+                    [resizable]="true"
                     [pageSize]="10"
                     [pageable]="true"
                     [sortable]="true"
                     [filterable]="true"
                     [groupable]="true"
-                    [height]="510">
-                    <kendo-grid-column field="CompanyName" [width]="140"></kendo-grid-column>
-                    <kendo-grid-column field="ContactName" [width]="120"></kendo-grid-column>
-                    <kendo-grid-column field="City" [width]="100"></kendo-grid-column>
-                    <kendo-grid-column field="ContactTitle" [width]="130"></kendo-grid-column>
+                    [height]="310">
+                    <kendo-grid-column field="containerCode" title="Container Code" [width]="240"></kendo-grid-column>
+                    <kendo-grid-column field="poName" title="PO Name" [width]="240"></kendo-grid-column>
+                    <kendo-grid-column field="territory" title="Territory" [width]="180"></kendo-grid-column>
+                    <kendo-grid-column field="projectName" title="Project Name" [width]="180"></kendo-grid-column>
+                    <kendo-grid-column field="pslc" title="pslc" [width]="100"></kendo-grid-column>
+                    <kendo-grid-column field="useBy" title="UseBy Date" [width]="180"></kendo-grid-column>
+                    <kendo-grid-column field="fuzeStatus" title="Fuze Status" [width]="180"></kendo-grid-column>
+                    <kendo-grid-column field="catsStatus" title="Cats Status" [width]="180"></kendo-grid-column>
+                    <kendo-grid-column field="market" title="Market" [width]="180"></kendo-grid-column>
+                    <kendo-grid-column field="localMarket" title="Local Market" [width]="180"></kendo-grid-column>
                 </kendo-grid>
                 </ng-template>
                     </kendo-panelbar-item>

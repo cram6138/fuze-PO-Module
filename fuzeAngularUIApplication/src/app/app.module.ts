@@ -13,6 +13,8 @@ import { LayoutModule } from '@progress/kendo-angular-layout';
 import { ButtonsModule } from '@progress/kendo-angular-buttons';
 import { GridModule } from '@progress/kendo-angular-grid';
 
+import { ReservationService } from './services/reservation-service';
+
 
 
 @NgModule({
@@ -31,7 +33,7 @@ import { GridModule } from '@progress/kendo-angular-grid';
          
     ],
     declarations: [AppComponent],
-    providers: [AuthGuard],
+    providers: [AuthGuard,ReservationService],
     bootstrap: [AppComponent]
 })
 export class AppModule {}
