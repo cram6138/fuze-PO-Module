@@ -50,7 +50,7 @@
                                 [data]="dataResultSubMarkets" [disabled]="isDisabledSubMarket"
                                 [value]="selectedSubMarket"
                                 [textField]="'name'"
-                                [valueField]="'subMarketId'" name="subMarket">
+                                [valueField]="'subMarketId'" (valueChange)="handleSubMarketChange($event)" name="subMarket">
                                 </kendo-dropdownlist>
                             </div>
                             <div class="col-sm-3">
