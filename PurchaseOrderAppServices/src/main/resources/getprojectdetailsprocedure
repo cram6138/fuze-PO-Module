@@ -1,0 +1,28 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getprojectdetails`(in projectName varchar(50),
+in Usemarket varchar(50),in Usesitename varchar(50),in Useterritory varchar(50)
+,in Usesubmarket varchar(50),in Useprjecttype varchar(50))
+BEGIN
+
+if(projectName!=null ||projectName!='')then
+select * from project where project_name=projectName;
+
+elseif(Usemarket !=null ||Usemarket!='') then
+select * from project where market=Usemarket;
+
+elseif(Usesitename!=null ||Usesitename!='') then 
+select * from project where site_name=Usesitename;
+
+elseif(Useterritory!=null ||Useterritory!='') then
+select * from project where teritory=Useterritory;
+
+elseif(Usesubmarket!=null ||Usesubmarket!='') then
+select * from project where sub_market=Usesubmarket;
+
+elseif(Useprjecttype!=null ||Useprjecttype!='') then
+select * from project where project_type=Useprjecttype;
+
+else
+select * from project;
+end if;
+
+END

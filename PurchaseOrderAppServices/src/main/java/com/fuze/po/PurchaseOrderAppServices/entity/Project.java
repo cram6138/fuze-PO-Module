@@ -9,12 +9,20 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedStoredProcedureQueries;
+import javax.persistence.NamedStoredProcedureQuery;
 import javax.persistence.Table;
 
 /**
  * @author Bhajuram.c
  *
  */
+
+@NamedStoredProcedureQueries(@NamedStoredProcedureQuery(name = "getprojectdetails", procedureName = "getprojectdetails", resultClasses = Project.class)
+
+)
+
+
 @Entity
 @Table(name = "project")
 public class Project {

@@ -85,6 +85,12 @@ public class POController {
 		ResponseInfo responseData = poRequestService.createProject(projectForm);
 		return new ResponseEntity<ResponseInfo>(responseData, HttpStatus.CREATED);
 	}
+	
+	@PostMapping("/search/project/V2")
+	public ResponseEntity<List<ProjectInfo>> searchProjectsV2(@RequestBody final ProjectSearchForm projectSearchForm) {
+		return new ResponseEntity<List<ProjectInfo>>(poRequestService.searchProjectsV2(projectSearchForm),
+				HttpStatus.OK);
+	}
 
 
 }

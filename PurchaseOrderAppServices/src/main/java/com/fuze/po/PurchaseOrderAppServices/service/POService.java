@@ -8,6 +8,11 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.persistence.EntityManager;
+import javax.persistence.ParameterMode;
+import javax.persistence.PersistenceContext;
+import javax.persistence.StoredProcedureQuery;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -56,6 +61,9 @@ public class POService {
 	
 	@Autowired
     private SoapConsumer soapConsumer;
+	
+	@PersistenceContext
+    private EntityManager entityManager;
 
 	public ResponseInfo createPoRequest(PORequestForm requestForm) {
 		ResponseInfo response = new ResponseInfo();
@@ -241,6 +249,48 @@ public class POService {
 		Project project = new Project();
 		BeanUtils.copyProperties(projectForm, project);
 		return project;
+	}
+	
+	
+	public List<ProjectInfo> searchProjectsV2(ProjectSearchForm projectSearchForm) {
+		StoredProcedureQuery query = entityManager.createNamedStoredProcedureQuery("getprojectdetails")
+				.registerStoredProcedureParameter(1, String.class, ParameterMode.IN)
+				.registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
+				.registerStoredProcedureParameter(3, String.class, ParameterMode.IN)
+				.registerStoredProcedureParameter(4, String.class, ParameterMode.IN)
+				.registerStoredProcedureParameter(5, String.class, ParameterMode.IN)
+				.registerStoredProcedureParameter(6, String.class, ParameterMode.IN)
+				.setParameter(1, projectSearchForm.getProjectName()).setParameter(2, projectSearchForm.getMarket())
+				.setParameter(3, projectSearchForm.getSiteName()).setParameter(4, projectSearchForm.getTeritory())
+				.setParameter(5, projectSearchForm.getSubMarket()).setParameter(6, projectSearchForm.getProjectType());
+		query.execute();
+		List<Project> projectList = query.getResultList();
+		List<ProjectInfo> projectInfoList = new ArrayList<ProjectInfo>();
+		if (projectList != null && !projectList.isEmpty()) {
+			for (Project project : projectList) {
+				ProjectInfo containerInfo = getProjectInfo(project);
+				projectInfoList.add(containerInfo);
+			}
+		}
+		return projectInfoList;
+	}
+
+	private ProjectInfo getProjectInfo(Project project) {
+		ProjectInfo projectInfo = new ProjectInfo();
+		BeanUtils.copyProperties(project, projectInfo);
+		projectInfo.setId(project.getId());
+		projectInfo.setSiteName(project.getSiteName());
+		projectInfo.setProjectName(project.getProjectName());
+		projectInfo.setMarket(project.getMarket());
+		projectInfo.setSubMarket(project.getSubMarket());
+		projectInfo.setProjectType(project.getProjectType());
+		projectInfo.setFuzeProject(project.getFuzeProject());
+		projectInfo.setPslc(project.getPslc());
+		projectInfo.setProjectStatus(project.getProjectStatus());
+		projectInfo.setCustomProjectType(project.getCustomProjectType());
+		projectInfo.setSiteTracker(project.getSiteTracker());
+		projectInfo.setTeritory(project.getTeritory());
+		return projectInfo;
 	}
 
 
