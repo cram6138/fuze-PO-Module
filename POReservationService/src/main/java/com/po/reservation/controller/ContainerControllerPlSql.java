@@ -28,7 +28,7 @@ import com.po.reservation.info.UserInfo;
 import com.po.reservation.service.ContainerServicePlSql;
 
 @RestController
-@RequestMapping("/reservation")
+@RequestMapping("/reservations")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ContainerControllerPlSql {
 
@@ -36,13 +36,12 @@ public class ContainerControllerPlSql {
 	@Autowired
 	private ContainerServicePlSql containerService;
 
-
 	@PostMapping("/containersByUserInfoV1plsql")
 	public Map<String, Object> containerByUserInfo(@RequestBody UserInfo request) {
 		logger.info("Entering into gettingContainerDetails method in Container controller");
 		return containerService.containersByUserInfo(request);
 	}
-	
+
 	@PostMapping("/search/containerV1plsql")
 	public ResponseEntity<List<ContainerInfo>> searchContainers(@Valid @RequestBody final ContainerForm containerForm) {
 		List<ContainerInfo> containerList = new ArrayList<>();
@@ -56,46 +55,42 @@ public class ContainerControllerPlSql {
 		}
 		return new ResponseEntity<List<ContainerInfo>>(containerList, HttpStatus.OK);
 	}
-	
-	
-	
-	 @HystrixCommand(fallbackMethod="fallBackGetContainer")
-		@PostMapping("/reserve/container/v2")
-		public ResponseEntity<ContainerInfo> reserveContainerV2(@RequestBody final ContainerReserveForm containerReserveForm) {
-			ContainerInfo containerInfo = new ContainerInfo();
-			try {
-			 containerInfo = containerService.reserveContainerV2(containerReserveForm);
-			} catch (Exception e) {
-				logger.error("Exception in reserveContainer method" + e.getMessage());
-			}
-			return new ResponseEntity<ContainerInfo>(containerInfo, HttpStatus.OK);
+
+	@HystrixCommand(fallbackMethod = "fallBackGetContainer")
+	@PostMapping("/reserve/container/v2")
+	public ResponseEntity<ContainerInfo> reserveContainerV2(
+			@RequestBody final ContainerReserveForm containerReserveForm) {
+		ContainerInfo containerInfo = new ContainerInfo();
+		try {
+			containerInfo = containerService.reserveContainerV2(containerReserveForm);
+		} catch (Exception e) {
+			logger.error("Exception in reserveContainer method" + e.getMessage());
 		}
-		
-		@HystrixCommand(fallbackMethod="fallBackGetContainer")
-		@GetMapping("/unreserve/container/v2/{containerCode}")
-		public ResponseEntity<ContainerInfo> unreserveContainerV2(@PathVariable String containerCode) {
-			ContainerInfo containerInfo = null;
-			try {
-			 containerInfo = containerService.unReserveContainerV2(containerCode);
-			} catch (Exception e) {
-				logger.error("Exception in unReserveContainer method" + e.getMessage());
-			}
-			return new ResponseEntity<ContainerInfo>(containerInfo, HttpStatus.OK);
+		return new ResponseEntity<ContainerInfo>(containerInfo, HttpStatus.OK);
+	}
+
+	@HystrixCommand(fallbackMethod = "fallBackGetContainer")
+	@GetMapping("/unreserve/container/v2/{containerCode}")
+	public ResponseEntity<ContainerInfo> unreserveContainerV2(@PathVariable String containerCode) {
+		ContainerInfo containerInfo = null;
+		try {
+			containerInfo = containerService.unReserveContainerV2(containerCode);
+		} catch (Exception e) {
+			logger.error("Exception in unReserveContainer method" + e.getMessage());
 		}
-		
-		
-	  
-		@HystrixCommand(fallbackMethod = "fallBackGetContainers")
-		@PostMapping("/container/reserved/v2")
-		public ResponseEntity<List<ContainerInfo>> getReservedContainerByUserV2(@RequestBody final UserInfo userInfo) {
-			List<ContainerInfo> reservedContainerList = new ArrayList<ContainerInfo>();
-			try {
-				reservedContainerList = containerService.getReservedContainerByUserV2(userInfo);
-			} catch (Exception e) {
-				logger.error("Exception in getReservedContainerByUser method " + e.toString());
-			}
-			return new ResponseEntity<List<ContainerInfo>>(reservedContainerList, HttpStatus.OK);
+		return new ResponseEntity<ContainerInfo>(containerInfo, HttpStatus.OK);
+	}
+
+	@HystrixCommand(fallbackMethod = "fallBackGetContainers")
+	@PostMapping("/container/reserved/v2")
+	public ResponseEntity<List<ContainerInfo>> getReservedContainerByUserV2(@RequestBody final UserInfo userInfo) {
+		List<ContainerInfo> reservedContainerList = new ArrayList<ContainerInfo>();
+		try {
+			reservedContainerList = containerService.getReservedContainerByUserV2(userInfo);
+		} catch (Exception e) {
+			logger.error("Exception in getReservedContainerByUser method " + e.toString());
 		}
-	   
-	
+		return new ResponseEntity<List<ContainerInfo>>(reservedContainerList, HttpStatus.OK);
+	}
+
 }
