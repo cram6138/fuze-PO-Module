@@ -10,13 +10,23 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedStoredProcedureQueries;
+import javax.persistence.NamedStoredProcedureQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+
+@NamedStoredProcedureQueries({
+	@NamedStoredProcedureQuery(name = "getMarketDetails", procedureName = "getMarketDetails", resultClasses = Market.class),
+
+	@NamedStoredProcedureQuery(name = "getMarketBasedonTerritoryId", procedureName = "getMarketBasedonTerritoryId", resultClasses = Market.class),
+	@NamedStoredProcedureQuery(name = "searchOnMarket", procedureName = "searchOnMarket", resultClasses = Market.class)
+})
 
 @Entity
 @Table(name = "market")
 public class Market {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -27,14 +37,12 @@ public class Market {
 	@Column(name = "code")
 	private String code;
 
-
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "territory_id")
 	private Territory territory;
-	
+
 	@OneToMany(mappedBy = "market")
 	private List<SubMarket> subMarkets;
-
 
 	public int getId() {
 		return id;
@@ -75,5 +83,5 @@ public class Market {
 	public void setSubMarkets(List<SubMarket> subMarkets) {
 		this.subMarkets = subMarkets;
 	}
-	
+
 }

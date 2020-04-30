@@ -1,0 +1,6 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getMarketDetails`()
+BEGIN
+
+select * from market;
+
+END

@@ -1,0 +1,6 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getTerritoryDetails`()
+BEGIN
+
+select * from territory;
+
+END

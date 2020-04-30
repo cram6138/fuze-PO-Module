@@ -1,0 +1,7 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `searchOnMarket`(inout marketId int(50),out marketCode varchar(50),out marketName varchar(50) )
+BEGIN
+
+select code,name into marketCode,marketName from market where id=marketId;
+
+
+END
