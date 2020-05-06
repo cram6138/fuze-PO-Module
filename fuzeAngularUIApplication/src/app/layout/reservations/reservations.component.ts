@@ -39,6 +39,7 @@ export class ReservationsComponent implements OnInit {
     }
     userInfo = new UserInfo(1,null,null);
     public containerInfoDetails:any[];
+    public MyReservations:any[];
     public containers:any;
     public territoryList: Array<String> = [];
     public territoryListData: Array<{name:String,id:String}> = [];
@@ -69,6 +70,14 @@ export class ReservationsComponent implements OnInit {
     }
    // public listItems: Array<string> = ["X-Small", "Small", "Medium", "Large", "X-Large", "2X-Large"];
    
+   myReservations(){
+        console.log("MyReservations ");
+        let response = this.reservationService.myReservation(this.userInfo);
+        response.subscribe(data => {
+            this.MyReservations = data;
+        });
+   }
+
     containerDetails(){
         console.log("containerDetails invoked...");
            let response = this.reservationService.containerDetails(this.userInfo);

@@ -1,20 +1,36 @@
 <div [@routerTransition]>
     <div class="panelbar-wrapper">
         <kendo-panelbar>
-            <kendo-panelbar-item [title]="'MyReservations'">
+            <kendo-panelbar-item [title]="'MyReservations'"  (click)="myReservations()">
                 <ng-template kendoPanelBarContent>
                 <kendo-grid
                 [kendoGridBinding]="MyReservations"
-                [pageSize]="10"
+                [pageSize]="5"
                 [pageable]="true"
                 [sortable]="true"
                 [filterable]="true"
                 [groupable]="true"
                 [height]="510">
-                <kendo-grid-column field="CompanyName" [width]="140"></kendo-grid-column>
-                <kendo-grid-column field="ContactName" [width]="120"></kendo-grid-column>
-                <kendo-grid-column field="City" [width]="100"></kendo-grid-column>
-                <kendo-grid-column field="ContactTitle" [width]="130"></kendo-grid-column>
+                <kendo-grid-column field="containerCode" title="Container Code" [width]="240"></kendo-grid-column>
+                <kendo-grid-column field="poName" title="PO Name" [width]="240"></kendo-grid-column>
+                <kendo-grid-column field="MROrderCode" title="MR Order Code" [width]="150"></kendo-grid-column>
+                <kendo-grid-column field="MRSource" title="MR Source" [width]="130"></kendo-grid-column>
+                <kendo-grid-column field="fuzeReservationId" tittle="Fuze Reservation Id"  [width]="130"></kendo-grid-column>
+                <kendo-grid-column field="fuzeProjectId" title="Fuze ProjectId" [width]="100"></kendo-grid-column>
+                <kendo-grid-column field="projectName" title = "Project Name" [width]="130"></kendo-grid-column>
+                <kendo-grid-column field="psproject" title="PS Project" [width]="130"></kendo-grid-column>
+                <kendo-grid-column field="pslc" title="pslc" [width]="100"></kendo-grid-column>
+                <kendo-grid-column field="reservedUsername" title="Reserved By" [width]="130"></kendo-grid-column>
+                <kendo-grid-column field="useBy" title="Use By Date" [width]="130"></kendo-grid-column>
+                <kendo-grid-column field="reservationCreationDate" title="Reservation Creation Date" [width]="130"></kendo-grid-column>
+                <kendo-grid-column field="fuzeStatus" title = "Fuze Status" [width]="130"></kendo-grid-column>
+                <kendo-grid-column field="catsStatus" title="Cats Status" [width]="130"></kendo-grid-column>
+                <kendo-grid-column field="territory" title = "Territory" [width]="130"></kendo-grid-column>
+                <kendo-grid-column field="market" title = "Market" [width]="130"></kendo-grid-column>
+                <kendo-grid-column field="subMarket" title = "Sub Market" [width]="130"></kendo-grid-column>
+                <kendo-grid-column field="localMarket" title="Local Market"  [width]="130"></kendo-grid-column>
+                <kendo-grid-column field="buyerId" title = "Buyer Id"  [width]="130"></kendo-grid-column>
+                <kendo-grid-column field="buyerName" title = "Buyer Name"  [width]="130"></kendo-grid-column>
             </kendo-grid>
             </ng-template>
             </kendo-panelbar-item>
@@ -94,12 +110,21 @@
                     [filterable]="true"
                     [groupable]="true"
                     [height]="350">
+                    <kendo-grid-column field= "poName" title="PO Name" [width]="240"></kendo-grid-column>
                     <kendo-grid-column field="containerCode" title="Container Code" [width]="240"></kendo-grid-column>
-                    <kendo-grid-column field="pslc" title="pslc" [width]="100"></kendo-grid-column>
-                    <kendo-grid-column field="fuzeProjectId" title="Fuze ProjectId" [width]="100"></kendo-grid-column>
+                    <kendo-grid-column-group title="Reserving">
+                        <kendo-grid-column field="fuzeReservationId" title="Fuze Reservation Id" [width]="180"></kendo-grid-column>
+                        <kendo-grid-column field="fuzeProjectId" title="Fuze ProjectId" [width]="100"></kendo-grid-column>
+                        <kendo-grid-column field="userBy" title="UserBy Date" [width]="100"></kendo-grid-column>
+                         <kendo-grid-column field="psproject" title="PS Project" [width]="100"></kendo-grid-column>
+                        <kendo-grid-column field="pslc" title="pslc" [width]="100"></kendo-grid-column>
+                        <kendo-grid-column field="reservedUsername" title="Reserved Username" [width]="100"></kendo-grid-column>
+                        <kendo-grid-column field="fuzeStatus" title="Fuze Status" [width]="100"></kendo-grid-column>
+                    </kendo-grid-column-group>
                     <kendo-grid-column field="catsStatus" title="Cats Status" [width]="130"></kendo-grid-column>
-                    <kendo-grid-column field="psproject" title="PS Project" [width]="130"></kendo-grid-column>
                     <kendo-grid-column field="localMarket" title="Local Market"  [width]="130"></kendo-grid-column>
+                    <kendo-grid-column field="buyerId" title="Buyer Id" [width]="130"></kendo-grid-column>
+                    <kendo-grid-column field="buyerName" title="Buyer Name" [width]="130"></kendo-grid-column>
                 </kendo-grid>
                 </ng-template>
                
@@ -127,6 +152,8 @@
                     <kendo-grid-column field="catsStatus" title="Cats Status" [width]="180"></kendo-grid-column>
                     <kendo-grid-column field="market" title="Market" [width]="180"></kendo-grid-column>
                     <kendo-grid-column field="localMarket" title="Local Market" [width]="180"></kendo-grid-column>
+                    <kendo-grid-column field="subMarket" title="Sub Market" [width]="180"></kendo-grid-column>
+                    <kendo-grid-column field="buyerName" title="Buyer Name" [width]="180"></kendo-grid-column>
                 </kendo-grid>
                 </ng-template>
                     </kendo-panelbar-item>

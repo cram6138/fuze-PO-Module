@@ -13,10 +13,15 @@ export class ReservationService {
 
   private GET_CONTAINER_DETAILS_SERVICE = "http://localhost:8888/por/reservation/containersByUserInfoV1plsql";
   private SEARCH_CONTAINER_DETAILS_SERVICE = "http://localhost:8888/por/reservation/search/containerV1plsql";
+  private MYRESERVATIONS_SERVICE = "http://localhost:8888/por/reservation/container/reserved/v2";
   private GET_TERRITORIES = "http://localhost:8888/por/territories";
   private GET_MARKETS = "http://localhost:8888/por/markets";
 
   constructor(private http: HttpClient) { }
+
+  public myReservation(user: UserInfo){
+    return this.http.post<any>(this.MYRESERVATIONS_SERVICE,user,{ responseType: 'json'})
+  }
 
   public containerDetails(user: UserInfo){
     return this.http.post<any>(this.GET_CONTAINER_DETAILS_SERVICE,user,{ responseType: 'json'});
