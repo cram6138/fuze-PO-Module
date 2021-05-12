@@ -39,7 +39,7 @@
     "@progress/kendo-data-query": "^1.5.3",
     "@progress/kendo-drawing": "^1.6.0",
     "@progress/kendo-theme-default": "^4.17.0",
-    "chart.js": "2.9.3",
+    "chart.js": "2.9.4",
     "core-js": "3.6.4",
     "font-awesome": "4.7.0",
     "ng2-charts": "2.3.0",
